@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180428162819) do
+ActiveRecord::Schema.define(version: 20180428163101) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -27,6 +27,15 @@ ActiveRecord::Schema.define(version: 20180428162819) do
     t.integer "number_of_outbreaks"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "infections", force: :cascade do |t|
+    t.integer "city_id"
+    t.integer "color"
+    t.integer "quantity"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["city_id"], name: "index_infections_on_city_id"
   end
 
   create_table "special_cards", force: :cascade do |t|
