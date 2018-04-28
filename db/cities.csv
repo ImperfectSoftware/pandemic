@@ -1,0 +1,49 @@
+Static Id, City Name, Color, Pipe Separated Neighbours
+0, San Francisco, blue, Chicago | Los Angeles | Tokyo | Manila
+1, Los Angeles, yellow, Chicago | San Francisco | Mexico City | Sydney
+2, Chicago, blue, San Francisco | Montreal | Atlanta | Mexico City | Los Angeles
+3, Mexico City, yellow, Los Angeles | Chicago | Miami | Bogota | Lima
+4, Lima, yellow, Mexico City | Bogota | Santiago
+5, Santiago, yellow, Lima
+6, Atlanta, blue, Washington | Chicago | Miami
+7, Montreal, blue, New York | Washington | Chicago
+8, New York, blue, Washington | Montreal | London | Madrid
+9, Washington, blue, New York | Montreal | Atlanta | Miami
+10, Miami, yellow, Washington | Atlanta | Mexico City | Bogota
+11, Bogota, yellow, Mexico City | Lima | Miami | Sao Paulo | Buenos Aires
+12, Buenos Aires, yellow, Bogota | Sao Paulo
+13, Sao Paulo, yellow, Buenos Aires | Bogota | Lagos | Madrid
+14, Lagos, yellow, Sao Paulo | Khartoum | Kinshasa
+15, Khartoum, yellow, Lagos | Kinshasa | Johannesburg | Cairo
+16, Kinshasa, yellow, Khartoum | Johannesburg | Lagos 
+17, Johannesburg, yellow, Khartoum | Kinshasa
+18, London, blue, Essen | Paris | Madrid | New York
+19, Madrid, blue, New York | London | Paris | Algiers | Sao Paulo
+20, Paris, blue, Madrid | London | Essen | Milan | Algiers
+21, Essen, blue, Paris | London | Milan | St. Petersburg
+22, Milan, blue, Essen | Paris | Istanbul
+23, St. Petersburg, blue, Essen | Moscow | Istanbul
+24, Algiers, black, Madrid | Paris | Istanbul | Cairo
+25, Istanbul, black, St. Petersburg | Milan | Algiers | Cairo | Baghdad | Moscow
+26, Moscow, black, Istanbul | St. Petersburg | Tehran
+27, Cairo, black, Algiers | Istanbul | Baghdad | Riyadh | Khartoum 
+28, Baghdad, black, Istanbul | Cairo | Riyadh | Karachi | Tehran
+29, Tehran, black, Moscow | Baghdad | Karachi | Delhi
+30, Riyadh, black, Cairo | Baghdad | Karachi
+31, Karachi, black, Baghdad | Riyadh | Mumbai | Delhi | Tehran
+32, Delhi, black, Tehran | Karachi | Mumbai | Chennai | Kolkata
+33, Mumbai, black, Karachi | Delhi | Chennai
+34, Kolkata, black, Delhi | Chennai | Bangkok | Hong Kong
+35, Chennai, black, Kolkata | Delhi | Mumbai | Jakarta | Bangkok
+36, Beijing, red, Seoul | Shanghai
+37, Shanghai, red, Beijing | Seoul | Tokyo | Taipei | Hong Kong
+38, Hong Kong, red, Kolkata | Bangkok | Ho Chi Min City | Manila | Taipei | Shanghai
+39, Bangkok, red, Hong Kong | Kolkata | Chennai | Jakarta | Ho Chi Min City
+40, Jakarta, red, Chennai | Bangok | Ho Chi Min City | Sydney
+41, Ho Chi Min City, red, Jakarta | Bangkok | Manila | Hong Kong
+42, Manila, red, Sydney | Ho Chi Min City | Hong Kong | Taipei | San Francisco
+43, Sydney, red | Los Angeles | Manila | Jakarta
+44, Seoul, red, Tokyo | Shanghai | Beijing
+45, Tokyo, red, Seoul | Shanghai | Osaka
+46, Osaka, red, Tokyo | Taipei
+47, Taipei, red, Osaka| Shanghai | Hong Kong | Manila
