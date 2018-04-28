@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180428164240) do
+ActiveRecord::Schema.define(version: 20180428164426) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -25,6 +25,13 @@ ActiveRecord::Schema.define(version: 20180428164240) do
     t.datetime "updated_at", null: false
     t.index ["game_id"], name: "index_cities_on_game_id"
     t.index ["player_id"], name: "index_cities_on_player_id"
+  end
+
+  create_table "cure_markers", force: :cascade do |t|
+    t.integer "color"
+    t.boolean "eradicated"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "games", force: :cascade do |t|
