@@ -15,4 +15,10 @@ RSpec.describe WorldGraph do
     end
   end
 
+  it 'should return composite ids for cities' do
+    0.upto(47).each do |position|
+      expect(WorldGraph.composite_ids).to include("city-#{position}")
+    end
+  end
+
 end

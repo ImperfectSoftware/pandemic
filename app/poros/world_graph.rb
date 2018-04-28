@@ -1,5 +1,3 @@
-require 'csv'
-
 class WorldGraph
   def self.cities
     @cities ||= [].tap do |cities|
@@ -16,5 +14,9 @@ class WorldGraph
         end
       end
     end
+  end
+
+  def self.composite_ids
+    @composite_ids ||= self.cities.map(&:composite_id)
   end
 end

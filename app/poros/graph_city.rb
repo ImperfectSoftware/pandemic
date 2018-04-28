@@ -13,4 +13,9 @@ class GraphCity
       neighbors_names.include?(city.name)
     end
   end
+
+  def composite_id
+    "city-#{staticid}"
+  end
+
 end
