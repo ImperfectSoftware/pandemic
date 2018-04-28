@@ -39,11 +39,11 @@ Static Id, City Name, Color, Pipe Separated Neighbours
 37, Shanghai, red, Beijing | Seoul | Tokyo | Taipei | Hong Kong
 38, Hong Kong, red, Kolkata | Bangkok | Ho Chi Min City | Manila | Taipei | Shanghai
 39, Bangkok, red, Hong Kong | Kolkata | Chennai | Jakarta | Ho Chi Min City
-40, Jakarta, red, Chennai | Bangok | Ho Chi Min City | Sydney
+40, Jakarta, red, Chennai | Bangkok | Ho Chi Min City | Sydney
 41, Ho Chi Min City, red, Jakarta | Bangkok | Manila | Hong Kong
 42, Manila, red, Sydney | Ho Chi Min City | Hong Kong | Taipei | San Francisco
-43, Sydney, red | Los Angeles | Manila | Jakarta
+43, Sydney, red, Los Angeles | Manila | Jakarta
 44, Seoul, red, Tokyo | Shanghai | Beijing
-45, Tokyo, red, Seoul | Shanghai | Osaka
+45, Tokyo, red, Seoul | Shanghai | Osaka | San Francisco
 46, Osaka, red, Tokyo | Taipei
 47, Taipei, red, Osaka| Shanghai | Hong Kong | Manila
