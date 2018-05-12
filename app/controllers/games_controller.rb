@@ -2,8 +2,9 @@ class GamesController < ApplicationController
   attr_reader :game
 
   def create
-    player = current_user.players.create!
-    render json: player.games.create!(started: false)
+    game = current_user.games.create!(started: false)
+    player = game.players.create!(user: current_user)
+    render json: game
   end
 
 end

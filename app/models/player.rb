@@ -3,5 +3,6 @@ class Player < ApplicationRecord
   has_many :special_cards
   has_many :cities
   has_many :movements
-  has_many :games, foreign_key: "owner_id"
+  belongs_to :game
+  belongs_to :user
 end
