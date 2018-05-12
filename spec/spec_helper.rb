@@ -94,3 +94,24 @@ RSpec.configure do |config|
   Kernel.srand config.seed
 =end
 end
+
+module AuthHelper
+
+  def token
+    @token =
+      begin
+        post "/authenticate?email=#{current_user.email}&"\
+          "password=#{current_user.password}"
+        JSON.parse(response.body)['auth_token']
+      end
+  end
+
+  def headers
+    @headers = {
+      "ACCEPT" => "application/json",
+      "CONTENT-TYPE" => "application/json",
+      "AUTHORIZATION" => token
+    }
+  end
+
+end
