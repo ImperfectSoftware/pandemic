@@ -96,6 +96,7 @@ RSpec.configure do |config|
 end
 
 module AuthHelper
+  attr_reader :current_user
 
   def token
     @token =
@@ -112,6 +113,10 @@ module AuthHelper
       "CONTENT-TYPE" => "application/json",
       "AUTHORIZATION" => token
     }
+  end
+
+  def change_logged_in_user(user)
+    @current_user = user
   end
 
 end
