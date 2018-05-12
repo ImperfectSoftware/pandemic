@@ -18,6 +18,9 @@ class InvitationsController < ApplicationController
 
     invitation = current_user.invitations.find_by(id: params[:id])
     invitation.update(accepted: params[:accepted])
+    if invitation.accepted?
+      invitation.game.players.create(user: current_user)
+    end
     render json: invitation
   end
 

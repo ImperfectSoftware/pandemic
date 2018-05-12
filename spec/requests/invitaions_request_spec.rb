@@ -52,11 +52,25 @@ RSpec.describe InvitationsController, type: :request do
         expect(Invitation.last.accepted?).to be(true)
       end
 
+      it 'creates player on invitation acceptance' do
+        put "/games/#{@game.id}/invitations/#{invitation.id}", params: {
+          accepted: true
+        }.to_json, headers: headers
+        expect(@user.players.find_by(game: @game)).to be
+      end
+
       it 'declines invitation' do
         put "/games/#{@game.id}/invitations/#{invitation.id}", params: {
           accepted: false
         }.to_json, headers: headers
         expect(Invitation.last.accepted?).to be(false)
+      end
+
+      it 'does not create player when invitation is declined' do
+        put "/games/#{@game.id}/invitations/#{invitation.id}", params: {
+          accepted: false
+        }.to_json, headers: headers
+        expect(@user.players.find_by(game: @game)).to be_nil
       end
     end
 
@@ -72,11 +86,25 @@ RSpec.describe InvitationsController, type: :request do
           .to eq(I18n.t("invitations.game_started"))
       end
 
+      it 'does not create a player on invitation acceptance' do
+        put "/games/#{@game.id}/invitations/#{invitation.id}", params: {
+          accepted: true
+        }.to_json, headers: headers
+        expect(@user.players.find_by(game: @game)).to be_nil
+      end
+
       it 'declines invitation' do
         put "/games/#{@game.id}/invitations/#{invitation.id}", params: {
           accepted: false
         }.to_json, headers: headers
         expect(Invitation.last.accepted?).to be(false)
+      end
+
+      it 'does not create player when invitation is declined' do
+        put "/games/#{@game.id}/invitations/#{invitation.id}", params: {
+          accepted: false
+        }.to_json, headers: headers
+        expect(@user.players.find_by(game: @game)).to be_nil
       end
     end
 
