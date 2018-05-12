@@ -30,4 +30,7 @@
 # available at http://guides.rubyonrails.org/i18n.html.
 
 en:
+  invitations:
+    user_not_found: Could not find user with that username.
+    user_invited: An invitation for this user already exists.
   hello: "Hello world"
