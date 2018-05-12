@@ -1,6 +1,4 @@
 class GamesController < ApplicationController
-  respond_to :json
-
   attr_reader :game
 
   def create

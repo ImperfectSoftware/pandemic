@@ -1,13 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe GamesController, type: :request do
-  let! (:user) do
-    User.create(
-      password: '12341234',
-      email: 'test@test.com',
-      username: 'testuser'
-    )
-  end
+  let! (:user) { Fabricate(:user, password: '12341234') }
 
   describe "create game" do
     it "creates a game with started set to false" do
