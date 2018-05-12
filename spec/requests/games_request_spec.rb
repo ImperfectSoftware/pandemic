@@ -6,7 +6,7 @@ RSpec.describe GamesController, type: :request do
 
   describe "create game" do
     it "creates a game with started set to false" do
-      post "/games.json", params: {}, headers: headers
+      post "/games", params: {}, headers: headers
       expect(JSON.parse(response.body)["id"]).to eq(Game.last.id)
     end
   end

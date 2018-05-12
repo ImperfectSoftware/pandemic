@@ -8,7 +8,7 @@ RSpec.describe InvitationsController, type: :request do
 
   describe "create game invitation" do
     it "errors out if user is not registered" do
-      post "/games/10/invitations.json", params: {
+      post "/games/10/invitations", params: {
         username: "unregistered user"
       }.to_json, headers: headers
       expect(JSON.parse(response.body)["error"])
@@ -16,7 +16,7 @@ RSpec.describe InvitationsController, type: :request do
     end
 
     it "creates an invite for a game" do
-      post "/games/#{game.id}/invitations.json", params: {
+      post "/games/#{game.id}/invitations", params: {
         username: user.username
       }.to_json, headers: headers
       expect(JSON.parse(response.body)["id"])
@@ -24,10 +24,10 @@ RSpec.describe InvitationsController, type: :request do
     end
 
     it "errors out if attempting to create a second invite for the same user" do
-      post "/games/#{game.id}/invitations.json", params: {
+      post "/games/#{game.id}/invitations", params: {
         username: user.username
       }.to_json, headers: headers
-      post "/games/#{game.id}/invitations.json", params: {
+      post "/games/#{game.id}/invitations", params: {
         username: user.username
       }.to_json, headers: headers
       expect(JSON.parse(response.body)["error"])
