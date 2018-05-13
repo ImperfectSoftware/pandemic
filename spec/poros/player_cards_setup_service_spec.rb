@@ -13,8 +13,8 @@ RSpec.describe PlayerCardsSetupService do
 
       it 'should have 4 card hands' do
         expect(game_setup_data.player_hands.count).to eq(2)
-        game_setup_data.player_hands.each do |hand|
-          expect(hand.values.flatten.size).to eq(4)
+        game_setup_data.player_hands.each do |player_id, hand|
+          expect(hand.size).to eq(4)
         end
       end
 
@@ -50,8 +50,8 @@ RSpec.describe PlayerCardsSetupService do
 
       it 'should have 3 card hands' do
         expect(game_setup_data.player_hands.count).to eq(3)
-        game_setup_data.player_hands.each do |hand|
-          expect(hand.values.flatten.size).to eq(3)
+        game_setup_data.player_hands.each do |player_id, hand|
+          expect(hand.size).to eq(3)
         end
       end
 
@@ -70,8 +70,8 @@ RSpec.describe PlayerCardsSetupService do
 
       it 'should have 2 card hands' do
         expect(game_setup_data.player_hands.count).to eq(4)
-        game_setup_data.player_hands.each do |hand|
-          expect(hand.values.flatten.size).to eq(2)
+        game_setup_data.player_hands.each do |player_id, hand|
+          expect(hand.size).to eq(2)
         end
       end
 

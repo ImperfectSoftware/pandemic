@@ -21,8 +21,8 @@ class PlayerCardsSetupService
   end
 
   def player_hands
-    @player_hands ||= player_ids.map do |player_id|
-      { player_id => player_cards.pop(number_of_cards_per_hand) }
+    @player_hands ||= player_ids.reduce(Hash.new) do |result, player_id|
+      result.merge({ player_id => player_cards.pop(number_of_cards_per_hand) })
     end
   end
 
