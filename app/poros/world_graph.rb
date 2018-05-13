@@ -3,13 +3,18 @@ class WorldGraph
     @cities ||= [].tap do |cities|
       # Instantiate cities
       CSV.foreach("./db/cities.csv", headers: true) do |row|
-        cities << GraphCity
-          .new(name: row[1].strip, color: row[2].strip, staticid: row[0])
+        cities << GraphCity.new(
+          name: row[1].strip,
+          color: row[4].strip,
+          staticid: row[0],
+          population: row[2],
+          density: row[3],
+        )
       end
       # Create Graph
       CSV.foreach("./db/cities.csv", headers: true) do |row|
         city = cities.find { |city| city.name == row[1].strip }
-        row[3].split("|").map(&:strip).each do |neighbor_name|
+        row[5].split("|").map(&:strip).each do |neighbor_name|
           city.neighbors_names << neighbor_name
         end
       end

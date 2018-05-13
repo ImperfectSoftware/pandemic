@@ -1,49 +1,49 @@
-Static Id, City Name, Color, Pipe Separated Neighbours
-0, San Francisco, blue, Chicago | Los Angeles | Tokyo | Manila
-1, Los Angeles, yellow, Chicago | San Francisco | Mexico City | Sydney
-2, Chicago, blue, San Francisco | Montreal | Atlanta | Mexico City | Los Angeles
-3, Mexico City, yellow, Los Angeles | Chicago | Miami | Bogota | Lima
-4, Lima, yellow, Mexico City | Bogota | Santiago
-5, Santiago, yellow, Lima
-6, Atlanta, blue, Washington | Chicago | Miami
-7, Montreal, blue, New York | Washington | Chicago
-8, New York, blue, Washington | Montreal | London | Madrid
-9, Washington, blue, New York | Montreal | Atlanta | Miami
-10, Miami, yellow, Washington | Atlanta | Mexico City | Bogota
-11, Bogota, yellow, Mexico City | Lima | Miami | Sao Paulo | Buenos Aires
-12, Buenos Aires, yellow, Bogota | Sao Paulo
-13, Sao Paulo, yellow, Buenos Aires | Bogota | Lagos | Madrid
-14, Lagos, yellow, Sao Paulo | Khartoum | Kinshasa
-15, Khartoum, yellow, Lagos | Kinshasa | Johannesburg | Cairo
-16, Kinshasa, yellow, Khartoum | Johannesburg | Lagos 
-17, Johannesburg, yellow, Khartoum | Kinshasa
-18, London, blue, Essen | Paris | Madrid | New York
-19, Madrid, blue, New York | London | Paris | Algiers | Sao Paulo
-20, Paris, blue, Madrid | London | Essen | Milan | Algiers
-21, Essen, blue, Paris | London | Milan | St. Petersburg
-22, Milan, blue, Essen | Paris | Istanbul
-23, St. Petersburg, blue, Essen | Moscow | Istanbul
-24, Algiers, black, Madrid | Paris | Istanbul | Cairo
-25, Istanbul, black, St. Petersburg | Milan | Algiers | Cairo | Baghdad | Moscow
-26, Moscow, black, Istanbul | St. Petersburg | Tehran
-27, Cairo, black, Algiers | Istanbul | Baghdad | Riyadh | Khartoum 
-28, Baghdad, black, Istanbul | Cairo | Riyadh | Karachi | Tehran
-29, Tehran, black, Moscow | Baghdad | Karachi | Delhi
-30, Riyadh, black, Cairo | Baghdad | Karachi
-31, Karachi, black, Baghdad | Riyadh | Mumbai | Delhi | Tehran
-32, Delhi, black, Tehran | Karachi | Mumbai | Chennai | Kolkata
-33, Mumbai, black, Karachi | Delhi | Chennai
-34, Kolkata, black, Delhi | Chennai | Bangkok | Hong Kong
-35, Chennai, black, Kolkata | Delhi | Mumbai | Jakarta | Bangkok
-36, Beijing, red, Seoul | Shanghai
-37, Shanghai, red, Beijing | Seoul | Tokyo | Taipei | Hong Kong
-38, Hong Kong, red, Kolkata | Bangkok | Ho Chi Min City | Manila | Taipei | Shanghai
-39, Bangkok, red, Hong Kong | Kolkata | Chennai | Jakarta | Ho Chi Min City
-40, Jakarta, red, Chennai | Bangkok | Ho Chi Min City | Sydney
-41, Ho Chi Min City, red, Jakarta | Bangkok | Manila | Hong Kong
-42, Manila, red, Sydney | Ho Chi Min City | Hong Kong | Taipei | San Francisco
-43, Sydney, red, Los Angeles | Manila | Jakarta
-44, Seoul, red, Tokyo | Shanghai | Beijing
-45, Tokyo, red, Seoul | Shanghai | Osaka | San Francisco
-46, Osaka, red, Tokyo | Taipei
-47, Taipei, red, Osaka| Shanghai | Hong Kong | Manila
+Static Id, City Name, Population, Density (km^2), Color, Pipe Separated Neighbours
+0, San Francisco, 5864000, 2100, blue, Chicago | Los Angeles | Tokyo | Manila
+1, Los Angeles, 14900000, 2400, yellow, Chicago | San Francisco | Mexico City | Sydney
+2, Chicago, 9121000, 1300, blue, San Francisco | Montreal | Atlanta | Mexico City | Los Angeles
+3, Mexico City, 19463000, 9500, yellow, Los Angeles | Chicago | Miami | Bogota | Lima
+4, Lima, 9121000, 14100, yellow, Mexico City | Bogota | Santiago
+5, Santiago, 6015000, 6500, yellow, Lima
+6, Atlanta, 4715000, 700, blue, Washington | Chicago | Miami
+7, Montreal, 3429000, 2200, blue, New York | Washington | Chicago
+8, New York, 20464000, 1800, blue, Washington | Montreal | London | Madrid
+9, Washington, 4679000, 1400, blue, New York | Montreal | Atlanta | Miami
+10, Miami, 5582000, 1700, yellow, Washington | Atlanta | Mexico City | Bogota
+11, Bogota, 8702000, 21000, yellow, Mexico City | Lima | Miami | Sao Paulo | Buenos Aires
+12, Buenos Aires, 13639000, 5200, yellow, Bogota | Sao Paulo
+13, Sao Paulo, 20186000, 6400, yellow, Buenos Aires | Bogota | Lagos | Madrid
+14, Lagos, 11547000, 12700, yellow, Sao Paulo | Khartoum | Kinshasa
+15, Khartoum, 4887000, 4500, yellow, Lagos | Kinshasa | Johannesburg | Cairo
+16, Kinshasa, 9046000, 15500, yellow, Khartoum | Johannesburg | Lagos 
+17, Johannesburg, 3888000, 2400, yellow, Khartoum | Kinshasa
+18, London, 8586000, 5300, blue, Essen | Paris | Madrid | New York
+19, Madrid, 5427000, 5700, blue, New York | London | Paris | Algiers | Sao Paulo
+20, Paris, 10755000, 3800, blue, Madrid | London | Essen | Milan | Algiers
+21, Essen, 575000, 2800, blue, Paris | London | Milan | St. Petersburg
+22, Milan, 5232000, 2800, blue, Essen | Paris | Istanbul
+23, St. Petersburg, 4879000, 4100, blue, Essen | Moscow | Istanbul
+24, Algiers, 2946000, 6500, black, Madrid | Paris | Istanbul | Cairo
+25, Istanbul, 13576000, 9700, black, St. Petersburg | Milan | Algiers | Cairo | Baghdad | Moscow
+26, Moscow, 15512000, 3500, black, Istanbul | St. Petersburg | Tehran
+27, Cairo, 14718000, 8900, black, Algiers | Istanbul | Baghdad | Riyadh | Khartoum 
+28, Baghdad, 6204000, 10400, black, Istanbul | Cairo | Riyadh | Karachi | Tehran
+29, Tehran, 7419000, 9500, black, Moscow | Baghdad | Karachi | Delhi
+30, Riyadh, 5037000, 3400, black, Cairo | Baghdad | Karachi
+31, Karachi, 20711000, 25800, black, Baghdad | Riyadh | Mumbai | Delhi | Tehran
+32, Delhi, 22242000, 11500, black, Tehran | Karachi | Mumbai | Chennai | Kolkata
+33, Mumbai, 16910000, 30900, black, Karachi | Delhi | Chennai
+34, Kolkata, 14374000, 11900, black, Delhi | Chennai | Bangkok | Hong Kong
+35, Chennai, 8865000, 14600, black, Kolkata | Delhi | Mumbai | Jakarta | Bangkok
+36, Beijing, 17311000, 5000, red, Seoul | Shanghai
+37, Shanghai, 13482000, 2200, red, Beijing | Seoul | Tokyo | Taipei | Hong Kong
+38, Hong Kong, 7106000, 25900, red, Kolkata | Bangkok | Ho Chi Min City | Manila | Taipei | Shanghai
+39, Bangkok, 7151000, 3200, red, Hong Kong | Kolkata | Chennai | Jakarta | Ho Chi Min City
+40, Jakarta, 26063000, 9400, red, Chennai | Bangkok | Ho Chi Min City | Sydney
+41, Ho Chi Min City, 8314000, 9900, red, Jakarta | Bangkok | Manila | Hong Kong
+42, Manila, 20767000, 14400, red, Sydney | Ho Chi Min City | Hong Kong | Taipei | San Francisco
+43, Sydney, 3785000, 2100, red, Los Angeles | Manila | Jakarta
+44, Seoul, 22547000, 10400, red, Tokyo | Shanghai | Beijing
+45, Tokyo, 13189000, 6030, red, Seoul | Shanghai | Osaka | San Francisco
+46, Osaka, 2871000, 13000, red, Tokyo | Taipei
+47, Taipei, 8338000, 7300, red, Osaka| Shanghai | Hong Kong | Manila
