@@ -3,7 +3,11 @@ class GamesController < ApplicationController
 
   def create
     game = current_user.games.create!(started: false)
-    player = game.players.create!(user: current_user)
+    CreateCities.new(game: game, user: current_user).call
+    player = game.players.create!(
+      user: current_user,
+      current_location: game.find_atlanta
+    )
     render json: game
   end
 

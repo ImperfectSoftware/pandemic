@@ -5,4 +5,8 @@ class Game < ApplicationRecord
   has_many :players
   has_many :cities
   belongs_to :owner, class_name: "User"
+
+  def find_atlanta
+    cities.to_a.find { |city| city.name == 'Atlanta' }
+  end
 end

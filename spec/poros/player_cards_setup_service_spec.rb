@@ -56,7 +56,7 @@ RSpec.describe PlayerCardsSetupService do
       end
 
       it 'should have a starting deck with 48 player cards' do
-        expect(game_setup_data.player_cards.size).to eq(48)
+        expect(game_setup_data.player_cards.size).to eq(WorldGraph.cities.count)
       end
     end
 

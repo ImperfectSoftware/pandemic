@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe WorldGraph do
 
   it 'should contain 48 cities' do
-    expect(WorldGraph.cities.count).to be 48
+    expect(WorldGraph.cities.count).to be WorldGraph.cities.count
   end
 
   it 'should have cities with bidirectional neighbors' do

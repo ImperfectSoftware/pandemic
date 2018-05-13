@@ -6,7 +6,7 @@ RSpec.describe CreateCities do
 
   it 'creates instances of cities for game' do
     CreateCities.new(game: game, user: game.owner).call
-    expect(game.cities.count).to eq(48)
+    expect(game.cities.count).to eq(WorldGraph.cities.count)
   end
 
   it 'errors out with bad user' do

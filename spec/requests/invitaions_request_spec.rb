@@ -6,7 +6,7 @@ RSpec.describe InvitationsController, type: :request do
   before(:context) do
     @user = Fabricate(:user)
     @current_user = Fabricate(:user, password: '12341234')
-    @game = Fabricate(:game, owner: current_user)
+    @game = Fabricate(:game_with_cities, owner: current_user)
   end
 
   describe "create game invitation" do
@@ -57,6 +57,15 @@ RSpec.describe InvitationsController, type: :request do
           accepted: true
         }.to_json, headers: headers
         expect(@user.players.find_by(game: @game)).to be
+      end
+
+      it "sets player's current location on invitation acceptance to Atlanta" do
+        put "/games/#{@game.id}/invitations/#{invitation.id}", params: {
+          accepted: true
+        }.to_json, headers: headers
+        current_location_name = @current_user.players.find_by(game: @game)
+          .current_location.name
+        expect(current_location_name).to eq('Atlanta')
       end
 
       it 'declines invitation' do
