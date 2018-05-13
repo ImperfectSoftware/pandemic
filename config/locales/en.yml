@@ -36,3 +36,5 @@ en:
     user_not_found: Could not find user with that username.
     user_invited: An invitation for this user already exists.
     game_started: Cannot accept invitation. Game already started.
+  authorization:
+    create_city_not_allowed: This user cannot create city instances.
