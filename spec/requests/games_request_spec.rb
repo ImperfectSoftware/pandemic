@@ -23,5 +23,11 @@ RSpec.describe GamesController, type: :request do
         .current_location.name
       expect(current_location_name).to eq('Atlanta')
     end
+
+    it "assigns game role to player" do
+      post "/games", params: {}, headers: headers
+      player_role = Game.last.players.first.role
+      expect(Role.all.map(&:name).include?(player_role)).to be(true)
+    end
   end
 end

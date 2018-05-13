@@ -6,6 +6,7 @@ class GamesController < ApplicationController
     CreateCities.new(game: game, user: current_user).call
     player = game.players.create!(
       user: current_user,
+      role: Role.all.sample.name,
       current_location: game.find_atlanta
     )
     render json: game
