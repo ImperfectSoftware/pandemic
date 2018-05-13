@@ -12,4 +12,12 @@ class GamesController < ApplicationController
     render json: game
   end
 
+  def update
+    game = current_user.games.find_by(id: params[:id])
+    if game.players.count > 1
+    else
+      render json: { error: I18n.t("games.minimum_number_of_players") }
+    end
+  end
+
 end

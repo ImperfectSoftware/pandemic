@@ -30,4 +30,15 @@ RSpec.describe GamesController, type: :request do
       expect(Role.all.map(&:name).include?(player_role)).to be(true)
     end
   end
+
+  describe "update game" do
+    let(:game) { Fabricate(:game, owner: @current_user) }
+
+    it "does not start a game with only one player" do
+      put "/games/#{game.id}", params: {}, headers: headers
+      expect(JSON.parse(response.body)["error"])
+        .to eq(I18n.t("games.minimum_number_of_players"))
+    end
+  end
+
 end
