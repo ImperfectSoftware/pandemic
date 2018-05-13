@@ -68,6 +68,16 @@ RSpec.describe InvitationsController, type: :request do
         expect(current_location_name).to eq('Atlanta')
       end
 
+      it "sets player's role to a role not yet taken" do
+        put "/games/#{@game.id}/invitations/#{invitation.id}", params: {
+          accepted: true
+        }.to_json, headers: headers
+        player_one = @game.players.find_by(user: @game.owner)
+        player_two = @game.players.find_by(user: @user)
+        expect(player_two.role).to_not be_nil
+        expect(player_one.role).to_not eq(player_two.role)
+      end
+
       it 'declines invitation' do
         put "/games/#{@game.id}/invitations/#{invitation.id}", params: {
           accepted: false
