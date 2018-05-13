@@ -1,4 +1,13 @@
 class SpecialCard
+
+  def self.find(staticid)
+    if staticid == '0'
+      epidemic_card
+    else
+      events.find { |event| event.staticid == staticid }
+    end
+  end
+
   def self.events
     @events ||= [].tap do |cards|
       CSV.foreach("./db/event_cards.csv", headers: true) do |row|
@@ -14,7 +23,7 @@ class SpecialCard
 
   def self.epidemic_card
     @epidemic ||= SpecialCard.new(
-      staticid: 0,
+      staticid: '0',
       name: 'Epidemic',
       description: '1. Increase | 2. Infect | 3. Intensify'
     )

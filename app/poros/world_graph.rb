@@ -7,7 +7,7 @@ class WorldGraph
           name: row[1].strip,
           color: row[4].strip,
           staticid: row[0],
-          population: row[2],
+          population: row[2].to_i,
           density: row[3],
         )
       end

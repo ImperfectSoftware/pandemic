@@ -1,10 +1,19 @@
 class GraphCity
-  attr_reader :neighbors_names, :name, :color, :staticid
 
-  def initialize(staticid:, name:, color:)
+  def self.find(staticid)
+    WorldGraph.cities.find do |city|
+      city.staticid == staticid
+    end
+  end
+
+  attr_reader :neighbors_names, :name, :color, :staticid, :population, :density
+
+  def initialize(staticid:, name:, color:, population:, density:)
     @staticid = staticid
     @name = name
     @color = color
+    @population = population
+    @density = density
     @neighbors_names = []
   end
 

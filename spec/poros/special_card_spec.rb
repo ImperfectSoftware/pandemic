@@ -13,4 +13,14 @@ RSpec.describe SpecialCard do
         .to include("special-card-#{position}")
     end
   end
+
+  it 'finds an event based on the staticid' do
+    card = SpecialCard.events.sample
+    expect(card).to be(SpecialCard.find(card.staticid))
+  end
+
+  it 'finds an epidemic card based on the staticid' do
+    card = SpecialCard.epidemic_card
+    expect(card).to be(SpecialCard.find(card.staticid))
+  end
 end
