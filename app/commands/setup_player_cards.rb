@@ -1,4 +1,6 @@
-class PlayerCardsSetupService
+class SetupPlayerCards
+  prepend SimpleCommand
+
   attr_reader :player_ids, :number_of_epidemic_cards
 
   def initialize(player_ids:, number_of_epidemic_cards:)
