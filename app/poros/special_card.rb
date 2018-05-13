@@ -37,7 +37,7 @@ class SpecialCard
   end
 
   def composite_id
-    "special-card-#{self.staticid}"
+    "special-card-#{staticid}"
   end
 
 end
