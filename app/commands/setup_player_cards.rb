@@ -1,14 +1,22 @@
 class SetupPlayerCards
   prepend SimpleCommand
 
-  attr_reader :player_ids, :number_of_epidemic_cards
+  attr_reader :player_ids, :nr_of_epidemic_cards
 
-  def initialize(player_ids:, number_of_epidemic_cards:)
+  def initialize(player_ids:, nr_of_epidemic_cards:)
     @player_ids = player_ids
-    @number_of_epidemic_cards = number_of_epidemic_cards
+    @nr_of_epidemic_cards = nr_of_epidemic_cards.to_i
   end
 
   def call
+    if !player_ids.count.between?(2, 4)
+      errors.add(:setup, I18n.t("games.minimum_number_of_players"))
+    end
+    if !nr_of_epidemic_cards.between?(4, 6)
+      errors.add(:setup, I18n.t("games.incorrect_nr_of_epidemic_cards"))
+    end
+    return if errors.any?
+
     OpenStruct.new(
       player_hands: player_hands,
       player_cards: player_cards_with_epidemic_cards
@@ -30,7 +38,7 @@ class SetupPlayerCards
 
   def epidemic_cards
     [ SpecialCard.epidemic_card.composite_id ] *
-      number_of_epidemic_cards
+      nr_of_epidemic_cards
   end
 
   def number_of_cards_per_hand
@@ -38,7 +46,7 @@ class SetupPlayerCards
   end
 
   def player_cards_with_epidemic_cards
-    player_cards.in_groups(number_of_epidemic_cards).map do |group|
+    player_cards.in_groups(nr_of_epidemic_cards).map do |group|
       (group.compact + [SpecialCard.epidemic_card.composite_id]).shuffle
     end.flatten
   end

@@ -46,7 +46,7 @@ RSpec.describe GamesController, type: :request do
       player_two = Fabricate(:player, game: game)
       put "/games/#{game.id}", params: {}, headers: headers
       expect(JSON.parse(response.body)["error"])
-        .to eq(I18n.t("games.missing_epidemic_cards_param"))
+        .to eq(I18n.t("games.incorrect_nr_of_epidemic_cards"))
     end
   end
 

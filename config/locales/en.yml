@@ -38,5 +38,6 @@ en:
     game_started: Cannot accept invitation. Game already started.
   games:
     minimum_number_of_players: Cannot start a game with only one player.
+    incorrect_nr_of_epidemic_cards: Incorrect number of epidemic cards provided.
   authorization:
     create_city_not_allowed: This user cannot create city instances.

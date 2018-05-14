@@ -13,22 +13,15 @@ class GamesController < ApplicationController
   end
 
   def update
-    if update_error_message
-      render json: { error: update_error_message }
+    game = current_user.games.find_by(id: params[:id])
+    setup_player_cards = SetupPlayerCards.new(
+      player_ids: game.players.pluck(:id),
+      nr_of_epidemic_cards: params[:nr_of_epidemic_cards]
+    )
+    setup_player_cards.call
+    if setup_player_cards.errors[:setup].any?
+      render json: { error: setup_player_cards.errors[:setup].first }
       return
     end
-
-    game = current_user.games.find_by(id: params[:id])
-    if game.players.count > 1
-    else
-      render json: { error: I18n.t("games.minimum_number_of_players") }
-    end
   end
-
-  def update_error_message
-    if params[:nr_of_epidemic_cards].blank?
-      return I18n.t("games.missing_epidemic_cards_param")
-    end
-  end
-
 end

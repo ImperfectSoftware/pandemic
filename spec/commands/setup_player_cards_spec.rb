@@ -1,12 +1,32 @@
 require 'rails_helper'
 
 RSpec.describe SetupPlayerCards do
+  it 'creates an error if there are not enough players' do
+    command = SetupPlayerCards.new(
+      player_ids: [1],
+      nr_of_epidemic_cards: 4
+    )
+    command.call
+    expect(command.errors[:setup].first)
+      .to eq(I18n.t("games.minimum_number_of_players"))
+  end
+
+  it 'creates an error if there are too many player' do
+    command = SetupPlayerCards.new(
+      player_ids: [1,2,3,4,5],
+      nr_of_epidemic_cards: 4
+    )
+    command.call
+    expect(command.errors[:setup].first)
+      .to eq(I18n.t("games.minimum_number_of_players"))
+  end
+
   context 'with 4 epidemic cards' do
     context 'with 2 players' do
       let!(:command) do
         SetupPlayerCards.new(
           player_ids: [1,2],
-          number_of_epidemic_cards: 4
+          nr_of_epidemic_cards: 4
         )
       end
 
@@ -27,7 +47,7 @@ RSpec.describe SetupPlayerCards do
         100.times do
           command = SetupPlayerCards.new(
             player_ids: [1,2],
-            number_of_epidemic_cards: 4
+            nr_of_epidemic_cards: 4
           )
           command.call
           player_cards = command.result.player_cards
@@ -48,7 +68,7 @@ RSpec.describe SetupPlayerCards do
       let!(:command) do
         SetupPlayerCards.new(
           player_ids: [1,2,3],
-          number_of_epidemic_cards: 4
+          nr_of_epidemic_cards: 4
         )
       end
 
@@ -70,7 +90,7 @@ RSpec.describe SetupPlayerCards do
       let!(:command) do
         SetupPlayerCards.new(
           player_ids: [1,2,3,4],
-          number_of_epidemic_cards: 4
+          nr_of_epidemic_cards: 4
         )
       end
 
