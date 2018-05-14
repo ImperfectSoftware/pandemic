@@ -1,7 +1,7 @@
 class CreateInvitation
   prepend SimpleCommand
 
-  def initialize(game: game, username:)
+  def initialize(game:, username:)
     @game = game
     @username = username
   end
