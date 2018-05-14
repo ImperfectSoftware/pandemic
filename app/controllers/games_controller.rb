@@ -13,6 +13,10 @@ class GamesController < ApplicationController
 
   def update
     game = current_user.games.find_by(id: params[:id])
+    if game.started?
+      render json: { error: I18n.t("games.already_started") }
+      return
+    end
     setup_player_cards = SetupPlayerCards.new(
       player_ids: game.players.pluck(:id),
       nr_of_epidemic_cards: params[:nr_of_epidemic_cards]

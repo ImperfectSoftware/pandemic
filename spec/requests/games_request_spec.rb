@@ -43,6 +43,13 @@ RSpec.describe GamesController, type: :request do
       expect(JSON.parse(response.body)["error"])
         .to eq(I18n.t("games.incorrect_nr_of_epidemic_cards"))
     end
+
+    it "errors out if game has already started" do
+      game.update!(started: true)
+      put "/games/#{game.id}", params: {}, headers: headers
+      expect(JSON.parse(response.body)["error"])
+        .to eq(I18n.t("games.already_started"))
+    end
   end
 
 end
