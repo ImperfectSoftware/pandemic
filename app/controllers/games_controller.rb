@@ -30,6 +30,10 @@ class GamesController < ApplicationController
       hand = setup_player_cards.result.player_hands[player.id]
       player.update!(cards_composite_ids: hand)
     end
-    # render json: game
+    get_player_order = GetPlayerOrder
+      .new(player_hands: setup_player_cards.result.player_hands)
+    get_player_order.call
+    game.update!(player_turn_ids: get_player_order.result)
+    render json: game
   end
 end
