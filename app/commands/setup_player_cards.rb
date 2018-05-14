@@ -36,11 +36,6 @@ class SetupPlayerCards
     end
   end
 
-  def epidemic_cards
-    [ SpecialCard.epidemic_card.composite_id ] *
-      nr_of_epidemic_cards
-  end
-
   def number_of_cards_per_hand
     @number_of_cards_per_hand ||= { 2 => 4, 3 => 3 , 4 => 2 }[player_ids.count]
   end
