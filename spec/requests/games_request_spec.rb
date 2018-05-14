@@ -35,9 +35,18 @@ RSpec.describe GamesController, type: :request do
     let(:game) { Fabricate(:game, owner: @current_user) }
 
     it "does not start a game with only one player" do
-      put "/games/#{game.id}", params: {}, headers: headers
+      put "/games/#{game.id}", params: {
+        nr_of_epidemic_cards: 4
+      }.to_json, headers: headers
       expect(JSON.parse(response.body)["error"])
         .to eq(I18n.t("games.minimum_number_of_players"))
+    end
+
+    it "errors out if number of epidemic cards is not provided" do
+      player_two = Fabricate(:player, game: game)
+      put "/games/#{game.id}", params: {}, headers: headers
+      expect(JSON.parse(response.body)["error"])
+        .to eq(I18n.t("games.missing_epidemic_cards_param"))
     end
   end
 
