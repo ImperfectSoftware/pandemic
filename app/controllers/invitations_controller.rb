@@ -30,6 +30,20 @@ class InvitationsController < ApplicationController
     render json: invitation
   end
 
+  def destroy
+    if game.started?
+      render json: { error: I18n.t("invitations.game_started") }
+      return
+    end
+
+    invitation = current_user.invitations.find_by(id: params[:id])
+    player = current_user.players.find_by(game: invitation.game)
+    invitation.destroy
+    player.destroy
+
+    render :nothing
+  end
+
   private
 
   def game

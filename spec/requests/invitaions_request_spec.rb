@@ -156,4 +156,28 @@ RSpec.describe InvitationsController, type: :request do
       end
     end
   end
+
+  describe "delete game invitation" do
+    context "after game started" do
+      it "should not be allowed to delete if game started" do
+        change_logged_in_user(@user)
+        invitation = Fabricate(:accepted_invitation, game: @game, user: @user)
+        delete "/games/#{@game.id}/invitations/#{invitation.id}",
+          params: {}, headers: headers
+        expect(JSON.parse(response.body)["error"])
+          .to eq(I18n.t("invitations.game_started"))
+      end
+    end
+
+    context "before game started" do
+      it "should delete associated player when deleting an invitation" do
+        @game.update!(started: false)
+        change_logged_in_user(@user)
+        invitation = Fabricate(:accepted_invitation, game: @game, user: @user)
+        delete "/games/#{@game.id}/invitations/#{invitation.id}",
+          params: {}, headers: headers
+        expect(@game.players.count).to eq(1)
+      end
+    end
+  end
 end
