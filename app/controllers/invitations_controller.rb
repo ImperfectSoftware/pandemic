@@ -23,7 +23,7 @@ class InvitationsController < ApplicationController
       invitation.game.players.create(
         user: current_user,
         role: role,
-        current_location: invitation.game.find_atlanta
+        current_location_staticid: GraphCity.find_by_name('Atlanta').staticid
       )
     end
     render json: invitation

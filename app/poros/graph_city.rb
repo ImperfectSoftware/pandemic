@@ -6,6 +6,12 @@ class GraphCity
     end
   end
 
+  def self.find_by_name(name)
+    WorldGraph.cities.find do |city|
+      city.name == name
+    end
+  end
+
   attr_reader :neighbors_names, :name, :color, :staticid, :population, :density
 
   def initialize(staticid:, name:, color:, population:, density:)

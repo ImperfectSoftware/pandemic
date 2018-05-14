@@ -12,11 +12,6 @@ RSpec.describe GamesController, type: :request do
       expect(JSON.parse(response.body)["id"]).to eq(Game.last.id)
     end
 
-    it "instantiates cities on game creation" do
-      post "/games", params: {}, headers: headers
-      expect(Game.last.cities.count).to eq(WorldGraph.cities.count)
-    end
-
     it "sets game owner's player current location to Atlanta" do
       post "/games", params: {}, headers: headers
       current_location_name = @current_user.players.find_by(game: Game.last)

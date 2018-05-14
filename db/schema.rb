@@ -10,21 +10,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180514013434) do
+ActiveRecord::Schema.define(version: 20180514013857) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
-
-  create_table "cities", force: :cascade do |t|
-    t.integer "player_id"
-    t.integer "game_id"
-    t.boolean "research_station"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.string "staticid"
-    t.index ["game_id"], name: "index_cities_on_game_id"
-    t.index ["player_id"], name: "index_cities_on_player_id"
-  end
 
   create_table "cure_markers", force: :cascade do |t|
     t.integer "color"
@@ -37,8 +26,6 @@ ActiveRecord::Schema.define(version: 20180514013434) do
     t.boolean "started"
     t.integer "current_player_id"
     t.integer "player_turn_ids", array: true
-    t.integer "used_infection_card_city_ids", array: true
-    t.integer "unused_infection_card_city_ids", array: true
     t.integer "nr_of_epidemic_cards"
     t.integer "discarded_special_player_card_ids", array: true
     t.string "unused_player_card_ids", array: true
@@ -46,15 +33,16 @@ ActiveRecord::Schema.define(version: 20180514013434) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "owner_id"
+    t.string "used_infection_card_city_staticids", array: true
+    t.string "unused_infection_card_city_staticids", array: true
   end
 
   create_table "infections", force: :cascade do |t|
-    t.integer "city_id"
     t.integer "color"
     t.integer "quantity"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["city_id"], name: "index_infections_on_city_id"
+    t.string "city_staticid"
   end
 
   create_table "invitations", force: :cascade do |t|
@@ -68,22 +56,21 @@ ActiveRecord::Schema.define(version: 20180514013434) do
   end
 
   create_table "movements", force: :cascade do |t|
-    t.integer "from_city_id"
-    t.integer "to_city_id"
     t.integer "player_id"
     t.boolean "by_dispatcher"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "from_city_staticid"
+    t.string "to_city_staticid"
   end
 
   create_table "players", force: :cascade do |t|
     t.integer "user_id"
     t.string "role"
-    t.integer "current_location_id"
     t.integer "game_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["current_location_id"], name: "index_players_on_current_location_id"
+    t.string "current_location_staticid"
     t.index ["game_id"], name: "index_players_on_game_id"
     t.index ["user_id"], name: "index_players_on_user_id"
   end
