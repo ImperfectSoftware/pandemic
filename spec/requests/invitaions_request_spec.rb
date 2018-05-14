@@ -36,6 +36,26 @@ RSpec.describe InvitationsController, type: :request do
       expect(JSON.parse(response.body)["error"])
         .to eq(I18n.t("invitations.user_invited"))
     end
+
+    it "errors out if 3 game invitations already exist" do
+      user_three = Fabricate(:user)
+      user_four = Fabricate(:user)
+      user_five = Fabricate(:user)
+      post "/games/#{@game.id}/invitations", params: {
+        username: @user.username
+      }.to_json, headers: headers
+      post "/games/#{@game.id}/invitations", params: {
+        username: user_three.username
+      }.to_json, headers: headers
+      post "/games/#{@game.id}/invitations", params: {
+        username: user_four.username
+      }.to_json, headers: headers
+      post "/games/#{@game.id}/invitations", params: {
+        username: user_five.username
+      }.to_json, headers: headers
+      expect(JSON.parse(response.body)["error"])
+        .to eq(I18n.t("invitations.maximum_number_sent"))
+    end
   end
 
   describe "update game invitation" do

@@ -36,6 +36,7 @@ en:
     user_not_found: Could not find user with that username.
     user_invited: An invitation for this user already exists.
     game_started: Cannot accept invitation. Game already started.
+    maximum_number_sent: A maximum number of invitations have been sent.
   games:
     minimum_number_of_players: Cannot start a game with only one player.
     incorrect_nr_of_epidemic_cards: Incorrect number of epidemic cards provided.

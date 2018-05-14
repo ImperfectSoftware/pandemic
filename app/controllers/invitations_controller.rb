@@ -1,13 +1,14 @@
 class InvitationsController < ApplicationController
 
   def create
-    if create_error_message
-      render json: { error: create_error_message }
-      return
-    end
+    command = CreateInvitation.new(game: game, username: params[:username])
+    command.call
 
-    game = current_user.games.find_by(id: params[:game_id])
-    render json: game.invitations.create!(user: user, accepted: false)
+    if command.errors.present?
+      render json: { error: command.errors[:allowed].first }
+    else
+      render json: command.result
+    end
   end
 
   def update
@@ -35,15 +36,6 @@ class InvitationsController < ApplicationController
     @game ||= Game.find_by(id: params[:game_id])
   end
 
-  def user
-    @user ||= User.find_by(username: params[:username])
-  end
-
-  def create_error_message
-    return I18n.t("invitations.user_not_found") if !user
-    return I18n.t("invitations.user_invited") if user_invited?
-  end
-
   def update_error_message
     if game.started? && params[:accepted]
       return I18n.t("invitations.game_started")
@@ -52,9 +44,4 @@ class InvitationsController < ApplicationController
       return I18n.t("invitations.errors.missing_param")
     end
   end
-
-  def user_invited?
-    @user_invited ||= game.invitations.find_by(user: user).present?
-  end
-
 end
