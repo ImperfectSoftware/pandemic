@@ -33,7 +33,7 @@ class GamesController < ApplicationController
     get_player_order = GetPlayerOrder
       .new(player_hands: setup_player_cards.result.player_hands)
     get_player_order.call
-    game.update!(player_turn_ids: get_player_order.result)
+    game.update!(player_turn_ids: get_player_order.result, started: true)
     render json: game
   end
 end

@@ -72,6 +72,13 @@ RSpec.describe GamesController, type: :request do
         }.to_json, headers: headers
         expect(game.reload.player_turn_ids.present?).to be(true)
       end
+
+      it "sets game started to true" do
+        put "/games/#{game.id}", params: {
+          nr_of_epidemic_cards: 4
+        }.to_json, headers: headers
+        expect(game.reload.started?).to be(true)
+      end
     end
   end
 
