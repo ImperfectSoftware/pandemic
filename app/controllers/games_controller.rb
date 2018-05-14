@@ -33,7 +33,21 @@ class GamesController < ApplicationController
     get_player_order = GetPlayerOrder
       .new(player_hands: setup_player_cards.result.player_hands)
     get_player_order.call
-    game.update!(player_turn_ids: get_player_order.result, started: true)
+    setup_infection_cards = SetupInfectionCards.new
+    setup_infection_cards.call
+
+    setup_infection_cards.result.infections.each do |city_staticid, nr_of_cubes|
+      game.infections
+        .create!(quantity: nr_of_cubes, city_staticid: city_staticid)
+    end
+
+    game.update!(
+      player_turn_ids: get_player_order.result,
+      current_player_id: get_player_order.result.first,
+      started: true,
+      used_infection_card_city_staticids: setup_infection_cards.result.used_infection_card_city_staticids,
+      unused_infection_card_city_staticids: setup_infection_cards.result.unused_infection_card_city_staticids
+    )
     render json: game
   end
 end

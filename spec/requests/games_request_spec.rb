@@ -52,34 +52,49 @@ RSpec.describe GamesController, type: :request do
     end
 
     context "with valid params" do
-      before(:each) do
-        @player_one = game.players.find_by(user: @current_user)
-        @player_two = Fabricate(:player, game: game)
+      before(:all) do
+        @game = Fabricate(:game, owner: @current_user)
+        @player_one = @game.players.find_by(user: @current_user)
+        @player_two = Fabricate(:player, game: @game)
+        put "/games/#{@game.id}", params: {
+          nr_of_epidemic_cards: 4
+        }.to_json, headers: headers
       end
 
       it "assigns cards to players" do
-        put "/games/#{game.id}", params: {
-          nr_of_epidemic_cards: 4
-        }.to_json, headers: headers
         expect(@player_one.reload.cards_composite_ids.present?).to be(true)
         expect(@player_two.reload.cards_composite_ids.present?).to be(true)
       end
 
-
       it "sets game player turns" do
-        put "/games/#{game.id}", params: {
-          nr_of_epidemic_cards: 4
-        }.to_json, headers: headers
-        expect(game.reload.player_turn_ids.present?).to be(true)
+        expect(@game.reload.player_turn_ids.present?).to be(true)
       end
 
       it "sets game started to true" do
-        put "/games/#{game.id}", params: {
-          nr_of_epidemic_cards: 4
-        }.to_json, headers: headers
-        expect(game.reload.started?).to be(true)
+        expect(@game.reload.started?).to be(true)
+      end
+
+      it "sets game current player id" do
+        expect(@game.reload.current_player_id).to_not be_nil
+      end
+
+      it "creates start game infections" do
+        expect(@game.infections.where(quantity: 3).count).to eq(3)
+        expect(@game.infections.where(quantity: 2).count).to eq(3)
+        expect(@game.infections.where(quantity: 1).count).to eq(3)
+      end
+
+      it "stores used_infection_card_city_staticids" do
+        expect(@game.reload.used_infection_card_city_staticids.count).to eq(9)
+      end
+
+      it "stores unused_infection_card_city_staticids" do
+        expect(@game.reload.unused_infection_card_city_staticids.count).to eq(39)
+      end
+
+      it "returns a game object on update" do
+        expect(JSON.parse(response.body)["id"]).to eq(@game.id)
       end
     end
   end
-
 end

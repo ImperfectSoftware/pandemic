@@ -4,5 +4,6 @@ class Game < ApplicationRecord
   has_many :special_cards
   has_many :players
   has_many :research_stations
+  has_many :infections
   belongs_to :owner, class_name: "User"
 end
