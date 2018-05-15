@@ -10,6 +10,13 @@ RSpec.describe GamesController, type: :request do
     it "creates a game with started set to false" do
       post "/games", params: {}, headers: headers
       expect(JSON.parse(response.body)["id"]).to eq(Game.last.id)
+      expect(JSON.parse(response.body)["started"]).to eq(false)
+    end
+
+    it "creates a game with turn_nr set to 1" do
+      post "/games", params: {}, headers: headers
+      expect(JSON.parse(response.body)["id"]).to eq(Game.last.id)
+      expect(Game.last.turn_nr).to eq(1)
     end
 
     it "sets game owner's player current location to Atlanta" do
@@ -72,10 +79,6 @@ RSpec.describe GamesController, type: :request do
 
       it "sets game started to true" do
         expect(@game.reload.started?).to be(true)
-      end
-
-      it "sets game current player id" do
-        expect(@game.reload.current_player_id).to_not be_nil
       end
 
       it "creates start game infections" do

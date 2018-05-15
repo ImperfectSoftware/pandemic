@@ -2,7 +2,7 @@ class GamesController < ApplicationController
   attr_reader :game
 
   def create
-    game = current_user.games.create!(started: false)
+    game = current_user.games.create!(started: false, turn_nr: 1)
     player = game.players.create!(
       user: current_user,
       role: Role.all.sample.name,
@@ -43,7 +43,6 @@ class GamesController < ApplicationController
 
     game.update!(
       player_turn_ids: get_player_order.result,
-      current_player_id: get_player_order.result.first,
       started: true,
       used_infection_card_city_staticids: setup_infection_cards.result.used_infection_card_city_staticids,
       unused_infection_card_city_staticids: setup_infection_cards.result.unused_infection_card_city_staticids
