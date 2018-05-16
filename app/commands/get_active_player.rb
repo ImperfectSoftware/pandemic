@@ -1,4 +1,4 @@
-class GetCurrentPlayer
+class GetActivePlayer
   prepend SimpleCommand
 
   def initialize(player_ids:, turn_nr:)
