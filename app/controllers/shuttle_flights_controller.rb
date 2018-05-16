@@ -1,10 +1,7 @@
 class ShuttleFlightsController < PlayerActionsController
+  before_action :check_for_potential_errors, only: :create
 
   def create
-    if create_error_message
-      render json: { error: create_error_message }
-      return
-    end
     current_player.movements.create!(
       from_city_staticid: current_player.current_location_staticid,
       to_city_staticid: params[:city_staticid],
@@ -15,6 +12,10 @@ class ShuttleFlightsController < PlayerActionsController
   end
 
   private
+
+  def check_for_potential_errors
+    render json: { error: create_error_message } if create_error_message
+  end
 
   def create_error_message
     @create_error_message ||=
