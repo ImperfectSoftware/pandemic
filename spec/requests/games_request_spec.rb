@@ -19,6 +19,12 @@ RSpec.describe GamesController, type: :request do
       expect(Game.last.turn_nr).to eq(1)
     end
 
+    it "creates a game with actions_taken set to 0" do
+      post "/games", params: {}, headers: headers
+      expect(JSON.parse(response.body)["id"]).to eq(Game.last.id)
+      expect(Game.last.actions_taken).to eq(0)
+    end
+
     it "sets game owner's player current location to Atlanta" do
       post "/games", params: {}, headers: headers
       current_location_name = @current_user.players.find_by(game: Game.last)

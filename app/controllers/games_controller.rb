@@ -2,7 +2,11 @@ class GamesController < ApplicationController
   attr_reader :game
 
   def create
-    game = current_user.games.create!(started: false, turn_nr: 1)
+    game = current_user.games.create!(
+      started: false,
+      turn_nr: 1,
+      actions_taken: 0
+    )
     player = game.players.create!(
       user: current_user,
       role: Role.all.sample.name,
