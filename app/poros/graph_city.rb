@@ -29,6 +29,10 @@ class GraphCity
     end
   end
 
+  def neighbors_staticids
+    neighbors.map(&:staticid)
+  end
+
   def composite_id
     "city-#{staticid}"
   end
