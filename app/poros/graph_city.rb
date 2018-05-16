@@ -32,5 +32,4 @@ class GraphCity
   def composite_id
     "city-#{staticid}"
   end
-
 end
