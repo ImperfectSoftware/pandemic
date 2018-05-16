@@ -20,7 +20,7 @@ class ShuttleFlightsController < PlayerActionsController
     @create_error_message ||=
       begin
         if params[:city_staticid].blank?
-          I18n.t('shuttle_flights.city_staticid')
+          I18n.t('player_actions.city_staticid')
         elsif !departure_city_is_a_research_station?
           I18n.t('shuttle_flights.departure_city_not_a_research_station')
         elsif !destination_city_is_a_research_station?

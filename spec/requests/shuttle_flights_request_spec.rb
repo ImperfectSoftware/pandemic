@@ -16,7 +16,7 @@ RSpec.describe ShuttleFlightsController, type: :request do
     it 'returns error message if city_staticid is not passed in' do
       post "/games/#{@game.id}/shuttle_flights", params: {}, headers: headers
       expect(JSON.parse(response.body)["error"])
-        .to eq(I18n.t('shuttle_flights.city_staticid'))
+        .to eq(I18n.t('player_actions.city_staticid'))
     end
 
     it 'returns error if player is not currently at a research station' do
