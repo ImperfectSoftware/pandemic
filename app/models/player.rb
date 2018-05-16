@@ -7,4 +7,8 @@ class Player < ApplicationRecord
   def current_location
     GraphCity.find(current_location_staticid)
   end
+
+  def has_too_many_cards?
+    PlayerCard.city_cards(cards_composite_ids).count == 8
+  end
 end
