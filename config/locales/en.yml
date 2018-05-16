@@ -43,3 +43,5 @@ en:
     already_started: This game has already started.
   authorization:
     create_city_not_allowed: This user cannot create city instances.
+  player_actions:
+    not_your_turn: This action is not allowed. It's not your turn.
