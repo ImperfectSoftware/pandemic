@@ -1,32 +1,8 @@
-class ShuttleFlightsController < ApplicationController
-  def create
-    if current_player != active_player
-      render json: { error: I18n.t('player_actions.not_your_turn') }
-      return
-    end
-    if game.no_actions_left?
-      render json: { error: I18n.t('player_actions.no_actions_left') }
-      return
-    end
-    if current_player.has_too_many_cards?
-      render json: { error: I18n.t('player_actions.discard_player_city_card') }
-      return
-    end
+class ShuttleFlightsController < PlayerActionsController
 
-    if params[:city_staticid].blank?
-      render json: { error: I18n.t('shuttle_flights.city_staticid') }
-      return
-    end
-    if !departure_city_is_a_research_station?
-      render json: {
-        error: I18n.t('shuttle_flights.departure_city_not_a_research_station')
-      }
-      return
-    end
-    if !destination_city_is_a_research_station?
-      render json: {
-        error: I18n.t('shuttle_flights.destination_city_not_a_research_station')
-      }
+  def create
+    if create_error_message
+      render json: { error: create_error_message }
       return
     end
     current_player.movements.create!(
@@ -40,23 +16,17 @@ class ShuttleFlightsController < ApplicationController
 
   private
 
-  def current_player
-    @current_player ||= current_user.players.find_by(game: game)
-  end
-
-  def active_player
-    @active_player ||= game.players.find_by(id: active_player_id)
-  end
-
-  def game
-    @game ||= current_user.games.find_by(id: params[:game_id])
-  end
-
-  def active_player_id
-    GetActivePlayer.new(
-      player_ids: game.player_turn_ids,
-      turn_nr: game.turn_nr
-    ).call.result
+  def create_error_message
+    @create_error_message ||=
+      begin
+        if params[:city_staticid].blank?
+          I18n.t('shuttle_flights.city_staticid')
+        elsif !departure_city_is_a_research_station?
+          I18n.t('shuttle_flights.departure_city_not_a_research_station')
+        elsif !destination_city_is_a_research_station?
+          I18n.t('shuttle_flights.destination_city_not_a_research_station')
+        end
+      end
   end
 
   def departure_city_is_a_research_station?
@@ -70,5 +40,4 @@ class ShuttleFlightsController < ApplicationController
       city_staticid: params[:city_staticid]
     )
   end
-
 end
