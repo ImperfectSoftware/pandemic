@@ -1,10 +1,15 @@
 class PlayerActionsController < ApplicationController
-  before_action :ensure_player_can_act
+  before_action :ensure_player_can_act, only: :create
+  before_action :check_for_potential_errors, only: :create
 
   private
 
   def ensure_player_can_act
     render json: { error: error_message } if error_message
+  end
+
+  def check_for_potential_errors
+    render json: { error: create_error_message } if create_error_message
   end
 
   def error_message
@@ -37,5 +42,10 @@ class PlayerActionsController < ApplicationController
 
   def active_player
     @active_player ||= game.players.find_by(id: active_player_id)
+  end
+
+  def create_error_message
+    # implement method in subclass
+    raise NotImplementedError
   end
 end

@@ -1,5 +1,4 @@
 class ShuttleFlightsController < PlayerActionsController
-  before_action :check_for_potential_errors, only: :create
 
   def create
     current_player.movements.create!(
@@ -12,10 +11,6 @@ class ShuttleFlightsController < PlayerActionsController
   end
 
   private
-
-  def check_for_potential_errors
-    render json: { error: create_error_message } if create_error_message
-  end
 
   def create_error_message
     @create_error_message ||=
