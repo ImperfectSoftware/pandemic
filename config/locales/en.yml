@@ -48,6 +48,7 @@ en:
     no_actions_left: You have no player actions left.
     discard_player_city_card: You can hold a maximum of 7 city cards. Please discard card.
     city_staticid: A city staticid must be provided for this action.
+    city_card_composite_id: A city card composite id must be provided for this action.
   shuttle_flights:
     departure_city_not_a_research_station: The departure location is not a research station.
     destination_city_not_a_research_station: The destination location is not a research station.
