@@ -3,7 +3,7 @@ class WorldGraph
     @cities ||= [].tap do |cities|
       # Instantiate cities
       CSV.foreach("./db/cities.csv", headers: true) do |row|
-        cities << GraphCity.new(
+        cities << City.new(
           name: row[1].strip,
           color: row[4].strip,
           staticid: row[0],

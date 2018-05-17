@@ -4,7 +4,7 @@ class PlayerCard
     parts = composite_id.split('-')
     case parts.first
     when 'city'
-      GraphCity.find(parts.last)
+      City.find(parts.last)
     when 'special'
       SpecialCard.find(parts.last)
     end
@@ -14,7 +14,7 @@ class PlayerCard
     composite_ids.map do |composite_id|
       PlayerCard.find_by_composite_id(composite_id)
     end.select do |card|
-      card.is_a?(GraphCity)
+      card.is_a?(City)
     end
   end
 

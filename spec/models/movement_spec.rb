@@ -7,11 +7,11 @@ RSpec.describe Movement, type: :model do
 
   it "knows from location" do
     expect(movement.from_location)
-      .to eq(GraphCity.find(movement.from_city_staticid))
+      .to eq(City.find(movement.from_city_staticid))
   end
 
   it "knows to location" do
     expect(movement.to_location)
-      .to eq(GraphCity.find(movement.to_city_staticid))
+      .to eq(City.find(movement.to_city_staticid))
   end
 end

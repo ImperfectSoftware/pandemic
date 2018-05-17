@@ -23,7 +23,7 @@ class CharterFlightsController < PlayerActionsController
   end
 
   def player_card
-    @player_card ||= GraphCity
+    @player_card ||= City
       .find_from_composite_id(params[:player_card_composite_id])
   end
 

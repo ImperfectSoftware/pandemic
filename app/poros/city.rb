@@ -1,4 +1,4 @@
-class GraphCity
+class City
 
   def self.find(staticid)
     WorldGraph.cities.find do |city|

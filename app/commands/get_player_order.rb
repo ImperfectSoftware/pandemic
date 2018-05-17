@@ -10,7 +10,7 @@ class GetPlayerOrder
       hand.map do |composite_id|
         PlayerCard.find_by_composite_id(composite_id)
       end.select do |card|
-        card.is_a?(GraphCity)
+        card.is_a?(City)
       end.map(&:population).max || 0
     end.map(&:first)
   end

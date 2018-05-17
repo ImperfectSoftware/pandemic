@@ -5,7 +5,7 @@ class Player < ApplicationRecord
   belongs_to :user
 
   def current_location
-    GraphCity.find(current_location_staticid)
+    City.find(current_location_staticid)
   end
 
   def has_too_many_cards?
@@ -15,7 +15,7 @@ class Player < ApplicationRecord
   def player_city_card_from_inventory(composite_id:)
     return unless cards_composite_ids.include?(composite_id)
     card = PlayerCard.find_by_composite_id(composite_id)
-    return unless card.is_a?(GraphCity)
+    return unless card.is_a?(City)
     card
   end
 
