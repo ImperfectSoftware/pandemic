@@ -14,4 +14,32 @@ RSpec.describe Player, type: :model do
   it "knows player's current_location" do
     expect(@player.current_location).to be(WorldGraph.cities.first)
   end
+
+  it "finds a player city card by composite id" do
+    composite_id = WorldGraph.cities.first.composite_id
+    @player.cards_composite_ids = [composite_id]
+    expect(@player.find_player_city_card(composite_id: composite_id))
+      .to eq(PlayerCard.find_by_composite_id(composite_id))
+  end
+
+  it "returns nil if composite id is for an event card" do
+    composite_id = SpecialCard.events.first.composite_id
+    @player.cards_composite_ids = [composite_id]
+    expect(@player.find_player_city_card(composite_id: composite_id))
+      .to be_nil
+  end
+
+  it "finds a player event card by composite id" do
+    composite_id = SpecialCard.events.first.composite_id
+    @player.cards_composite_ids = [composite_id]
+    expect(@player.find_player_event_card(composite_id: composite_id))
+      .to eq(PlayerCard.find_by_composite_id(composite_id))
+  end
+
+  it "returns nil if composite id is for an event card" do
+    composite_id = WorldGraph.cities.first.composite_id
+    @player.cards_composite_ids = [composite_id]
+    expect(@player.find_player_event_card(composite_id: composite_id))
+      .to be_nil
+  end
 end
