@@ -17,7 +17,7 @@ class DirectFlightsController < PlayerActionsController
   end
 
   def player_card
-    @player_card ||= current_player.find_player_city_card(
+    @player_card ||= current_player.player_city_card_from_inventory(
       composite_id: params[:player_card_composite_id].to_s
     )
   end

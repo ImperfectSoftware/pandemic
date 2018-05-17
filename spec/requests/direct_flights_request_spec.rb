@@ -41,7 +41,7 @@ RSpec.describe DirectFlightsController, type: :request do
       expect(Movement.last.to_city_staticid).to eq(city.staticid)
     end
 
-    it "sets movements from location to the player's current location" do
+    it "sets movement's from location to the player's current location" do
       post "/games/#{game.id}/direct_flights", params: {
         player_card_composite_id: composite_id
       }.to_json, headers: headers
@@ -60,8 +60,7 @@ RSpec.describe DirectFlightsController, type: :request do
       post "/games/#{game.id}/direct_flights", params: {
         player_card_composite_id: composite_id
       }.to_json, headers: headers
-      expect(current_player.reload.current_location)
-        .to eq(WorldGraph.cities[10])
+      expect(current_player.reload.current_location).to eq(city)
     end
 
     it "increments actions taken" do
