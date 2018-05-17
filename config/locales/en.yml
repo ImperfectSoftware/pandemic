@@ -52,5 +52,7 @@ en:
   shuttle_flights:
     departure_city_not_a_research_station: The departure location is not a research station.
     destination_city_not_a_research_station: The destination location is not a research station.
+  charter_flights:
+    player_must_own_card: The player does not own the city card at the current location.
   line_movements:
     destination_is_not_a_neighbor: Destination city is not a neighbor.

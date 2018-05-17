@@ -4,6 +4,7 @@ Rails.application.routes.draw do
     resources :invitations, only: [:create, :update, :destroy], format: :json
     resources :shuttle_flights, only: :create, format: :json
     resources :direct_flights, only: :create, format: :json
+    resources :charter_flights, only: :create, format: :json
     resources :line_movements, only: :create, format: :json
   end
   post 'authenticate', to: 'authentication#authenticate'

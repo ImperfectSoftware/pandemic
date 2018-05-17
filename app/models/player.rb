@@ -12,14 +12,14 @@ class Player < ApplicationRecord
     PlayerCard.city_cards(cards_composite_ids).count == 8
   end
 
-  def find_player_city_card(composite_id:)
+  def player_city_card_from_inventory(composite_id:)
     return unless cards_composite_ids.include?(composite_id)
     card = PlayerCard.find_by_composite_id(composite_id)
     return unless card.is_a?(GraphCity)
     card
   end
 
-  def find_player_event_card(composite_id:)
+  def player_event_card_from_inventory(composite_id:)
     return unless cards_composite_ids.include?(composite_id)
     card = PlayerCard.find_by_composite_id(composite_id)
     return unless card.is_a?(SpecialCard)

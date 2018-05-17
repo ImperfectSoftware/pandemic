@@ -12,6 +12,12 @@ class GraphCity
     end
   end
 
+  def self.find_from_composite_id(composite_id)
+    WorldGraph.cities.find do |city|
+      city.composite_id == composite_id
+    end
+  end
+
   attr_reader :neighbors_names, :name, :color, :staticid, :population, :density
 
   def initialize(staticid:, name:, color:, population:, density:)
