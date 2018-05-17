@@ -28,7 +28,8 @@ RSpec.describe DirectFlightsController, type: :request do
   end
 
   context "with valid request" do
-    let(:composite_id) { WorldGraph.cities[10].composite_id }
+    let(:city) { WorldGraph.cities[10] }
+    let(:composite_id) { city.composite_id }
     before(:each) do
       current_player.update!(cards_composite_ids: [composite_id])
     end
@@ -37,7 +38,7 @@ RSpec.describe DirectFlightsController, type: :request do
       post "/games/#{game.id}/direct_flights", params: {
         player_card_composite_id: composite_id
       }.to_json, headers: headers
-      expect(Movement.last.to_city_staticid).to eq(composite_id)
+      expect(Movement.last.to_city_staticid).to eq(city.staticid)
     end
 
     it "sets movements from location to the player's current location" do
