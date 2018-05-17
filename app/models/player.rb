@@ -13,12 +13,14 @@ class Player < ApplicationRecord
   end
 
   def find_player_city_card(composite_id:)
+    return unless cards_composite_ids.include?(composite_id)
     card = PlayerCard.find_by_composite_id(composite_id)
     return unless card.is_a?(GraphCity)
     card
   end
 
   def find_player_event_card(composite_id:)
+    return unless cards_composite_ids.include?(composite_id)
     card = PlayerCard.find_by_composite_id(composite_id)
     return unless card.is_a?(SpecialCard)
     card

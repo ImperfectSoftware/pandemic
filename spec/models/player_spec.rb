@@ -29,6 +29,12 @@ RSpec.describe Player, type: :model do
       .to be_nil
   end
 
+  it "returns nil if city player card does not belong to the player" do
+    composite_id = WorldGraph.cities.first.composite_id
+    expect(@player.find_player_city_card(composite_id: composite_id))
+      .to be_nil
+  end
+
   it "finds a player event card by composite id" do
     composite_id = SpecialCard.events.first.composite_id
     @player.cards_composite_ids = [composite_id]
@@ -39,6 +45,12 @@ RSpec.describe Player, type: :model do
   it "returns nil if composite id is for an event card" do
     composite_id = WorldGraph.cities.first.composite_id
     @player.cards_composite_ids = [composite_id]
+    expect(@player.find_player_event_card(composite_id: composite_id))
+      .to be_nil
+  end
+
+  it "returns nil if special player card does not belong to the player" do
+    composite_id = SpecialCard.events.first.composite_id
     expect(@player.find_player_event_card(composite_id: composite_id))
       .to be_nil
   end
