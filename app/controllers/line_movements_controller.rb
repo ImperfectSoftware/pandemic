@@ -1,13 +1,12 @@
 class LineMovementsController < PlayerActionsController
 
   def create
-    current_player.movements.create!(
-      from_city_staticid: current_player.current_location_staticid,
-      to_city_staticid: params[:city_staticid],
-      by_dispatcher: false
-    )
-    current_player.update!(current_location_staticid: params[:city_staticid])
-    game.increment!(:actions_taken)
+    CreateMovement.new(
+      game: game,
+      player: current_player,
+      from: current_player.current_location_staticid,
+      to: params[:city_staticid]
+    ).call
   end
 
   private

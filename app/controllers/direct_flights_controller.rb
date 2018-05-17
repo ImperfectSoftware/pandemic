@@ -1,13 +1,12 @@
 class DirectFlightsController < PlayerActionsController
 
   def create
-    current_player.movements.create!(
-      from_city_staticid: current_player.current_location_staticid,
-      to_city_staticid: player_card.composite_id,
-      by_dispatcher: false
-    )
-    current_player.update!(current_location_staticid: player_card.staticid)
-    game.increment!(:actions_taken)
+    CreateMovement.new(
+      game: game,
+      player: current_player,
+      from: current_player.current_location_staticid,
+      to: player_card.staticid
+    ).call
     current_player.update!(cards_composite_ids: remaining_player_cards)
   end
 
