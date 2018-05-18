@@ -44,7 +44,7 @@ en:
   authorization:
     create_city_not_allowed: This user cannot create city instances.
   player_actions:
-    not_your_turn: This action is not allowed. It's not your turn.
+    bad_turn: This action is not allowed on this turn.
     no_actions_left: You have no player actions left.
     discard_player_city_card: You can hold a maximum of 7 city cards. Please discard card.
     city_staticid: A city staticid must be provided for this action.

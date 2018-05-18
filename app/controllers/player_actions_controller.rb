@@ -16,7 +16,7 @@ class PlayerActionsController < ApplicationController
     @error_message ||=
       begin
         if current_player != active_player
-          I18n.t('player_actions.not_your_turn')
+          I18n.t('player_actions.bad_turn')
         elsif game.no_actions_left?
           I18n.t('player_actions.no_actions_left')
         elsif current_player.has_too_many_cards?

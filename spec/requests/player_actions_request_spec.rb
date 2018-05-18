@@ -16,7 +16,7 @@ RSpec.describe PlayerActionsController, type: :request do
   it "returns error message if it's not the current player's turn" do
     @game.update(turn_nr: 2)
     post "/games/#{@game.id}/shuttle_flights", params: {}, headers: headers
-    expect(error).to eq(I18n.t('player_actions.not_your_turn'))
+    expect(error).to eq(I18n.t('player_actions.bad_turn'))
   end
 
   it "returns error message if the player has no actions left" do
