@@ -2,6 +2,7 @@ require 'rails_helper'
 
 RSpec.describe PlayerActionsController, type: :request do
   include AuthHelper
+  include ResponseHelpers
 
   before(:context) do
     @current_user = Fabricate(:user, password: '12341234')
@@ -15,21 +16,18 @@ RSpec.describe PlayerActionsController, type: :request do
   it "returns error message if it's not the current player's turn" do
     @game.update(turn_nr: 2)
     post "/games/#{@game.id}/shuttle_flights", params: {}, headers: headers
-    expect(JSON.parse(response.body)['error'])
-      .to eq(I18n.t('player_actions.not_your_turn'))
+    expect(error).to eq(I18n.t('player_actions.not_your_turn'))
   end
 
   it "returns error message if the player has no actions left" do
     @game.update(actions_taken: 4)
     post "/games/#{@game.id}/shuttle_flights", params: {}, headers: headers
-    expect(JSON.parse(response.body)['error'])
-      .to eq(I18n.t('player_actions.no_actions_left'))
+    expect(error).to eq(I18n.t('player_actions.no_actions_left'))
   end
 
   it 'returns error message if any player has more than 7 city cards' do
     @current_player.update(cards_composite_ids: WorldGraph.composite_ids[0,8])
     post "/games/#{@game.id}/shuttle_flights", params: {}, headers: headers
-    expect(JSON.parse(response.body)['error'])
-      .to eq(I18n.t('player_actions.discard_player_city_card'))
+    expect(error).to eq(I18n.t('player_actions.discard_player_city_card'))
   end
 end

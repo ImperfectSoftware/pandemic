@@ -2,6 +2,7 @@ require 'rails_helper'
 
 RSpec.describe InvitationsController, type: :request do
   include AuthHelper
+  include ResponseHelpers
 
   before(:context) do
     @user = Fabricate(:user)
@@ -14,16 +15,14 @@ RSpec.describe InvitationsController, type: :request do
       post "/games/10/invitations", params: {
         username: "unregistered user"
       }.to_json, headers: headers
-      expect(JSON.parse(response.body)["error"])
-        .to eq(I18n.t("invitations.user_not_found"))
+      expect(error).to eq(I18n.t("invitations.user_not_found"))
     end
 
     it "creates an invite for a game" do
       post "/games/#{@game.id}/invitations", params: {
         username: @user.username
       }.to_json, headers: headers
-      expect(JSON.parse(response.body)["id"])
-        .to eq(Invitation.last.id)
+      expect(body["id"]).to eq(Invitation.last.id)
     end
 
     it "errors out if attempting to create a second invite for the same user" do
@@ -33,8 +32,7 @@ RSpec.describe InvitationsController, type: :request do
       post "/games/#{@game.id}/invitations", params: {
         username: @user.username
       }.to_json, headers: headers
-      expect(JSON.parse(response.body)["error"])
-        .to eq(I18n.t("invitations.user_invited"))
+      expect(error).to eq(I18n.t("invitations.user_invited"))
     end
 
     it "errors out if 3 game invitations already exist" do
@@ -53,8 +51,7 @@ RSpec.describe InvitationsController, type: :request do
       post "/games/#{@game.id}/invitations", params: {
         username: user_five.username
       }.to_json, headers: headers
-      expect(JSON.parse(response.body)["error"])
-        .to eq(I18n.t("invitations.maximum_number_sent"))
+      expect(error).to eq(I18n.t("invitations.maximum_number_sent"))
     end
   end
 
@@ -121,8 +118,7 @@ RSpec.describe InvitationsController, type: :request do
         put "/games/#{@game.id}/invitations/#{invitation.id}", params: {
           accepted: true
         }.to_json, headers: headers
-        expect(JSON.parse(response.body)["error"])
-          .to eq(I18n.t("invitations.game_started"))
+        expect(error).to eq(I18n.t("invitations.game_started"))
       end
 
       it 'does not create a player on invitation acceptance' do
@@ -151,8 +147,7 @@ RSpec.describe InvitationsController, type: :request do
       it 'returns error message' do
         put "/games/#{@game.id}/invitations/#{invitation.id}",
           params: {}.to_json, headers: headers
-        expect(JSON.parse(response.body)["error"])
-          .to eq(I18n.t("invitations.errors.missing_param"))
+        expect(error).to eq(I18n.t("invitations.errors.missing_param"))
       end
     end
   end
@@ -164,8 +159,7 @@ RSpec.describe InvitationsController, type: :request do
         invitation = Fabricate(:accepted_invitation, game: @game, user: @user)
         delete "/games/#{@game.id}/invitations/#{invitation.id}",
           params: {}, headers: headers
-        expect(JSON.parse(response.body)["error"])
-          .to eq(I18n.t("invitations.game_started"))
+        expect(error).to eq(I18n.t("invitations.game_started"))
       end
     end
 

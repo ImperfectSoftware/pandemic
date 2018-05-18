@@ -2,6 +2,7 @@ require 'rails_helper'
 
 RSpec.describe LineMovementsController, type: :request do
   include AuthHelper
+  include ResponseHelpers
 
   before(:context) do
     @current_user = Fabricate(:user, password: '12341234')
@@ -18,16 +19,14 @@ RSpec.describe LineMovementsController, type: :request do
 
   it 'returns error message if city_staticid is not passed in' do
     post "/games/#{@game.id}/line_movements", params: {}, headers: headers
-    expect(JSON.parse(response.body)["error"])
-      .to eq(I18n.t('player_actions.city_staticid'))
+    expect(error).to eq(I18n.t('player_actions.city_staticid'))
   end
 
   it 'returns an error if the destination city is not a neighboring city' do
     post "/games/#{@game.id}/line_movements", params: {
       city_staticid: WorldGraph.cities[10].staticid
     }.to_json, headers: headers
-    expect(JSON.parse(response.body)["error"])
-      .to eq(I18n.t('line_movements.destination_is_not_a_neighbor'))
+    expect(error).to eq(I18n.t('line_movements.destination_is_not_a_neighbor'))
   end
 
   it 'creates a movement for current player' do

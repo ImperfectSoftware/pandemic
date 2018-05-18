@@ -2,6 +2,8 @@ require 'rails_helper'
 
 RSpec.describe GamesController, type: :request do
   include AuthHelper
+  include ResponseHelpers
+
   before(:context) do
     @current_user = Fabricate(:user, password: '12341234')
   end
@@ -9,19 +11,19 @@ RSpec.describe GamesController, type: :request do
   describe "create game" do
     it "creates a game with started set to false" do
       post "/games", params: {}, headers: headers
-      expect(JSON.parse(response.body)["id"]).to eq(Game.last.id)
-      expect(JSON.parse(response.body)["started"]).to eq(false)
+      expect(body["id"]).to eq(Game.last.id)
+      expect(body["started"]).to eq(false)
     end
 
     it "creates a game with turn_nr set to 1" do
       post "/games", params: {}, headers: headers
-      expect(JSON.parse(response.body)["id"]).to eq(Game.last.id)
+      expect(body["id"]).to eq(Game.last.id)
       expect(Game.last.turn_nr).to eq(1)
     end
 
     it "creates a game with actions_taken set to 0" do
       post "/games", params: {}, headers: headers
-      expect(JSON.parse(response.body)["id"]).to eq(Game.last.id)
+      expect(body["id"]).to eq(Game.last.id)
       expect(Game.last.actions_taken).to eq(0)
     end
 
@@ -46,22 +48,19 @@ RSpec.describe GamesController, type: :request do
       put "/games/#{game.id}", params: {
         nr_of_epidemic_cards: 4
       }.to_json, headers: headers
-      expect(JSON.parse(response.body)["error"])
-        .to eq(I18n.t("games.minimum_number_of_players"))
+      expect(error).to eq(I18n.t("games.minimum_number_of_players"))
     end
 
     it "errors out if number of epidemic cards is not provided" do
       player_two = Fabricate(:player, game: game)
       put "/games/#{game.id}", params: {}, headers: headers
-      expect(JSON.parse(response.body)["error"])
-        .to eq(I18n.t("games.incorrect_nr_of_epidemic_cards"))
+      expect(error).to eq(I18n.t("games.incorrect_nr_of_epidemic_cards"))
     end
 
     it "errors out if game has already started" do
       game.update!(started: true)
       put "/games/#{game.id}", params: {}, headers: headers
-      expect(JSON.parse(response.body)["error"])
-        .to eq(I18n.t("games.already_started"))
+      expect(error).to eq(I18n.t("games.already_started"))
     end
 
     context "with valid params" do
@@ -102,7 +101,7 @@ RSpec.describe GamesController, type: :request do
       end
 
       it "returns a game object on update" do
-        expect(JSON.parse(response.body)["id"]).to eq(@game.id)
+        expect(body["id"]).to eq(@game.id)
       end
     end
   end

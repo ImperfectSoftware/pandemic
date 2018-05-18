@@ -2,6 +2,7 @@ require 'rails_helper'
 
 RSpec.describe DirectFlightsController, type: :request do
   include AuthHelper
+  include ResponseHelpers
 
   let(:current_user) { Fabricate(:user, password: '12341234') }
   let(:game) { Fabricate(:game, owner: current_user) }
@@ -15,16 +16,14 @@ RSpec.describe DirectFlightsController, type: :request do
 
   it "returns an error if no player card passed in" do
     post "/games/#{game.id}/direct_flights", params: {}, headers: headers
-    expect(JSON.parse(response.body)['error'])
-      .to eq(I18n.t("player_actions.city_card_composite_id"))
+    expect(error).to eq(I18n.t("player_actions.city_card_composite_id"))
   end
 
   it "returns an error if a special player card is passed in" do
     post "/games/#{game.id}/direct_flights", params: {
       player_card_composite_id: SpecialCard.events.first.composite_id
     }.to_json, headers: headers
-    expect(JSON.parse(response.body)['error'])
-      .to eq(I18n.t("player_actions.city_card_composite_id"))
+    expect(error).to eq(I18n.t("player_actions.city_card_composite_id"))
   end
 
   context "with valid request" do

@@ -50,8 +50,7 @@ en:
     city_staticid: A city staticid must be provided for this action.
     city_card_composite_id: A city card composite id must be provided for this action.
   shuttle_flights:
-    departure_city_not_a_research_station: The departure location is not a research station.
-    destination_city_not_a_research_station: The destination location is not a research station.
+    city_with_no_station: There is no research station in %{name}.
   charter_flights:
     player_must_own_card: The player does not own the city card at the current location.
   line_movements:

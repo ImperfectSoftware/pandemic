@@ -17,9 +17,15 @@ class ShuttleFlightsController < PlayerActionsController
         if params[:city_staticid].blank?
           I18n.t('player_actions.city_staticid')
         elsif !departure_city_is_a_research_station?
-          I18n.t('shuttle_flights.departure_city_not_a_research_station')
+          I18n.t(
+            'shuttle_flights.city_with_no_station',
+            name: departure_city.name
+          )
         elsif !destination_city_is_a_research_station?
-          I18n.t('shuttle_flights.destination_city_not_a_research_station')
+          I18n.t(
+            'shuttle_flights.city_with_no_station',
+            name: destination_city.name
+          )
         end
       end
   end
@@ -34,5 +40,13 @@ class ShuttleFlightsController < PlayerActionsController
     game.has_research_station_at?(
       city_staticid: params[:city_staticid]
     )
+  end
+
+  def destination_city
+    @destination_city ||= City.find(params[:city_staticid])
+  end
+
+  def departure_city
+    current_player.current_location
   end
 end

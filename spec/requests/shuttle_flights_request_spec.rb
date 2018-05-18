@@ -2,6 +2,7 @@ require 'rails_helper'
 
 RSpec.describe ShuttleFlightsController, type: :request do
   include AuthHelper
+  include ResponseHelpers
 
   context "with_errors" do
     before(:context) do
@@ -15,16 +16,17 @@ RSpec.describe ShuttleFlightsController, type: :request do
 
     it 'returns error message if city_staticid is not passed in' do
       post "/games/#{@game.id}/shuttle_flights", params: {}, headers: headers
-      expect(JSON.parse(response.body)["error"])
-        .to eq(I18n.t('player_actions.city_staticid'))
+      expect(error).to eq(I18n.t('player_actions.city_staticid'))
     end
 
     it 'returns error if player is not currently at a research station' do
       post "/games/#{@game.id}/shuttle_flights", params: {
         city_staticid: WorldGraph.cities.first.staticid
       }.to_json, headers: headers
-      expect(JSON.parse(response.body)["error"])
-        .to eq(I18n.t('shuttle_flights.departure_city_not_a_research_station'))
+      expect(error).to eq(I18n.t(
+        'shuttle_flights.city_with_no_station',
+        name: WorldGraph.cities.first.name
+      ))
     end
 
     it 'returns error if player is not going to a research station' do
@@ -33,8 +35,10 @@ RSpec.describe ShuttleFlightsController, type: :request do
       post "/games/#{@game.id}/shuttle_flights", params: {
         city_staticid: WorldGraph.cities.second.staticid
       }.to_json, headers: headers
-      expect(JSON.parse(response.body)["error"])
-        .to eq(I18n.t('shuttle_flights.destination_city_not_a_research_station'))
+      expect(error).to eq(I18n.t(
+        'shuttle_flights.city_with_no_station',
+        name: WorldGraph.cities.second.name
+      ))
     end
   end
 

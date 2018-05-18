@@ -120,3 +120,13 @@ module AuthHelper
   end
 
 end
+
+module ResponseHelpers
+  def body
+    JSON.parse(response.body)
+  end
+
+  def error
+    body['error']
+  end
+end
