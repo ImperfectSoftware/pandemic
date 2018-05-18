@@ -3,6 +3,10 @@ class Player < ApplicationRecord
   has_many :movements
   belongs_to :game
   belongs_to :user
+  has_many :city_offers_made, foreign_key: "from_player_id",
+    class_name: "ShareKnowledge"
+  has_many :city_offers_received, foreign_key: "to_player_id",
+    class_name: "ShareKnowledge"
 
   def current_location
     City.find(current_location_staticid)
