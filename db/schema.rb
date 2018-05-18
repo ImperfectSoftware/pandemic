@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180515123356) do
+ActiveRecord::Schema.define(version: 20180518125015) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -85,7 +85,7 @@ ActiveRecord::Schema.define(version: 20180515123356) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "share_knowledges", force: :cascade do |t|
+  create_table "share_cards", force: :cascade do |t|
     t.integer "from_player_id"
     t.integer "to_player_id"
     t.boolean "accepted"

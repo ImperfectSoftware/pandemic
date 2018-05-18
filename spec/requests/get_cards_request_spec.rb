@@ -35,28 +35,28 @@ RSpec.describe GetCardsController, type: :request do
       post "/games/#{game.id}/get_cards", params: {
         player_id: player.id
       }.to_json, headers: headers
-      expect(ShareKnowledge.last.to_player_id).to eq(current_player.id)
+      expect(ShareCard.last.to_player_id).to eq(current_player.id)
     end
 
     it "stores the other player's id in the from_player_id field" do
       post "/games/#{game.id}/get_cards", params: {
         player_id: player.id
       }.to_json, headers: headers
-      expect(ShareKnowledge.last.from_player_id).to eq(player.id)
+      expect(ShareCard.last.from_player_id).to eq(player.id)
     end
 
     it "sets accepted to false" do
       post "/games/#{game.id}/get_cards", params: {
         player_id: player.id
       }.to_json, headers: headers
-      expect(ShareKnowledge.last.accepted).to be(false)
+      expect(ShareCard.last.accepted).to be(false)
     end
 
     it "stores the card composite id" do
       post "/games/#{game.id}/get_cards", params: {
         player_id: player.id
       }.to_json, headers: headers
-      expect(ShareKnowledge.last.card_composite_id)
+      expect(ShareCard.last.card_composite_id)
         .to eq(player.current_location.composite_id)
     end
   end

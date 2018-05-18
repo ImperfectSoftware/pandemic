@@ -1,6 +1,6 @@
 class PlayerActionsController < ApplicationController
   before_action :ensure_player_can_act, only: :create
-  before_action :check_for_potential_errors, only: :create
+  before_action :check_for_potential_create_errors, only: :create
 
   private
 
@@ -8,7 +8,7 @@ class PlayerActionsController < ApplicationController
     render json: { error: error_message } if error_message
   end
 
-  def check_for_potential_errors
+  def check_for_potential_create_errors
     render json: { error: create_error_message } if create_error_message
   end
 

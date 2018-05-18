@@ -1,3 +1,3 @@
-Fabricator(:share_knowledge) do
+Fabricator(:share_card) do
   accepted            false
 end

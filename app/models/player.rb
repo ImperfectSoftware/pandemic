@@ -4,9 +4,9 @@ class Player < ApplicationRecord
   belongs_to :game
   belongs_to :user
   has_many :city_offers_made, foreign_key: "from_player_id",
-    class_name: "ShareKnowledge"
+    class_name: "ShareCard"
   has_many :city_offers_received, foreign_key: "to_player_id",
-    class_name: "ShareKnowledge"
+    class_name: "ShareCard"
 
   def current_location
     City.find(current_location_staticid)
