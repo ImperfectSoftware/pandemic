@@ -31,12 +31,6 @@ RSpec.describe GetCardsController, type: :request do
   end
 
   context "with valid request" do
-    before(:each) do
-      player.update!(
-        cards_composite_ids: [player.current_location.composite_id]
-      )
-    end
-
     it "stores the current player's id in the to_player_id field" do
       post "/games/#{game.id}/get_cards", params: {
         player_id: player.id
