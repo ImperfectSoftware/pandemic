@@ -4,7 +4,7 @@ class GiveCardsController < PlayerActionsController
     current_player.city_offers_made.create!(
       to_player: other_player,
       accepted: false,
-      card_composite_id: player_card.composite_id
+      city_staticid: player_card.staticid
     )
   end
 

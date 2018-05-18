@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180518125015) do
+ActiveRecord::Schema.define(version: 20180518132500) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -89,7 +89,7 @@ ActiveRecord::Schema.define(version: 20180518125015) do
     t.integer "from_player_id"
     t.integer "to_player_id"
     t.boolean "accepted"
-    t.string "card_composite_id"
+    t.string "city_staticid"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
