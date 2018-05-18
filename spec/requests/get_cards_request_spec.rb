@@ -19,7 +19,7 @@ RSpec.describe GetCardsController, type: :request do
     post "/games/#{game.id}/get_cards", params: {
       player_id: player.id
     }.to_json, headers: headers
-    expect(error).to eq(I18n.t("get_cards.not_the_same_location"))
+    expect(error).to eq(I18n.t("share_cards.not_the_same_location"))
   end
 
   it "returns an error if the other player is not in possession of the card" do
@@ -27,7 +27,7 @@ RSpec.describe GetCardsController, type: :request do
     post "/games/#{game.id}/get_cards", params: {
       player_id: player.id
     }.to_json, headers: headers
-    expect(error).to eq(I18n.t("get_cards.not_an_owner"))
+    expect(error).to eq(I18n.t("share_cards.not_an_owner"))
   end
 
   context "with valid request" do

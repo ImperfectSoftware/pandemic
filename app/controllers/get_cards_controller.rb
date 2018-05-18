@@ -14,9 +14,9 @@ class GetCardsController < PlayerActionsController
     @create_error_message ||=
       begin
         if other_player.current_location != current_player.current_location
-          I18n.t("get_cards.not_the_same_location")
+          I18n.t("share_cards.not_the_same_location")
         elsif !player_card
-          I18n.t("get_cards.not_an_owner")
+          I18n.t("share_cards.not_an_owner")
         end
       end
   end

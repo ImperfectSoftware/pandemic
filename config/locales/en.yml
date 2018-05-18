@@ -55,6 +55,6 @@ en:
     player_must_own_card: The player does not own the city card at the current location.
   line_movements:
     destination_is_not_a_neighbor: Destination city is not a neighbor.
-  get_cards:
+  share_cards:
     not_the_same_location: You are requesting a card from a player at a different location.
     not_an_owner: The card you are requesting is not owned by this player.
