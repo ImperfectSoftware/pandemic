@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe GetCardsController, type: :request do
+RSpec.describe GiveCardsController, type: :request do
   include AuthHelper
   include ResponseHelpers
 
