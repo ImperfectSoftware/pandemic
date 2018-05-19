@@ -55,7 +55,8 @@ en:
     city_card_composite_id: A city card composite id must be provided for this action.
   share_cards:
     not_the_same_location: You are requesting a card from a player at a different location.
-    not_an_owner: The card you are requesting is not owned by this player.
+    not_an_owner: The card to be shared is no longer owned by the player.
+    not_authorized: This player is not authorized to accept this card transfer.
     from_player_bad_location: Player offering the card is not at the correct location.
     to_player_bad_location: Player receiving the card is not at the correct location.
   shuttle_flights:
