@@ -40,8 +40,6 @@ class InvitationsController < ApplicationController
     player = current_user.players.find_by(game: invitation.game)
     invitation.destroy
     player.destroy
-
-    render :nothing
   end
 
   private
