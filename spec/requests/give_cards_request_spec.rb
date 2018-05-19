@@ -59,5 +59,12 @@ RSpec.describe GetCardsController, type: :request do
       expect(ShareCard.last.city_staticid)
         .to eq(player.current_location.staticid)
     end
+
+    it "stores the card creator id" do
+      post "/games/#{game.id}/get_cards", params: {
+        player_id: player.id
+      }.to_json, headers: headers
+      expect(ShareCard.last.creator_id).to eq(current_player.id)
+    end
   end
 end

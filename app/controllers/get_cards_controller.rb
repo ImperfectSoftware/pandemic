@@ -1,7 +1,8 @@
 class GetCardsController < PlayerActionsController
 
   def create
-    current_player.city_offers_received.create!(
+    current_player.share_cards.create!(
+      to_player: current_player,
       from_player: other_player,
       accepted: false,
       city_staticid: player_card.staticid
