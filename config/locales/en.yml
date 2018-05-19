@@ -64,3 +64,7 @@ en:
     to_player_bad_location: Player receiving the card is not at the correct location.
   shuttle_flights:
     city_with_no_station: There is no research station in %{name}.
+  treat_diseases:
+    not_enough_actions_left: You don't have enough actions to cure that many cubes.
+    quantity: You cannot cure that many infections.
+    no_color: Color must be provided for this request.

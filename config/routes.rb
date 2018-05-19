@@ -10,6 +10,7 @@ Rails.application.routes.draw do
     resources :research_stations, only: :create, format: :json
     resources :share_cards, only: :update, format: :json
     resources :shuttle_flights, only: :create, format: :json
+    resources :treat_diseases, only: :create, format: :json
   end
   post 'authenticate', to: 'authentication#authenticate'
 end
