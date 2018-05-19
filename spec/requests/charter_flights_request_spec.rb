@@ -15,11 +15,8 @@ RSpec.describe CharterFlightsController, type: :request do
   end
 
   it "returns an error if the player doesn't own the current location card" do
-    composite_id = WorldGraph.cities[10].composite_id
     current_player.update!(current_location_staticid: WorldGraph.cities.last.staticid)
-    post "/games/#{game.id}/charter_flights", params: {
-      player_card_composite_id: composite_id
-    }.to_json, headers: headers
+    trigger_post(id: WorldGraph.cities[10].composite_id)
     expect(error).to eq(I18n.t("player_actions.must_own_card"))
   end
 
@@ -39,49 +36,45 @@ RSpec.describe CharterFlightsController, type: :request do
     end
 
     it "creates a movement with the to location set to the card passed in" do
-      post "/games/#{game.id}/charter_flights", params: {
-        player_card_composite_id: composite_id
-      }.to_json, headers: headers
+      trigger_post
       expect(Movement.last.to_city_staticid).to eq(city.staticid)
     end
 
     it "sets movement's from location to the player's current location" do
       location = current_player.current_location
-      post "/games/#{game.id}/charter_flights", params: {
-        player_card_composite_id: composite_id
-      }.to_json, headers: headers
+      trigger_post
       expect(Movement.last.from_city_staticid).to eq(location.staticid)
     end
 
     it "sets by_dispatcher to false" do
-      post "/games/#{game.id}/charter_flights", params: {
-        player_card_composite_id: composite_id
-      }.to_json, headers: headers
+      trigger_post
       expect(Movement.last.by_dispatcher).to be(false)
     end
 
     it "sets the current player's location to the new location" do
-      post "/games/#{game.id}/charter_flights", params: {
-        player_card_composite_id: composite_id
-      }.to_json, headers: headers
+      trigger_post
       expect(current_player.reload.current_location).to eq(city)
     end
 
     it "increments actions taken" do
-      post "/games/#{game.id}/charter_flights", params: {
-        player_card_composite_id: composite_id
-      }.to_json, headers: headers
+      trigger_post
       expect(game.reload.actions_taken).to eq(1)
     end
 
     it "removes used player card from player's inventory" do
       location = current_player.current_location
-      post "/games/#{game.id}/charter_flights", params: {
-        player_card_composite_id: composite_id
-      }.to_json, headers: headers
+      trigger_post
       composite_ids = current_player.reload.cards_composite_ids
       expect(composite_ids.include?(location.composite_id)).to be(false)
     end
+  end
+
+  private
+
+  def trigger_post(id: composite_id)
+    post "/games/#{game.id}/charter_flights", params: {
+      player_card_composite_id: id
+    }.to_json, headers: headers
   end
 
 end
