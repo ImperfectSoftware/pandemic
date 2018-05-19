@@ -20,7 +20,7 @@ RSpec.describe CharterFlightsController, type: :request do
     post "/games/#{game.id}/charter_flights", params: {
       player_card_composite_id: composite_id
     }.to_json, headers: headers
-    expect(error).to eq(I18n.t("charter_flights.player_must_own_card"))
+    expect(error).to eq(I18n.t("player_actions.must_own_card"))
   end
 
   it "returns an error if no valid player card passed in" do

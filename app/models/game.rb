@@ -14,4 +14,5 @@ class Game < ApplicationRecord
   def has_research_station_at?(city_staticid:)
     !!research_stations.find_by(city_staticid: city_staticid)
   end
+
 end

@@ -15,7 +15,7 @@ class CharterFlightsController < PlayerActionsController
     @create_error_message ||=
       begin
         if !player_owns_current_location?
-          I18n.t("charter_flights.player_must_own_card")
+          I18n.t("player_actions.must_own_card")
         elsif !player_card
           I18n.t("player_actions.city_card_composite_id")
         end

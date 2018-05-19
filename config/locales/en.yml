@@ -49,10 +49,13 @@ en:
     destination_is_not_a_neighbor: Destination city is not a neighbor.
   player_actions:
     bad_turn: This action is not allowed on this turn.
-    no_actions_left: You have no player actions left.
-    discard_player_city_card: You can hold a maximum of 7 city cards. Please discard card.
     city_staticid: A city staticid must be provided for this action.
     city_card_composite_id: A city card composite id must be provided for this action.
+    discard_player_city_card: You can hold a maximum of 7 city cards. Please discard card.
+    no_actions_left: You have no player actions left.
+    must_own_card: The player does not own the city card at the current location.
+  research_stations:
+    cheone_left: There are no research stations left to be placed.
   share_cards:
     not_the_same_location: You are requesting a card from a player at a different location.
     not_an_owner: The card to be shared is no longer owned by the player.
