@@ -15,4 +15,8 @@ class Game < ApplicationRecord
     !!research_stations.find_by(city_staticid: city_staticid)
   end
 
+  def infection_count(color: color)
+    infections.where(color: color).sum(&:quantity)
+  end
+
 end
