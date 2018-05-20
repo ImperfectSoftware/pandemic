@@ -27,8 +27,20 @@ class GetCardsController < PlayerActionsController
     @other_player ||= game.players.find_by(id: params[:player_id])
   end
 
+  def allowed_to_share_knowledge?
+    return true if params[:city_staticid].nil?
+    return true if location.staticid == params[:city_staticid]
+    return true if current_player.researcher?
+    return true if other_player.researcher?
+    false
+  end
+
   def player_card
+    return other_location if other_player.owns_card?(other_location)
     return location if other_player.owns_card?(location)
   end
 
+  def other_location
+    City.find(params[:city_staticid])
+  end
 end

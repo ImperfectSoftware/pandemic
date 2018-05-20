@@ -52,13 +52,35 @@ RSpec.describe GetCardsController, type: :request do
       trigger_post
       expect(ShareCard.last.creator_id).to eq(current_player.id)
     end
+
+    context "other player as a researcher" do
+      it "creates a share card with the passed in location" do
+        city = WorldGraph.cities[25]
+        player.update!(cards_composite_ids: [city.composite_id])
+        player.update!(role: Player.roles.keys[3])
+        trigger_post(city_staticid: city.staticid)
+        expect(ShareCard.last.city_staticid).to eq(city.staticid)
+      end
+    end
+
+    context "current player as a researcher" do
+      it "creates a share card with the passed in location" do
+        city = WorldGraph.cities[25]
+        player.update!(cards_composite_ids: [city.composite_id])
+        current_player.update!(role: Player.roles.keys[3])
+        trigger_post(city_staticid: city.staticid)
+        expect(ShareCard.last.city_staticid).to eq(city.staticid)
+      end
+    end
+
   end
 
   private
 
-  def trigger_post
+  def trigger_post(city_staticid: nil)
     post "/games/#{game.id}/get_cards", params: {
-      player_id: player.id
+      player_id: player.id,
+      city_staticid: city_staticid
     }.to_json, headers: headers
   end
 end
