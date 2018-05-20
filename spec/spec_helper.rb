@@ -124,6 +124,8 @@ end
 module ResponseHelpers
   def body
     JSON.parse(response.body)
+  rescue JSON::ParserError
+    raise "Body was empty."
   end
 
   def error
