@@ -8,7 +8,7 @@ class Player < ApplicationRecord
   has_many :city_offers_received, foreign_key: "to_player_id",
     class_name: "ShareCard"
   has_many :share_cards, foreign_key: "creator_id"
-  has_many :operation_expert_actions
+  has_many :operations_expert_actions
 
   def current_location
     City.find(current_location_staticid)
@@ -29,6 +29,12 @@ class Player < ApplicationRecord
     return unless cards_composite_ids.include?(composite_id)
     card = PlayerCard.find_by_composite_id(composite_id)
     return unless card.is_a?(SpecialCard)
+    card
+  end
+
+  def city_card_from_inventory(staticid:)
+    card = City.find(staticid)
+    return unless cards_composite_ids.include?(card.composite_id)
     card
   end
 
