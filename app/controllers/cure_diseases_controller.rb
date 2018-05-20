@@ -17,8 +17,8 @@ class CureDiseasesController < PlayerActionsController
       begin
         if !player_at_research_station?
           I18n.t("player_actions.city_with_no_station", name: location.name)
-        elsif unique_city_staticids.count != 5
-          I18n.t("cure_diseases.five_cards_must_be_provided")
+        elsif !correct_number_of_cards?
+          I18n.t("cure_diseases.wrong_number_of_cards")
         elsif cities.map(&:color).uniq.count != 1
           I18n.t("cure_diseases.not_the_same_color")
         elsif game.cure_markers.find_by(color: color)&.cured
@@ -31,6 +31,15 @@ class CureDiseasesController < PlayerActionsController
     game.has_research_station_at?(
       city_staticid: location.staticid
     )
+  end
+
+  def correct_number_of_cards?
+    unique_city_staticids.count ==
+      if current_player.scientist?
+        4
+      else
+        5
+      end
   end
 
   def cities

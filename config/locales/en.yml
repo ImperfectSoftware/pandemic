@@ -3,21 +3,21 @@ en:
     create_city_not_allowed: This user cannot create city instances.
   cure_diseases:
     already_cured: The disease is already cured.
-    five_cards_must_be_provided: The player doesn't have 5 cards.
     not_the_same_color: The cards are not the same color.
+    wrong_number_of_cards: The player doesn't have correct number of cards.
   charter_flights:
     player_must_own_card: The player does not own the city card at the current location.
   errors:
     missing_param: Required parameter missing.
   games:
-    minimum_number_of_players: Cannot start a game with only one player.
-    incorrect_nr_of_epidemic_cards: Incorrect number of epidemic cards provided.
     already_started: This game has already started.
+    incorrect_nr_of_epidemic_cards: Incorrect number of epidemic cards provided.
+    minimum_number_of_players: Cannot start a game with only one player.
   invitations:
-    user_not_found: Could not find user with that username.
-    user_invited: An invitation for this user already exists.
     game_started: Cannot accept invitation. Game already started.
     maximum_number_sent: A maximum number of invitations have been sent.
+    user_not_found: Could not find user with that username.
+    user_invited: An invitation for this user already exists.
   line_movements:
     destination_is_not_a_neighbor: Destination city is not a neighbor.
   operations_expert:

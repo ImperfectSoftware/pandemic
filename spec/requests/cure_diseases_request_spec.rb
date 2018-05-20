@@ -30,13 +30,14 @@ RSpec.describe CureDiseasesController, type: :request do
     it "returns error if 4 cards are passed in" do
       city_staticids = WorldGraph.cities[0,4].map(&:staticid)
       trigger_post(city_staticids: city_staticids)
-      expect(error).to eq(I18n.t("cure_diseases.five_cards_must_be_provided"))
+      expect(error).to eq(I18n.t("cure_diseases.wrong_number_of_cards"))
     end
 
     context "with current player as a scientist" do
       it "does not return error if 4 cards are passed in" do
-        # current_player.udpate(role: Role.all..name)
-
+        current_player.update!(role: Player.roles.keys[6])
+        trigger_post(city_staticids: city_staticids[1..-1])
+        expect(game.cure_markers.find_by(color: 'blue')).to_not be_nil
       end
     end
 
@@ -44,13 +45,13 @@ RSpec.describe CureDiseasesController, type: :request do
       city_staticids = WorldGraph.cities[0,4].map(&:staticid)
       city_staticids << city_staticids.first
       trigger_post(city_staticids: city_staticids)
-      expect(error).to eq(I18n.t("cure_diseases.five_cards_must_be_provided"))
+      expect(error).to eq(I18n.t("cure_diseases.wrong_number_of_cards"))
     end
 
     it "returns error if 6 cards are passed in" do
       city_staticids = WorldGraph.cities[0,6].map(&:staticid)
       trigger_post(city_staticids: city_staticids)
-      expect(error).to eq(I18n.t("cure_diseases.five_cards_must_be_provided"))
+      expect(error).to eq(I18n.t("cure_diseases.wrong_number_of_cards"))
     end
 
     it "returns an error if the cards are not of the same color" do
