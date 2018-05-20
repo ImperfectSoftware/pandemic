@@ -24,7 +24,7 @@ RSpec.describe ShuttleFlightsController, type: :request do
         city_staticid: WorldGraph.cities.first.staticid
       }.to_json, headers: headers
       expect(error).to eq(I18n.t(
-        'shuttle_flights.city_with_no_station',
+        'player_actions.city_with_no_station',
         name: WorldGraph.cities.first.name
       ))
     end
@@ -36,7 +36,7 @@ RSpec.describe ShuttleFlightsController, type: :request do
         city_staticid: WorldGraph.cities.second.staticid
       }.to_json, headers: headers
       expect(error).to eq(I18n.t(
-        'shuttle_flights.city_with_no_station',
+        'player_actions.city_with_no_station',
         name: WorldGraph.cities.second.name
       ))
     end

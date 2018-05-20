@@ -127,6 +127,7 @@ module ResponseHelpers
   end
 
   def error
+    expect(body['error']).to_not match("translation missing")
     body['error']
   end
 end

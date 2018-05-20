@@ -15,11 +15,11 @@ RSpec.describe CureDiseasesController, type: :request do
   end
 
   it "returns an error if the current player is not at the research station" do
-    staticid = WorldGraph.cities.second.staticid
-    game.research_stations.create!(city_staticid: staticid)
-    post "/games/#{game.id}/cure_diseases", params: {
-      cards_composite_ids: current_player.cards_composite_ids
-    }.to_json, headers: headers
-    expect(error).to eq(I18n.t("cure_diseases.player_must_be_at_research_station"))
+    city = WorldGraph.cities.second
+    game.research_stations.create!(city_staticid: city.staticid)
+    post "/games/#{game.id}/cure_diseases", params: {}.to_json, headers: headers
+    location = current_player.current_location
+    expect(error)
+      .to eq(I18n.t("player_actions.city_with_no_station", name: location.name))
   end
 end

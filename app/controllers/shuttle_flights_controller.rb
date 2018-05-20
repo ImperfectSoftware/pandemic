@@ -18,12 +18,12 @@ class ShuttleFlightsController < PlayerActionsController
           I18n.t('player_actions.city_staticid')
         elsif !departure_city_is_a_research_station?
           I18n.t(
-            'shuttle_flights.city_with_no_station',
+            'player_actions.city_with_no_station',
             name: departure_city.name
           )
         elsif !destination_city_is_a_research_station?
           I18n.t(
-            'shuttle_flights.city_with_no_station',
+            'player_actions.city_with_no_station',
             name: destination_city.name
           )
         end

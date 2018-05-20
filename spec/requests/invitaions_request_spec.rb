@@ -147,7 +147,7 @@ RSpec.describe InvitationsController, type: :request do
       it 'returns error message' do
         put "/games/#{@game.id}/invitations/#{invitation.id}",
           params: {}.to_json, headers: headers
-        expect(error).to eq(I18n.t("invitations.errors.missing_param"))
+        expect(error).to eq(I18n.t("errors.missing_param"))
       end
     end
   end

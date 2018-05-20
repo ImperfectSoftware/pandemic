@@ -53,7 +53,7 @@ class InvitationsController < ApplicationController
       return I18n.t("invitations.game_started")
     end
     if params[:accepted].blank?
-      return I18n.t("invitations.errors.missing_param")
+      return I18n.t("errors.missing_param")
     end
   end
 end
