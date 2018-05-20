@@ -11,7 +11,7 @@ class Player < ApplicationRecord
   has_many :operations_expert_actions
 
   def location
-    City.find(current_location_staticid)
+    City.find(location_staticid)
   end
 
   def has_too_many_cards?

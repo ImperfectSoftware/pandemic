@@ -15,7 +15,7 @@ RSpec.describe CharterFlightsController, type: :request do
   end
 
   it "returns an error if the player doesn't own the current location card" do
-    current_player.update!(current_location_staticid: WorldGraph.cities.last.staticid)
+    current_player.update!(location_staticid: WorldGraph.cities.last.staticid)
     trigger_post(id: WorldGraph.cities[10].composite_id)
     expect(error).to eq(I18n.t("player_actions.must_own_card"))
   end

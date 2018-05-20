@@ -16,7 +16,7 @@ RSpec.describe OperationsExpertFlightsController, type: :request do
     current_player.update!(role: Role.all.first.name)
     game.update(player_turn_ids: [current_player.id, player.id])
     game.research_stations
-      .create!(city_staticid: current_player.current_location_staticid)
+      .create!(city_staticid: current_player.location_staticid)
   end
 
   it "returns an error if destination param is missing" do
@@ -37,7 +37,7 @@ RSpec.describe OperationsExpertFlightsController, type: :request do
 
   it "returns an error if the departure location is not a research station" do
     current_player
-      .update!(current_location_staticid: WorldGraph.cities[21].staticid)
+      .update!(location_staticid: WorldGraph.cities[21].staticid)
     trigger_post(discarded: discarded, destination: destination)
     expect(error).to eq(I18n.t(
       'player_actions.city_with_no_station',
@@ -77,7 +77,7 @@ RSpec.describe OperationsExpertFlightsController, type: :request do
   it "sets movement's from location to the player's current location" do
     trigger_post(discarded: discarded, destination: destination)
     expect(Movement.last.from_city_staticid)
-      .to eq(current_player.current_location_staticid)
+      .to eq(current_player.location_staticid)
   end
 
   it "increments actions taken" do

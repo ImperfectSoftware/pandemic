@@ -4,7 +4,7 @@ class LineMovementsController < PlayerActionsController
     CreateMovement.new(
       game: game,
       player: current_player,
-      from: current_player.current_location_staticid,
+      from: current_player.location_staticid,
       to: params[:city_staticid]
     ).call
   end

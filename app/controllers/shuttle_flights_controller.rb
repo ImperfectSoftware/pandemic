@@ -4,7 +4,7 @@ class ShuttleFlightsController < PlayerActionsController
     CreateMovement.new(
       game: game,
       player: current_player,
-      from: current_player.current_location_staticid,
+      from: current_player.location_staticid,
       to: params[:city_staticid]
     ).call
   end
@@ -32,7 +32,7 @@ class ShuttleFlightsController < PlayerActionsController
 
   def departure_city_is_a_research_station?
     game.has_research_station_at?(
-      city_staticid: current_player.current_location_staticid
+      city_staticid: current_player.location_staticid
     )
   end
 

@@ -3,7 +3,7 @@ class CharterFlightsController < PlayerActionsController
     CreateMovement.new(
       game: game,
       player: current_player,
-      from: current_player.current_location_staticid,
+      from: current_player.location_staticid,
       to: player_card.staticid
     ).call
     current_player.update!(cards_composite_ids: remaining_player_cards)

@@ -15,7 +15,7 @@ RSpec.describe GetCardsController, type: :request do
   end
 
   it "returns an error if the other player is not at the same location" do
-    player.update!(current_location_staticid: WorldGraph.cities[25].staticid)
+    player.update!(location_staticid: WorldGraph.cities[25].staticid)
     trigger_post
     expect(error).to eq(I18n.t("share_cards.not_the_same_location"))
   end

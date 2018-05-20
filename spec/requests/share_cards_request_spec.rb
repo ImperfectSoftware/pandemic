@@ -54,8 +54,8 @@ RSpec.describe ShareCardsController, type: :request do
   end
 
   it "returns error if the from player is no longer at the card's location" do
-    player.update(current_location_staticid: city.staticid)
-    current_player.update(current_location_staticid: bad_city.staticid)
+    player.update(location_staticid: city.staticid)
+    current_player.update(location_staticid: bad_city.staticid)
     put "/games/#{game.id}/share_cards/#{card.id}", params: {
       accepted: true
     }.to_json, headers: headers
@@ -63,8 +63,8 @@ RSpec.describe ShareCardsController, type: :request do
   end
 
   it "returns error if the to player is no longer at the card's location" do
-    player.update(current_location_staticid: bad_city.staticid)
-    current_player.update(current_location_staticid: city.staticid)
+    player.update(location_staticid: bad_city.staticid)
+    current_player.update(location_staticid: city.staticid)
     put "/games/#{game.id}/share_cards/#{card.id}", params: {
       accepted: true
     }.to_json, headers: headers
@@ -95,10 +95,10 @@ RSpec.describe ShareCardsController, type: :request do
 
   it "returns error if the from player is no longer the owner of the card" do
     current_player.update!(
-      current_location_staticid: city.staticid,
+      location_staticid: city.staticid,
       cards_composite_ids: []
     )
-    player.update(current_location_staticid: city.staticid)
+    player.update(location_staticid: city.staticid)
     put "/games/#{game.id}/share_cards/#{card.id}", params: {
       accepted: true
     }.to_json, headers: headers

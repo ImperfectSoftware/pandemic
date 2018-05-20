@@ -33,7 +33,7 @@ RSpec.describe ShuttleFlightsController, type: :request do
 
     it 'returns error if player is not going to a research station' do
       game.research_stations
-        .create!(city_staticid: current_player.current_location_staticid)
+        .create!(city_staticid: current_player.location_staticid)
       post "/games/#{game.id}/shuttle_flights", params: {
         city_staticid: WorldGraph.cities.second.staticid
       }.to_json, headers: headers
@@ -45,12 +45,12 @@ RSpec.describe ShuttleFlightsController, type: :request do
   end
 
   context "without errors" do
-    let(:from) { current_player.current_location_staticid }
+    let(:from) { current_player.location_staticid }
     let(:to) { WorldGraph.cities.second.staticid }
 
     before(:each) do
       game.research_stations
-        .create!(city_staticid: current_player.current_location_staticid)
+        .create!(city_staticid: current_player.location_staticid)
       game.research_stations
         .create!(city_staticid: WorldGraph.cities.second.staticid)
     end
@@ -87,7 +87,7 @@ RSpec.describe ShuttleFlightsController, type: :request do
       post "/games/#{game.id}/shuttle_flights", params: {
         city_staticid: to
       }.to_json, headers: headers
-      expect(current_player.reload.current_location_staticid).to eq(to)
+      expect(current_player.reload.location_staticid).to eq(to)
     end
 
     it "updates the number of actions taken" do

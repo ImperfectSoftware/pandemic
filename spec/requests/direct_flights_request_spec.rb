@@ -39,7 +39,7 @@ RSpec.describe DirectFlightsController, type: :request do
     it "sets movement's from location to the player's current location" do
       trigger_post
       expect(Movement.last.from_city_staticid)
-        .to eq(current_player.current_location_staticid)
+        .to eq(current_player.location_staticid)
     end
 
     it "sets by_dispatcher to false" do

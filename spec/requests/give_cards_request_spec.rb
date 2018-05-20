@@ -15,7 +15,7 @@ RSpec.describe GiveCardsController, type: :request do
   end
 
   it "returns an error if the other player is not at the same location" do
-    player.update!(current_location_staticid: WorldGraph.cities[25].staticid)
+    player.update!(location_staticid: WorldGraph.cities[25].staticid)
     post "/games/#{game.id}/give_cards", params: {
       player_id: player.id
     }.to_json, headers: headers

@@ -14,7 +14,7 @@ RSpec.describe LineMovementsController, type: :request do
   end
 
   let(:current_player) { @current_user.players.find_by(game: @game) }
-  let(:from) { current_player.current_location_staticid }
+  let(:from) { current_player.location_staticid }
   let(:to) { current_player.location.neighbors_staticids.first }
 
   it 'returns error message if city_staticid is not passed in' do
@@ -61,7 +61,7 @@ RSpec.describe LineMovementsController, type: :request do
     post "/games/#{@game.id}/line_movements", params: {
       city_staticid: to
     }.to_json, headers: headers
-    expect(@current_player.reload.current_location_staticid).to eq(to)
+    expect(@current_player.reload.location_staticid).to eq(to)
   end
 
   it "updates the number of actions taken" do

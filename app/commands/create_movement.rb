@@ -17,7 +17,7 @@ class CreateMovement
       to_city_staticid: to,
       by_dispatcher: by_dispatcher
     )
-    player.update!(current_location_staticid: to)
+    player.update!(location_staticid: to)
     game.increment!(:actions_taken)
   end
 end
