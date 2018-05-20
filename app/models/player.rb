@@ -14,7 +14,7 @@ class Player < ApplicationRecord
   end
 
   def has_too_many_cards?
-    PlayerCard.city_cards(cards_composite_ids).count == 8
+    PlayerCard.city_cards(cards_composite_ids).count > 7
   end
 
   def player_city_card_from_inventory(composite_id:)

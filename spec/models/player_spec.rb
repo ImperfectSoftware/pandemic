@@ -11,6 +11,11 @@ RSpec.describe Player, type: :model do
     expect(@player.has_too_many_cards?).to be(true)
   end
 
+  it 'knows if it has too many cards when player has 9 cards' do
+    @player.update(cards_composite_ids: WorldGraph.composite_ids[0,9])
+    expect(@player.has_too_many_cards?).to be(true)
+  end
+
   it "knows player's current_location" do
     expect(@player.current_location).to be(WorldGraph.cities.first)
   end
