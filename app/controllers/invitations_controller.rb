@@ -20,10 +20,10 @@ class InvitationsController < ApplicationController
     invitation = current_user.invitations.find_by(id: params[:id])
     invitation.update(accepted: params[:accepted])
     if invitation.accepted?
-      role = GetUniqueRole.new(players: invitation.game.players).call
+      command = GetUniqueRole.new(players: invitation.game.players).call
       invitation.game.players.create(
         user: current_user,
-        role: role,
+        role: command.result,
         location_staticid: City.find_by_name('Atlanta').staticid
       )
     end

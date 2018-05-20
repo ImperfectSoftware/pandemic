@@ -1,4 +1,14 @@
 class Player < ApplicationRecord
+  enum role: {
+    operations_expert: 0,
+    contingency_planer: 1,
+    medic: 2,
+    researcher: 3,
+    quarantine_specialist: 4,
+    dispatcher: 5,
+    scientist: 6
+  }
+
   has_many :special_cards
   has_many :movements
   belongs_to :game
@@ -36,9 +46,5 @@ class Player < ApplicationRecord
     card = City.find(staticid)
     return unless cards_composite_ids.include?(card.composite_id)
     card
-  end
-
-  def operations_expert?
-    role == Role.all.first.name
   end
 end

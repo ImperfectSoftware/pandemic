@@ -33,6 +33,13 @@ RSpec.describe CureDiseasesController, type: :request do
       expect(error).to eq(I18n.t("cure_diseases.five_cards_must_be_provided"))
     end
 
+    context "with current player as a scientist" do
+      it "does not return error if 4 cards are passed in" do
+        # current_player.udpate(role: Role.all..name)
+
+      end
+    end
+
     it "returns error if less than 5 unique cards are passed in" do
       city_staticids = WorldGraph.cities[0,4].map(&:staticid)
       city_staticids << city_staticids.first

@@ -6,6 +6,6 @@ class GetUniqueRole
   end
 
   def call
-    (Role.all - @players.map(&:role)).sample
+    (Player.roles.keys - @players.map(&:role)).sample
   end
 end

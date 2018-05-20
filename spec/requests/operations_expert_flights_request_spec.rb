@@ -13,7 +13,7 @@ RSpec.describe OperationsExpertFlightsController, type: :request do
   let(:destination) { WorldGraph.cities[34].staticid }
 
   before(:each) do
-    current_player.update!(role: Role.all.first.name)
+    current_player.update!(role: Player.roles.keys.first)
     game.update(player_turn_ids: [current_player.id, player.id])
     game.research_stations
       .create!(city_staticid: current_player.location_staticid)
@@ -30,7 +30,7 @@ RSpec.describe OperationsExpertFlightsController, type: :request do
   end
 
   it "returns an error if the current player is not an operations expert" do
-    current_player.update!(role: Role.all[1,5].sample.name)
+    current_player.update!(role: Player.roles.keys[1,5].sample)
     trigger_post(discarded: discarded, destination: destination)
     expect(error).to eq(I18n.t("player_actions.must_be_an_operations_expert"))
   end

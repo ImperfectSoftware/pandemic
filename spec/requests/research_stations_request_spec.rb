@@ -12,7 +12,7 @@ RSpec.describe ResearchStationsController, type: :request do
 
   before(:each) do
     # We must assign a role other than Operations Expert.
-    current_player.update!(role: Role.all[1,5].sample.name)
+    current_player.update!(role: Player.roles.keys[1,5].sample)
     game.update(player_turn_ids: [current_player.id, player.id])
   end
 
@@ -49,7 +49,7 @@ RSpec.describe ResearchStationsController, type: :request do
 
   context "when player is an operations expert" do
     before(:each) do
-      current_player.update!(role: Role.all.first.name)
+      current_player.update!(role: Player.roles.keys.first)
     end
 
     it "doesn't return must own card error if player is an operations expert" do

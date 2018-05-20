@@ -9,7 +9,7 @@ class GamesController < ApplicationController
     )
     player = game.players.create!(
       user: current_user,
-      role: Role.all.sample.name,
+      role: Player.roles.keys.sample,
       location_staticid: City.find_by_name('Atlanta').staticid
     )
     render json: game
