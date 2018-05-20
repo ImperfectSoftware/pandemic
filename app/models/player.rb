@@ -30,4 +30,8 @@ class Player < ApplicationRecord
     return unless card.is_a?(SpecialCard)
     card
   end
+
+  def operations_expert?
+    role == Role.all.first.name
+  end
 end
