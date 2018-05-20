@@ -17,12 +17,14 @@ class DirectFlightsController < PlayerActionsController
   end
 
   def player_card
-    @player_card ||= current_player.player_city_card_from_inventory(
-      composite_id: params[:player_card_composite_id].to_s
-    )
+    return location if current_player.owns_card?(location)
   end
 
   def remaining_player_cards
     current_player.cards_composite_ids - [player_card.composite_id]
+  end
+
+  def location
+    City.find_from_composite_id(params[:player_card_composite_id].to_s)
   end
 end

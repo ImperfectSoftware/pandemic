@@ -34,9 +34,7 @@ class OperationsExpertFlightsController < PlayerActionsController
   end
 
   def player_card
-    @player_card ||= current_player.city_card_from_inventory(
-      staticid: params[:discarded_city_staticid].to_s
-    )
+    return discarded_city_card if current_player.owns_card?(discarded_city_card)
   end
 
   def action_already_performed_this_turn?
@@ -56,5 +54,9 @@ class OperationsExpertFlightsController < PlayerActionsController
   def missing_params
     params[:destination_city_staticid].blank? ||
       params[:discarded_city_staticid].blank?
+  end
+
+  def discarded_city_card
+    @discarded_city_card ||= City.find(params[:discarded_city_staticid])
   end
 end

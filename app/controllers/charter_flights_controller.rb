@@ -14,7 +14,7 @@ class CharterFlightsController < PlayerActionsController
   def create_error_message
     @create_error_message ||=
       begin
-        if !player_owns_current_location?
+        if !current_player.owns_card?(current_player.location)
           I18n.t("player_actions.must_own_card")
         elsif !player_card
           I18n.t("player_actions.city_card_composite_id")
@@ -25,12 +25,6 @@ class CharterFlightsController < PlayerActionsController
   def player_card
     @player_card ||= City
       .find_from_composite_id(params[:player_card_composite_id])
-  end
-
-  def player_owns_current_location?
-    !!current_player.player_city_card_from_inventory(
-      composite_id: current_player.location.composite_id
-    )
   end
 
   def remaining_player_cards

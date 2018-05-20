@@ -47,9 +47,12 @@ class ShareCardsController < PlayerActionsController
   end
 
   def player_card
-    @player_card ||= from_player.player_city_card_from_inventory(
-      composite_id: share_card.location.composite_id
-    )
+    @player_card ||=
+      begin
+        if current_player.owns_card?(share_card.location)
+          share_card.location
+        end
+      end
   end
 
   def remaining_player_cards

@@ -1,4 +1,5 @@
 class GetCardsController < PlayerActionsController
+  delegate :location, to: :current_player
 
   def create
     current_player.share_cards.create!(
@@ -27,9 +28,7 @@ class GetCardsController < PlayerActionsController
   end
 
   def player_card
-    @player_card ||= other_player.player_city_card_from_inventory(
-      composite_id: current_player.location.composite_id
-    )
+    return location if other_player.owns_card?(location)
   end
 
 end

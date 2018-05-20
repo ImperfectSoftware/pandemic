@@ -1,4 +1,5 @@
 class ResearchStationsController < PlayerActionsController
+  delegate :location, to: :current_player
 
   def create
     @research_station ||= game.research_stations
@@ -27,20 +28,11 @@ class ResearchStationsController < PlayerActionsController
   end
 
   def player_card
-    @player_card ||=
-      begin
-        if current_player.operations_expert?
-          City.find(current_player.location.staticid)
-        else
-          current_player.player_city_card_from_inventory(
-            composite_id: current_player.location.composite_id
-          )
-        end
-      end
+    return location if current_player.operations_expert?
+    return location if current_player.owns_card?(location)
   end
 
   def remaining_player_cards
     current_player.cards_composite_ids - [player_card.composite_id]
   end
-
 end

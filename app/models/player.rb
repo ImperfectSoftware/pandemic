@@ -28,23 +28,7 @@ class Player < ApplicationRecord
     PlayerCard.city_cards(cards_composite_ids).count > 7
   end
 
-  def player_city_card_from_inventory(composite_id:)
-    return unless cards_composite_ids.include?(composite_id)
-    card = PlayerCard.find_by_composite_id(composite_id)
-    return unless card.is_a?(City)
-    card
-  end
-
-  def player_event_card_from_inventory(composite_id:)
-    return unless cards_composite_ids.include?(composite_id)
-    card = PlayerCard.find_by_composite_id(composite_id)
-    return unless card.is_a?(SpecialCard)
-    card
-  end
-
-  def city_card_from_inventory(staticid:)
-    card = City.find(staticid)
-    return unless cards_composite_ids.include?(card.composite_id)
-    card
+  def owns_card?(card)
+    cards_composite_ids.include?(card&.composite_id)
   end
 end

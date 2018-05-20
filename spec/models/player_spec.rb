@@ -20,43 +20,9 @@ RSpec.describe Player, type: :model do
     expect(@player.location).to be(WorldGraph.cities.first)
   end
 
-  it "finds a player city card by composite id" do
-    composite_id = WorldGraph.cities.first.composite_id
-    @player.cards_composite_ids = [composite_id]
-    expect(@player.player_city_card_from_inventory(composite_id: composite_id))
-      .to eq(PlayerCard.find_by_composite_id(composite_id))
-  end
-
-  it "returns nil if composite id is for an event card" do
-    composite_id = SpecialCard.events.first.composite_id
-    @player.cards_composite_ids = [composite_id]
-    expect(@player.player_city_card_from_inventory(composite_id: composite_id))
-      .to be_nil
-  end
-
-  it "returns nil if city player card does not belong to the player" do
-    composite_id = WorldGraph.cities.first.composite_id
-    expect(@player.player_city_card_from_inventory(composite_id: composite_id))
-      .to be_nil
-  end
-
-  it "finds a player event card by composite id" do
-    composite_id = SpecialCard.events.first.composite_id
-    @player.cards_composite_ids = [composite_id]
-    expect(@player.player_event_card_from_inventory(composite_id: composite_id))
-      .to eq(PlayerCard.find_by_composite_id(composite_id))
-  end
-
-  it "returns nil if composite id is for an event card" do
-    composite_id = WorldGraph.cities.first.composite_id
-    @player.cards_composite_ids = [composite_id]
-    expect(@player.player_event_card_from_inventory(composite_id: composite_id))
-      .to be_nil
-  end
-
-  it "returns nil if special player card does not belong to the player" do
-    composite_id = SpecialCard.events.first.composite_id
-    expect(@player.player_event_card_from_inventory(composite_id: composite_id))
-      .to be_nil
+  it "knows if it owns a card" do
+    city = WorldGraph.cities.first
+    @player.cards_composite_ids = [city.composite_id]
+    expect(@player.owns_card?(city)).to eq(true)
   end
 end

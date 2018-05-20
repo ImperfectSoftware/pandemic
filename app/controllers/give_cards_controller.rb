@@ -29,17 +29,8 @@ class GiveCardsController < PlayerActionsController
   end
 
   def player_card
-    @player_card ||=
-      begin
-        if params[:city_staticid].present?
-         current_player
-           .city_card_from_inventory(staticid: params[:city_staticid])
-        else
-          current_player.player_city_card_from_inventory(
-           composite_id: location.composite_id
-          )
-        end
-      end
+    return other_location if current_player.owns_card?(other_location)
+    return location if current_player.owns_card?(location)
   end
 
   def allowed_to_share_knowledge?
@@ -48,5 +39,9 @@ class GiveCardsController < PlayerActionsController
     return true if current_player.researcher?
     return true if other_player.researcher?
     false
+  end
+
+  def other_location
+    City.find(params[:city_staticid])
   end
 end
