@@ -26,6 +26,20 @@ RSpec.describe GiveCardsController, type: :request do
     expect(error).to eq(I18n.t("share_cards.not_an_owner"))
   end
 
+  context "when current player is not a researcher" do
+    it "returns an error when passing in a city staticid" do
+      current_player.update!(role: Player.roles.keys.first)
+      trigger_post(city_staticid: WorldGraph.cities[25].staticid)
+      expect(error).to eq(I18n.t("player_actions.not_a_researcher"))
+    end
+
+    it "doesn't return an error when passing in the current location" do
+      current_player.update!(role: Player.roles.keys.first)
+      trigger_post(city_staticid: player.location.staticid)
+      expect(ShareCard.last.from_player_id).to eq(current_player.id)
+    end
+  end
+
   context "with valid request" do
     it "stores the current player's id in the from_player_id field" do
       trigger_post
@@ -51,13 +65,34 @@ RSpec.describe GiveCardsController, type: :request do
       trigger_post
       expect(ShareCard.last.creator_id).to eq(current_player.id)
     end
+
+    context "as a researcher" do
+      it "creates a share card with the passed in location" do
+        city = WorldGraph.cities[25]
+        current_player.update!(cards_composite_ids: [city.composite_id])
+        current_player.update!(role: Player.roles.keys[3])
+        trigger_post(city_staticid: city.staticid)
+        expect(ShareCard.last.city_staticid).to eq(city.staticid)
+      end
+    end
+
+    context "other player as a researcher" do
+      it "creates a share card with the passed in location" do
+        city = WorldGraph.cities[25]
+        current_player.update!(cards_composite_ids: [city.composite_id])
+        player.update!(role: Player.roles.keys[3])
+        trigger_post(city_staticid: city.staticid)
+        expect(ShareCard.last.city_staticid).to eq(city.staticid)
+      end
+    end
   end
 
   private
 
-  def trigger_post
+  def trigger_post(city_staticid: nil)
     post "/games/#{game.id}/give_cards", params: {
-      player_id: player.id
+      player_id: player.id,
+      city_staticid: city_staticid
     }.to_json, headers: headers
   end
 end
