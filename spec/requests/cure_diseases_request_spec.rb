@@ -25,6 +25,7 @@ RSpec.describe CureDiseasesController, type: :request do
     before(:each) do
       location = current_player.location
       game.research_stations.create!(city_staticid: location.staticid)
+      current_player.update!(role: Player.roles.keys[1])
     end
 
     it "returns error if 4 cards are passed in" do
