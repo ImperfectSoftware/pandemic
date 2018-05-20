@@ -9,6 +9,8 @@ class CureDiseasesController < PlayerActionsController
       begin
         if !player_at_research_station?
           I18n.t("player_actions.city_with_no_station", name: location.name)
+        elsif params[:city_staticids].uniq.count != 5
+          I18n.t("cure_diseases.five_cards_must_be_provided")
         end
       end
   end
