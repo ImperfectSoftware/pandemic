@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180520121625) do
+ActiveRecord::Schema.define(version: 20180520134044) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -68,6 +68,14 @@ ActiveRecord::Schema.define(version: 20180520121625) do
     t.datetime "updated_at", null: false
     t.string "from_city_staticid"
     t.string "to_city_staticid"
+  end
+
+  create_table "operations_expert_actions", force: :cascade do |t|
+    t.integer "turn_nr"
+    t.integer "player_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["player_id"], name: "index_operations_expert_actions_on_player_id"
   end
 
   create_table "players", force: :cascade do |t|

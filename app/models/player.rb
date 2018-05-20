@@ -8,6 +8,7 @@ class Player < ApplicationRecord
   has_many :city_offers_received, foreign_key: "to_player_id",
     class_name: "ShareCard"
   has_many :share_cards, foreign_key: "creator_id"
+  has_many :operation_expert_actions
 
   def current_location
     City.find(current_location_staticid)
