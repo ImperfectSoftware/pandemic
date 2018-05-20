@@ -19,4 +19,8 @@ class Game < ApplicationRecord
     infections.where(color: color).sum(&:quantity)
   end
 
+  def eradicated?(color:)
+    infection_count(color: color) == 0
+  end
+
 end

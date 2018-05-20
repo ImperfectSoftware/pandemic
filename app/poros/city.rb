@@ -18,6 +18,12 @@ class City
     end
   end
 
+  def self.find_from_staticids(staticids)
+    staticids.map do |staticid|
+      find(staticid)
+    end.compact
+  end
+
   attr_reader :neighbors_names, :name, :color, :staticid, :population, :density
 
   def initialize(staticid:, name:, color:, population:, density:)

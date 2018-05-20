@@ -2,7 +2,9 @@ en:
   authorization:
     create_city_not_allowed: This user cannot create city instances.
   cure_diseases:
+    already_cured: The disease is already cured.
     five_cards_must_be_provided: The player doesn't have 5 cards.
+    not_the_same_color: The cards are not the same color.
   charter_flights:
     player_must_own_card: The player does not own the city card at the current location.
   errors:

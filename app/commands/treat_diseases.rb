@@ -44,7 +44,7 @@ class TreatDiseases
 
   def eradicated?
     return false unless @cure_marker.cured?
-    return false unless @game.infection_count(color: @cure_marker.color) == 0
+    return false unless @game.eradicated?(color: @cure_marker.color)
     true
   end
 
