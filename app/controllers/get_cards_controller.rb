@@ -14,7 +14,7 @@ class GetCardsController < PlayerActionsController
   def create_error_message
     @create_error_message ||=
       begin
-        if other_player.current_location != current_player.current_location
+        if other_player.location != current_player.location
           I18n.t("share_cards.not_the_same_location")
         elsif !player_card
           I18n.t("share_cards.not_an_owner")
@@ -28,7 +28,7 @@ class GetCardsController < PlayerActionsController
 
   def player_card
     @player_card ||= other_player.player_city_card_from_inventory(
-      composite_id: current_player.current_location.composite_id
+      composite_id: current_player.location.composite_id
     )
   end
 

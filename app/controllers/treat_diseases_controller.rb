@@ -31,6 +31,6 @@ class TreatDiseasesController < PlayerActionsController
   end
 
   def city
-    @city ||= current_player.current_location
+    @city ||= current_player.location
   end
 end

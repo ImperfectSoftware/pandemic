@@ -30,10 +30,10 @@ class ResearchStationsController < PlayerActionsController
     @player_card ||=
       begin
         if current_player.operations_expert?
-          City.find(current_player.current_location.staticid)
+          City.find(current_player.location.staticid)
         else
           current_player.player_city_card_from_inventory(
-            composite_id: current_player.current_location.composite_id
+            composite_id: current_player.location.composite_id
           )
         end
       end

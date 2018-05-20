@@ -47,6 +47,6 @@ class ShuttleFlightsController < PlayerActionsController
   end
 
   def departure_city
-    current_player.current_location
+    current_player.location
   end
 end

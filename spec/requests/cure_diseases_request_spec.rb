@@ -15,14 +15,14 @@ RSpec.describe CureDiseasesController, type: :request do
 
   it "returns an error if the current player is not at the research station" do
     trigger_post
-    location = current_player.current_location
+    location = current_player.location
     expect(error)
       .to eq(I18n.t("player_actions.city_with_no_station", name: location.name))
   end
 
   context "with wrong number of cards passed in" do
     before(:each) do
-      location = current_player.current_location
+      location = current_player.location
       game.research_stations.create!(city_staticid: location.staticid)
     end
 

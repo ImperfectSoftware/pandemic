@@ -31,7 +31,7 @@ RSpec.describe ResearchStationsController, type: :request do
   it "creates a research station at the current location" do
     trigger_valid_post
     expect(body['city_staticid'])
-      .to eq(current_player.current_location.staticid)
+      .to eq(current_player.location.staticid)
   end
 
   it "increments actions taken" do
@@ -40,7 +40,7 @@ RSpec.describe ResearchStationsController, type: :request do
   end
 
   it "removes card from player's inventory" do
-    composite_id = current_player.current_location.composite_id
+    composite_id = current_player.location.composite_id
     trigger_valid_post
     expect(current_player.reload.cards_composite_ids.include?(composite_id))
       .to be(false)
@@ -59,7 +59,7 @@ RSpec.describe ResearchStationsController, type: :request do
     end
 
     it "doesn't remove cards from the current player's inventory" do
-      composite_id = current_player.current_location.composite_id
+      composite_id = current_player.location.composite_id
       current_player.update!(cards_composite_ids: [composite_id])
       trigger_valid_post
       expect(current_player.reload.cards_composite_ids.include?(composite_id))

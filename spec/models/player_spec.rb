@@ -17,7 +17,7 @@ RSpec.describe Player, type: :model do
   end
 
   it "knows player's current_location" do
-    expect(@player.current_location).to be(WorldGraph.cities.first)
+    expect(@player.location).to be(WorldGraph.cities.first)
   end
 
   it "finds a player city card by composite id" do

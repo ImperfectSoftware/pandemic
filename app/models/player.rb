@@ -10,7 +10,7 @@ class Player < ApplicationRecord
   has_many :share_cards, foreign_key: "creator_id"
   has_many :operations_expert_actions
 
-  def current_location
+  def location
     City.find(current_location_staticid)
   end
 

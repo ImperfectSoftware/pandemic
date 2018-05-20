@@ -15,7 +15,7 @@ RSpec.describe LineMovementsController, type: :request do
 
   let(:current_player) { @current_user.players.find_by(game: @game) }
   let(:from) { current_player.current_location_staticid }
-  let(:to) { current_player.current_location.neighbors_staticids.first }
+  let(:to) { current_player.location.neighbors_staticids.first }
 
   it 'returns error message if city_staticid is not passed in' do
     post "/games/#{@game.id}/line_movements", params: {}, headers: headers

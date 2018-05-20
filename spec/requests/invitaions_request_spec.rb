@@ -80,9 +80,8 @@ RSpec.describe InvitationsController, type: :request do
         put "/games/#{@game.id}/invitations/#{invitation.id}", params: {
           accepted: true
         }.to_json, headers: headers
-        current_location_name = @current_user.players.find_by(game: @game)
-          .current_location.name
-        expect(current_location_name).to eq('Atlanta')
+        location = @current_user.players.find_by(game: @game).location
+        expect(location.name).to eq('Atlanta')
       end
 
       it "sets player's role to a role not yet taken" do

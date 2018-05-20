@@ -49,7 +49,7 @@ RSpec.describe DirectFlightsController, type: :request do
 
     it "sets the current player's location to the new location" do
       trigger_post
-      expect(current_player.reload.current_location).to eq(city)
+      expect(current_player.reload.location).to eq(city)
     end
 
     it "increments actions taken" do

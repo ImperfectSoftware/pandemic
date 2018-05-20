@@ -1,4 +1,6 @@
 class CureDiseasesController < PlayerActionsController
+  delegate :location, to: :current_player
+
   def create
   end
 
@@ -19,9 +21,5 @@ class CureDiseasesController < PlayerActionsController
       game.has_research_station_at?(
         city_staticid: location.staticid
       )
-    end
-
-    def location
-      current_player.current_location
     end
 end

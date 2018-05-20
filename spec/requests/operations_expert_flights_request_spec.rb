@@ -41,7 +41,7 @@ RSpec.describe OperationsExpertFlightsController, type: :request do
     trigger_post(discarded: discarded, destination: destination)
     expect(error).to eq(I18n.t(
       'player_actions.city_with_no_station',
-      name: current_player.current_location.name
+      name: current_player.location.name
     ))
   end
 
@@ -58,7 +58,7 @@ RSpec.describe OperationsExpertFlightsController, type: :request do
   end
 
   it "discards the player card" do
-    composite_id = current_player.current_location.composite_id
+    composite_id = current_player.location.composite_id
     trigger_post(discarded: discarded, destination: destination)
     expect(current_player.reload.cards_composite_ids.include?(composite_id))
       .to be(false)
@@ -66,7 +66,7 @@ RSpec.describe OperationsExpertFlightsController, type: :request do
 
   it "sets the current player's location to destination" do
     trigger_post(discarded: discarded, destination: destination)
-    expect(current_player.reload.current_location.staticid).to eq(destination)
+    expect(current_player.reload.location.staticid).to eq(destination)
   end
 
   it "creates a movement with the to location set to the card passed in" do

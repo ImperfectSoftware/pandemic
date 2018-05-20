@@ -26,9 +26,9 @@ class ShareCardsController < PlayerActionsController
           I18n.t('player_actions.no_actions_left')
         elsif not_to_or_from_player_turn?
           I18n.t('player_actions.bad_turn')
-        elsif to_player.current_location != share_card.location
+        elsif to_player.location != share_card.location
           I18n.t('share_cards.to_player_bad_location')
-        elsif from_player.current_location != share_card.location
+        elsif from_player.location != share_card.location
           I18n.t('share_cards.from_player_bad_location')
         elsif !player_card
           I18n.t('share_cards.not_an_owner')

@@ -29,9 +29,8 @@ RSpec.describe GamesController, type: :request do
 
     it "sets game owner's player current location to Atlanta" do
       post "/games", params: {}, headers: headers
-      current_location_name = @current_user.players.find_by(game: Game.last)
-        .current_location.name
-      expect(current_location_name).to eq('Atlanta')
+      location = @current_user.players.find_by(game: Game.last).location
+      expect(location.name).to eq('Atlanta')
     end
 
     it "assigns game role to player" do

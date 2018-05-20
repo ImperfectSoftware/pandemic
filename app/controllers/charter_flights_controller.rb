@@ -29,7 +29,7 @@ class CharterFlightsController < PlayerActionsController
 
   def player_owns_current_location?
     !!current_player.player_city_card_from_inventory(
-      composite_id: current_player.current_location.composite_id
+      composite_id: current_player.location.composite_id
     )
   end
 

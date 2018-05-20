@@ -31,7 +31,7 @@ RSpec.describe CharterFlightsController, type: :request do
 
     before(:each) do
       current_player.update!(
-        cards_composite_ids: [current_player.current_location.composite_id]
+        cards_composite_ids: [current_player.location.composite_id]
       )
     end
 
@@ -41,7 +41,7 @@ RSpec.describe CharterFlightsController, type: :request do
     end
 
     it "sets movement's from location to the player's current location" do
-      location = current_player.current_location
+      location = current_player.location
       trigger_post
       expect(Movement.last.from_city_staticid).to eq(location.staticid)
     end
@@ -53,7 +53,7 @@ RSpec.describe CharterFlightsController, type: :request do
 
     it "sets the current player's location to the new location" do
       trigger_post
-      expect(current_player.reload.current_location).to eq(city)
+      expect(current_player.reload.location).to eq(city)
     end
 
     it "increments actions taken" do
@@ -62,7 +62,7 @@ RSpec.describe CharterFlightsController, type: :request do
     end
 
     it "removes used player card from player's inventory" do
-      location = current_player.current_location
+      location = current_player.location
       trigger_post
       composite_ids = current_player.reload.cards_composite_ids
       expect(composite_ids.include?(location.composite_id)).to be(false)

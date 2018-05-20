@@ -56,8 +56,7 @@ RSpec.describe GiveCardsController, type: :request do
       post "/games/#{game.id}/give_cards", params: {
         player_id: player.id
       }.to_json, headers: headers
-      expect(ShareCard.last.city_staticid)
-        .to eq(player.current_location.staticid)
+      expect(ShareCard.last.city_staticid) .to eq(player.location.staticid)
     end
 
     it "stores the card creator id" do

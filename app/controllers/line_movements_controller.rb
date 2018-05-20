@@ -23,7 +23,7 @@ class LineMovementsController < PlayerActionsController
   end
 
   def destination_is_a_neighbor?
-    current_player.current_location.neighbors_staticids
+    current_player.location.neighbors_staticids
       .include?(params[:city_staticid])
   end
 end

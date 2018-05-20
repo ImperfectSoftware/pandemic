@@ -45,7 +45,7 @@ RSpec.describe GetCardsController, type: :request do
     it "stores the card composite id" do
       trigger_post
       expect(ShareCard.last.city_staticid)
-        .to eq(player.current_location.staticid)
+        .to eq(player.location.staticid)
     end
 
     it "stores the card creator id" do

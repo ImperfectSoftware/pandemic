@@ -9,7 +9,7 @@ RSpec.describe TreatDiseasesController, type: :request do
   let(:current_player) { current_user.players.find_by(game: game) }
   let(:player) { Fabricate(:player, game: game) }
   let(:user) { user.players.find_by(game: game) }
-  let(:staticid) { current_player.current_location.staticid }
+  let(:staticid) { current_player.location.staticid }
 
   before(:each) do
     game.update(player_turn_ids: [current_player.id, player.id])

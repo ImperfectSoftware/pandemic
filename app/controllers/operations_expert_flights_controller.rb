@@ -23,7 +23,7 @@ class OperationsExpertFlightsController < PlayerActionsController
         elsif !departure_city_is_a_research_station?
           I18n.t(
             'player_actions.city_with_no_station',
-            name: current_player.current_location.name
+            name: current_player.location.name
           )
         elsif !player_card
           I18n.t("player_actions.must_own_card")
