@@ -40,4 +40,8 @@ class SpecialCard
     "special-card-#{staticid}"
   end
 
+  def forecast?
+    "special-card-5" == composite_id
+  end
+
 end

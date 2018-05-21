@@ -34,4 +34,14 @@ class Player < ApplicationRecord
   def owns_card?(card)
     cards_composite_ids.include?(card&.composite_id)
   end
+
+  def player_cards
+    cards_composite_ids.map do |id|
+      PlayerCard.find_by_composite_id(id)
+    end
+  end
+
+  def event_cards
+    player_cards.select { |card| card.is_a?(SpecialCard) }
+  end
 end
