@@ -20,7 +20,8 @@ class Player < ApplicationRecord
   has_many :share_cards, foreign_key: "creator_id"
   has_many :operations_expert_actions
   has_many :movement_proposals
-  has_many :created_movement_proposals
+  has_many :created_movement_proposals, foreign_key: "creator_id",
+    class_name: "MovementProposal"
 
   def location
     City.find(location_staticid)

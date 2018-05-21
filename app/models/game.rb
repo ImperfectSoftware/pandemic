@@ -5,6 +5,7 @@ class Game < ApplicationRecord
   has_many :players
   has_many :research_stations
   has_many :infections
+  has_many :movement_proposals
   belongs_to :owner, class_name: "User"
 
   def no_actions_left?

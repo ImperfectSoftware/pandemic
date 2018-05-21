@@ -7,6 +7,8 @@ en:
     wrong_number_of_cards: The player doesn't have correct number of cards.
   charter_flights:
     player_must_own_card: The player does not own the city card at the current location.
+  dispatcher:
+    must_be_a_dispatcher: This action requires the dispatcher role.
   errors:
     missing_param: Required parameter missing.
   games:
@@ -20,6 +22,8 @@ en:
     user_invited: An invitation for this user already exists.
   line_movements:
     destination_is_not_a_neighbor: Destination city is not a neighbor.
+  movement_proposals:
+    not_allowed: Destination is not a neighbor and there is no other player at that location.
   operations_expert:
     one_action_per_turn: This action has already been performed and it can only be performed once per turn.
   player_actions:
