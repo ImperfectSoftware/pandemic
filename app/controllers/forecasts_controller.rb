@@ -1,18 +1,24 @@
 class ForecastsController < ApplicationController
-  before_action :check_for_potential_errors
+  before_action :check_for_potential_errors, only: :create
 
-  def index
-    forecast_card
+  def create
+    if !forecast_performed_this_turn?
+      game.discarded_special_player_card_ids << forecast_card.staticid
+      game.save!
+      current_player.update!(cards_composite_ids: remaining_cards)
+      game.forecasts.create!(turn_nr: game.turn_nr)
+    end
+    @static_ids = game.unused_infection_card_city_staticids.last(6)
   end
 
   private
 
   def check_for_potential_errors
-    render json: { error: create_error_message }
+    render json: { error: create_error_message } if create_error_message
   end
 
   def create_error_message
-    if current_player.event_cards.find { |card| card.forecast? }.nil?
+    if forecast_card.nil? && !forecast_performed_this_turn?
       I18n.t("player_actions.must_own_card")
     end
   end
@@ -27,5 +33,13 @@ class ForecastsController < ApplicationController
 
   def current_player
     @current_player ||= current_user.players.find_by(game: game)
+  end
+
+  def forecast_performed_this_turn?
+    game.forecasts.last&.turn_nr == game.turn_nr
+  end
+
+  def remaining_cards
+    current_player.cards_composite_ids - [forecast_card.composite_id]
   end
 end
