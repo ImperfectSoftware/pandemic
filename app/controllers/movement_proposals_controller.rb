@@ -7,7 +7,8 @@ class MovementProposalsController < PlayerActionsController
       city_staticid: params[:city_staticid],
       turn_nr: game.turn_nr,
       game: game,
-      accepted: false
+      accepted: false,
+      airlift: using_airlift?
     )
   end
 

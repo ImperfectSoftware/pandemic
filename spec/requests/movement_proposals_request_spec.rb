@@ -50,10 +50,29 @@ RSpec.describe MovementProposalsController, type: :request do
       expect(MovementProposal.last.player_id).to eq(player.id)
     end
 
+    it "sets airlift to true" do
+      airlift = SpecialCard.events.find(&:airlift?)
+      current_player.update!(cards_composite_ids: [airlift.composite_id])
+      trigger_post(
+        player_id: player.id,
+        city_staticid: neighbor.staticid,
+        airlift: true
+      )
+      expect(MovementProposal.last.airlift).to be(true)
+    end
+
     context "when destination is a neighbor" do
       before(:each) do
         # dispatcher role
         current_player.update!(role: Player.roles.keys[5])
+      end
+
+      it "sets airlift to false" do
+        trigger_post(
+          player_id: player.id,
+          city_staticid: neighbor.staticid
+        )
+        expect(MovementProposal.last.airlift).to be(false)
       end
 
       it "sets player id on the movement proposal" do
