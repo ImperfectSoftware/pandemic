@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180522111226) do
+ActiveRecord::Schema.define(version: 20180522122340) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -25,20 +25,28 @@ ActiveRecord::Schema.define(version: 20180522111226) do
     t.index ["game_id"], name: "index_cure_markers_on_game_id"
   end
 
+  create_table "forecasts", force: :cascade do |t|
+    t.integer "game_id"
+    t.integer "turn_nr"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["game_id"], name: "index_forecasts_on_game_id"
+  end
+
   create_table "games", force: :cascade do |t|
     t.boolean "started"
-    t.integer "player_turn_ids", array: true
+    t.integer "player_turn_ids", default: [], array: true
     t.integer "nr_of_epidemic_cards"
-    t.integer "discarded_special_player_card_ids", array: true
-    t.string "unused_player_card_ids", array: true
+    t.string "unused_player_card_ids", default: [], array: true
     t.integer "number_of_outbreaks"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "owner_id"
-    t.string "used_infection_card_city_staticids", array: true
-    t.string "unused_infection_card_city_staticids", array: true
+    t.string "used_infection_card_city_staticids", default: [], array: true
+    t.string "unused_infection_card_city_staticids", default: [], array: true
     t.integer "turn_nr"
     t.integer "actions_taken"
+    t.string "discarded_special_player_card_ids", default: [], array: true
   end
 
   create_table "infections", force: :cascade do |t|
@@ -97,7 +105,7 @@ ActiveRecord::Schema.define(version: 20180522111226) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "location_staticid"
-    t.string "cards_composite_ids", array: true
+    t.string "cards_composite_ids", default: [], array: true
     t.integer "role"
     t.index ["game_id"], name: "index_players_on_game_id"
     t.index ["user_id"], name: "index_players_on_user_id"
