@@ -7,7 +7,7 @@ Rails.application.routes.draw do
     resources :give_cards, only: :create, format: :json
     resources :invitations, only: [:create, :update, :destroy], format: :json
     resources :line_movements, only: :create, format: :json
-    resources :movement_proposals, only: :create, format: :json
+    resources :movement_proposals, only: [:create, :update], format: :json
     resources :operations_expert_flights, only: :create, format: :json
     resources :research_stations, only: :create, format: :json
     resources :share_cards, only: :update, format: :json

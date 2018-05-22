@@ -1,5 +1,5 @@
 Fabricator(:movement_proposal) do
-  by_player_id  1
+  creator_id  1
   player_id     1
   city_staticid "MyString"
   turn_nr       1

@@ -1,4 +1,6 @@
 class MovementProposalsController < PlayerActionsController
+  before_action :check_for_potential_update_errors, only: :update
+
   def create
     current_player.created_movement_proposals.create!(
       player_id: params[:player_id],
@@ -9,7 +11,23 @@ class MovementProposalsController < PlayerActionsController
     )
   end
 
+  def update
+    if params[:accepted]
+      movement_proposal.update!(accepted: true)
+      CreateMovement.new(
+        game: game,
+        player: puppet_player,
+        from: puppet_player.location_staticid,
+        to: city_staticid
+      ).call
+    end
+  end
+
   private
+
+  def check_for_potential_update_errors
+    render json: { error: update_error_message } if update_error_message
+  end
 
   def create_error_message
     @create_error_message ||=
@@ -25,17 +43,46 @@ class MovementProposalsController < PlayerActionsController
       end
   end
 
+  def update_error_message
+    @update_error_message ||=
+      begin
+        case
+        when !params[:accepted]
+        when puppet_player != current_player
+          I18n.t("errors.not_authorized")
+        when game.actions_taken == 4
+          I18n.t("player_actions.no_actions_left")
+        when !destination_is_a_neighbor? && !other_player_at_destination?
+          I18n.t("movement_proposals.not_allowed")
+        when movement_proposal.turn_nr != game.turn_nr
+          I18n.t("movement_proposals.expired")
+        end
+      end
+  end
+
   def destination_is_a_neighbor?
     puppet_player.location.neighbors_staticids
-      .include?(params[:city_staticid])
+      .include?(city_staticid)
   end
 
   def other_player_at_destination?
     game.players.map(&:location).map(&:staticid)
-      .include?(params[:city_staticid])
+      .include?(city_staticid)
   end
 
   def puppet_player
-    @puppet_player ||= game.players.find_by(id: params[:player_id])
+    @puppet_player ||= game.players.find_by(id: player_id)
+  end
+
+  def movement_proposal
+    @movement_proposal ||= game.movement_proposals.find_by(id: params[:id])
+  end
+
+  def city_staticid
+    params[:city_staticid] || movement_proposal.city_staticid
+  end
+
+  def player_id
+    params[:player_id] || movement_proposal.player_id
   end
 end
