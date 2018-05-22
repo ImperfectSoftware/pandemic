@@ -44,4 +44,8 @@ class SpecialCard
     "special-card-5" == composite_id
   end
 
+  def airlift?
+    "special-card-3" == composite_id
+  end
+
 end

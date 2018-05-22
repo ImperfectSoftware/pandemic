@@ -37,7 +37,7 @@ class MovementProposalsController < PlayerActionsController
           I18n.t("errors.missing_param")
         when !destination_is_a_neighbor? && !other_player_at_destination?
           I18n.t("movement_proposals.not_allowed")
-        when !current_player.dispatcher?
+        when !current_player.dispatcher? && !using_airlift?
           I18n.t("dispatcher.must_be_a_dispatcher")
         end
       end
@@ -84,5 +84,9 @@ class MovementProposalsController < PlayerActionsController
 
   def player_id
     params[:player_id] || movement_proposal.player_id
+  end
+
+  def using_airlift?
+    !!current_player.event_cards.find { |card| card.airlift? }
   end
 end
