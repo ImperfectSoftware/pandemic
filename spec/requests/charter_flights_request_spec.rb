@@ -46,11 +46,6 @@ RSpec.describe CharterFlightsController, type: :request do
       expect(Movement.last.from_city_staticid).to eq(location.staticid)
     end
 
-    it "sets by_dispatcher to false" do
-      trigger_post
-      expect(Movement.last.by_dispatcher).to be(false)
-    end
-
     it "sets the current player's location to the new location" do
       trigger_post
       expect(current_player.reload.location).to eq(city)

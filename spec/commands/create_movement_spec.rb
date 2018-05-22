@@ -21,9 +21,4 @@ RSpec.describe CreateMovement do
   it "sets player_id" do
     expect(Movement.last.player_id).to eq(player.id)
   end
-
-  it "sets by_dispatcher" do
-    expect(Movement.last.by_dispatcher).to be(false)
-  end
-
 end

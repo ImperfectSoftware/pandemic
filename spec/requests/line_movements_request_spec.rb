@@ -50,13 +50,6 @@ RSpec.describe LineMovementsController, type: :request do
     expect(Movement.last.to_city_staticid).to eq(to)
   end
 
-  it 'creates a movement as a player' do
-    post "/games/#{@game.id}/line_movements", params: {
-      city_staticid: to
-    }.to_json, headers: headers
-    expect(Movement.last.by_dispatcher).to be(false)
-  end
-
   it "updates player's current location" do
     post "/games/#{@game.id}/line_movements", params: {
       city_staticid: to
