@@ -87,6 +87,6 @@ class MovementProposalsController < PlayerActionsController
   end
 
   def using_airlift?
-    !!current_player.event_cards.find { |card| card.airlift? }
+    !!current_player.event_cards.find(&:airlift?)
   end
 end
