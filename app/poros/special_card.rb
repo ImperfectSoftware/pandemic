@@ -48,4 +48,8 @@ class SpecialCard
     "special-card-3" == composite_id
   end
 
+  def government_grant?
+    "special-card-2" == composite_id
+  end
+
 end
