@@ -18,8 +18,7 @@ RSpec.describe ForecastsController, type: :request do
   it "places the card in the discarded cards pile" do
     current_player.update!(cards_composite_ids: [forecast_card.composite_id])
     post "/games/#{game.id}/forecasts", headers: headers
-    cards = game.reload.discarded_special_player_card_ids
-    expect(cards.include?(forecast_card.staticid)).to be(true)
+    expect(game.reload.discarded_events.include?(forecast_card)).to be(true)
   end
 
   context "with valid request" do

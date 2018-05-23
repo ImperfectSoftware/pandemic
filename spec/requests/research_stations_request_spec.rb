@@ -104,7 +104,7 @@ RSpec.describe ResearchStationsController, type: :request do
     it "adds the event card to the discarded cards pile" do
       trigger_post(city_staticid: city.staticid)
       discarded_ids = game.reload.discarded_special_player_card_ids
-      expect(discarded_ids.include?(grant.staticid)).to be(true)
+      expect(game.reload.discarded_events.include?(grant)).to be(true)
     end
   end
 
