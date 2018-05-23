@@ -25,4 +25,9 @@ class Game < ApplicationRecord
     infection_count(color: color) == 0
   end
 
+  def discarded_events
+    discarded_special_player_card_ids.map do |staticid|
+      SpecialCard.find(staticid)
+    end
+  end
 end

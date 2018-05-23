@@ -202,8 +202,7 @@ RSpec.describe MovementProposalsController, type: :request do
 
       it "places event card in discarded cards" do
         trigger_put
-        composite_ids = game.reload.discarded_special_player_card_ids
-        expect(composite_ids.include?(airlift.composite_id)).to be(true)
+        expect(game.reload.discarded_events.include?(airlift)).to be(true)
       end
     end
   end
