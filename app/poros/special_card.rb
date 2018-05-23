@@ -52,4 +52,7 @@ class SpecialCard
     "special-card-2" == composite_id
   end
 
+  def one_quiet_night?
+    "special-card-4" == composite_id
+  end
 end

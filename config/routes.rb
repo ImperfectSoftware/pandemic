@@ -14,6 +14,10 @@ Rails.application.routes.draw do
     resources :share_cards, only: :update, format: :json
     resources :shuttle_flights, only: :create, format: :json
     resources :treat_diseases, only: :create, format: :json
+
+    scope module: :games, path: '' do
+      resource :skip_infections, only: :create
+    end
   end
   post 'authenticate', to: 'authentication#authenticate'
 end
