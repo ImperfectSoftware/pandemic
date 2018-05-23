@@ -21,6 +21,12 @@ class MovementProposalsController < PlayerActionsController
         from: puppet_player.location_staticid,
         to: city_staticid
       ).call
+      if movement_proposal.airlift?
+        game.discarded_special_player_card_ids << airlift_card.composite_id
+        game.decrement(:actions_taken)
+        game.save!
+        puppet_player.update!(cards_composite_ids: remaining_cards)
+      end
     end
   end
 
@@ -88,6 +94,14 @@ class MovementProposalsController < PlayerActionsController
   end
 
   def using_airlift?
-    !!current_player.event_cards.find(&:airlift?)
+    !!current_player.event_cards.find(&:airlift?) && params[:airlift]
+  end
+
+  def airlift_card
+    SpecialCard.events.find(&:airlift?)
+  end
+
+  def remaining_cards
+    puppet_player.cards_composite_ids - [airlift_card.composite_id]
   end
 end

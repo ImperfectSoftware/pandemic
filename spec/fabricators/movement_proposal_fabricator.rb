@@ -5,4 +5,5 @@ Fabricator(:movement_proposal) do
   turn_nr       1
   game_id       1
   accepted      false
+  airlift       false
 end

@@ -10,6 +10,7 @@ RSpec.describe MovementProposalsController, type: :request do
   let(:player) { Fabricate(:player, game: game) }
   let(:city) { WorldGraph.cities[20] }
   let(:neighbor) { WorldGraph.cities[1] }
+  let(:airlift) { SpecialCard.events.find(&:airlift?) }
 
   context "when creating a proposal" do
 
@@ -40,7 +41,6 @@ RSpec.describe MovementProposalsController, type: :request do
     end
 
     it "creates a movement proposal if using an airlift card" do
-      airlift = SpecialCard.events.find(&:airlift?)
       current_player.update!(cards_composite_ids: [airlift.composite_id])
       trigger_post(
         player_id: player.id,
@@ -51,7 +51,6 @@ RSpec.describe MovementProposalsController, type: :request do
     end
 
     it "sets airlift to true" do
-      airlift = SpecialCard.events.find(&:airlift?)
       current_player.update!(cards_composite_ids: [airlift.composite_id])
       trigger_post(
         player_id: player.id,
@@ -93,6 +92,12 @@ RSpec.describe MovementProposalsController, type: :request do
       it "sets game id on the movement proposal" do
         trigger_post(player_id: player.id, city_staticid: neighbor.staticid)
         expect(MovementProposal.last.game).to eq(game)
+      end
+
+      it "doesn't use airlift if airlift attribute not passed in" do
+        current_player.update!(cards_composite_ids: [airlift.composite_id])
+        trigger_post(player_id: player.id, city_staticid: neighbor.staticid)
+        expect(MovementProposal.last.airlift).to be(false)
       end
     end
   end
@@ -177,6 +182,29 @@ RSpec.describe MovementProposalsController, type: :request do
     it "does nothing if accepted param is false"do
       trigger_put(accepted: false)
       expect(movement_proposal.reload.accepted).to be(false)
+    end
+
+    context "when airlift" do
+      before(:each) do
+        movement_proposal.update!(airlift: true)
+      end
+
+      it "doesn't increment game actions on airlift" do
+        trigger_put
+        expect(game.reload.actions_taken).to eq(0)
+      end
+
+      it "removes event card from player's inventory" do
+        current_player.update!(cards_composite_ids: [airlift.composite_id])
+        trigger_put
+        expect(current_player.reload.event_cards.find(&:airlift?)).to be_nil
+      end
+
+      it "places event card in discarded cards" do
+        trigger_put
+        composite_ids = game.reload.discarded_special_player_card_ids
+        expect(composite_ids.include?(airlift.composite_id)).to be(true)
+      end
     end
   end
 
