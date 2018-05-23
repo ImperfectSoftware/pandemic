@@ -25,4 +25,21 @@ RSpec.describe Player, type: :model do
     @player.cards_composite_ids = [city.composite_id]
     expect(@player.owns_card?(city)).to eq(true)
   end
+
+  context "card types" do
+    let(:city) { WorldGraph.cities.first }
+    let(:event) { SpecialCard.events.first }
+
+    before(:each) do
+      @player.cards_composite_ids = [city.composite_id, event.composite_id]
+    end
+
+    it "knows city cards" do
+      expect(@player.cities.count).to eq(1)
+    end
+
+    it "knows event cards" do
+      expect(@player.events.count).to eq(1)
+    end
+  end
 end

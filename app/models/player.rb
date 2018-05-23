@@ -41,7 +41,11 @@ class Player < ApplicationRecord
     end
   end
 
-  def event_cards
+  def events
     player_cards.select { |card| card.is_a?(SpecialCard) }
+  end
+
+  def cities
+    player_cards.select { |card| card.is_a?(City) }
   end
 end

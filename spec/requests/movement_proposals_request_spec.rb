@@ -197,7 +197,7 @@ RSpec.describe MovementProposalsController, type: :request do
       it "removes event card from player's inventory" do
         current_player.update!(cards_composite_ids: [airlift.composite_id])
         trigger_put
-        expect(current_player.reload.event_cards.find(&:airlift?)).to be_nil
+        expect(current_player.reload.events.find(&:airlift?)).to be_nil
       end
 
       it "places event card in discarded cards" do

@@ -24,7 +24,7 @@ class ForecastsController < ApplicationController
   end
 
   def forecast_card
-    current_player.event_cards.find { |card| card.forecast? }
+    current_player.events.find { |card| card.forecast? }
   end
 
   def game
