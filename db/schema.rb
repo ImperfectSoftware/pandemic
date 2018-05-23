@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180522233703) do
+ActiveRecord::Schema.define(version: 20180523121602) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -47,6 +47,7 @@ ActiveRecord::Schema.define(version: 20180522233703) do
     t.integer "turn_nr"
     t.integer "actions_taken"
     t.string "discarded_special_player_card_ids", default: [], array: true
+    t.boolean "skip_infection", default: false
   end
 
   create_table "infections", force: :cascade do |t|
