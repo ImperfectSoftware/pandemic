@@ -17,6 +17,7 @@ Rails.application.routes.draw do
 
     scope module: :games, path: '' do
       resource :skip_infections, only: :create
+      resource :discard_city_cards, only: :destroy
     end
   end
   post 'authenticate', to: 'authentication#authenticate'
