@@ -11,6 +11,7 @@ Rails.application.routes.draw do
     resources :movement_proposals, only: [:create, :update], format: :json
     resources :operations_expert_flights, only: :create, format: :json
     resources :research_stations, only: :create, format: :json
+    delete "/research_stations/:city_staticid", to: "research_stations#destroy"
     resources :share_cards, only: :update, format: :json
     resources :shuttle_flights, only: :create, format: :json
     resources :treat_diseases, only: :create, format: :json

@@ -16,6 +16,11 @@ class ResearchStationsController < PlayerActionsController
     end
   end
 
+  def destroy
+    game.research_stations
+      .find_by(city_staticid: params[:city_staticid])&.destroy
+  end
+
   private
 
   def create_error_message
