@@ -18,7 +18,7 @@ Rails.application.routes.draw do
     scope module: :games, path: '' do
       resource :skip_infections, only: :create
       resource :discard_city_cards, only: :destroy
-      resource :forecasts, only: :create, format: :json
+      resource :forecasts, only: [:create, :update], format: :json
     end
   end
   post 'authenticate', to: 'authentication#authenticate'

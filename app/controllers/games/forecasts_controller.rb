@@ -1,5 +1,6 @@
 class Games::ForecastsController < ApplicationController
-  before_action :check_for_potential_errors, only: :create
+  before_action :check_for_potential_create_errors, only: :create
+  before_action :check_for_potential_update_errors, only: :update
 
   def create
     if !forecast_performed_this_turn?
@@ -11,16 +12,42 @@ class Games::ForecastsController < ApplicationController
     @static_ids = game.unused_infection_card_city_staticids.last(6)
   end
 
+  def update
+    staticids = game.unused_infection_card_city_staticids
+    staticids.pop(6)
+    staticids += params[:city_staticids]
+    game.update!(unused_infection_card_city_staticids: staticids)
+  end
+
   private
 
-  def check_for_potential_errors
+  def check_for_potential_create_errors
     render json: { error: create_error_message } if create_error_message
   end
 
+  def check_for_potential_update_errors
+    render json: { error: update_error_message } if update_error_message
+  end
+
   def create_error_message
-    if forecast_card.nil? && !forecast_performed_this_turn?
-      I18n.t("player_actions.must_own_card")
-    end
+    @create_error_message ||=
+      begin
+        if forecast_card.nil? && !forecast_performed_this_turn?
+          I18n.t("player_actions.must_own_card")
+        end
+      end
+  end
+
+  def update_error_message
+    @update_error_message ||=
+      begin
+        case
+        when forecast&.turn_nr != game.turn_nr
+          I18n.t("errors.not_authorized")
+        when bad_staticids?
+          I18n.t("forecasts.bad_staticids")
+        end
+      end
   end
 
   def forecast_card
@@ -45,5 +72,10 @@ class Games::ForecastsController < ApplicationController
 
   def forecast
     game.forecasts.last
+  end
+
+  def bad_staticids?
+    game.unused_infection_card_city_staticids.last(6).sort !=
+      params[:city_staticids].to_a.sort
   end
 end
