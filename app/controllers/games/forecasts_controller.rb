@@ -24,7 +24,7 @@ class Games::ForecastsController < ApplicationController
   end
 
   def forecast_card
-    current_player.events.find { |card| card.forecast? }
+    current_player.events.find(&:forecast?)
   end
 
   def game
@@ -36,10 +36,14 @@ class Games::ForecastsController < ApplicationController
   end
 
   def forecast_performed_this_turn?
-    game.forecasts.last&.turn_nr == game.turn_nr
+    forecast&.turn_nr == game.turn_nr
   end
 
   def remaining_cards
     current_player.cards_composite_ids - [forecast_card.composite_id]
+  end
+
+  def forecast
+    game.forecasts.last
   end
 end
