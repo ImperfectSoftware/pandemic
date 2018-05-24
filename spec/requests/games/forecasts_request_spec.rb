@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe ForecastsController, type: :request do
+RSpec.describe Games::ForecastsController, type: :request do
   include AuthHelper
   include ResponseHelpers
 

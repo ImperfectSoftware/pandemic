@@ -1,4 +1,4 @@
-class ForecastsController < ApplicationController
+class Games::ForecastsController < ApplicationController
   before_action :check_for_potential_errors, only: :create
 
   def create

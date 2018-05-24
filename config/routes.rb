@@ -3,7 +3,6 @@ Rails.application.routes.draw do
     resources :cure_diseases, only: :create, format: :json
     resources :charter_flights, only: :create, format: :json
     resources :direct_flights, only: :create, format: :json
-    resources :forecasts, only: :create, format: :json
     resources :get_cards, only: :create, format: :json
     resources :give_cards, only: :create, format: :json
     resources :invitations, only: [:create, :update, :destroy], format: :json
@@ -19,6 +18,7 @@ Rails.application.routes.draw do
     scope module: :games, path: '' do
       resource :skip_infections, only: :create
       resource :discard_city_cards, only: :destroy
+      resource :forecasts, only: :create, format: :json
     end
   end
   post 'authenticate', to: 'authentication#authenticate'
