@@ -2,7 +2,7 @@ class TreatDiseases
   prepend SimpleCommand
   delegate :cured?, to: :@cure_marker
 
-  def initialize(game:, cure_marker:, quantity: 1, infection:, medic: false)
+  def initialize(game:, cure_marker:, quantity: 1, infection:, medic:)
     @game = game
     @cure_marker = cure_marker
     @quantity = quantity.to_i

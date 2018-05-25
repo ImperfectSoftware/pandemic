@@ -4,7 +4,8 @@ class TreatDiseasesController < PlayerActionsController
       game: game,
       cure_marker: cure_marker,
       quantity: quantity,
-      infection: infection
+      infection: infection,
+      medic: current_player.medic?
     )
     command.call
     if command.errors.present?

@@ -12,7 +12,8 @@ RSpec.describe TreatDiseases do
     command = TreatDiseases.new(
       game: game,
       cure_marker: not_cured_marker,
-      infection: nil
+      infection: nil,
+      medic: false
     )
     command.call
     expect(command.errors[:quantity].first)
@@ -24,7 +25,8 @@ RSpec.describe TreatDiseases do
       game: game,
       cure_marker: not_cured_marker,
       infection: infection,
-      quantity: 5
+      quantity: 5,
+      medic: false
     )
     command.call
     expect(command.errors[:quantity].first)
@@ -37,7 +39,8 @@ RSpec.describe TreatDiseases do
       game: game,
       cure_marker: not_cured_marker,
       infection: infection,
-      quantity: 2
+      quantity: 2,
+      medic: false
     )
     command.call
     expect(command.errors[:quantity].first)
@@ -45,14 +48,18 @@ RSpec.describe TreatDiseases do
   end
 
   context "when disease is cured" do
-    before(:each) do
-      game.update!(actions_taken: 3)
-      @command = TreatDiseases.new(
+    let(:command) do
+      TreatDiseases.new(
         game: game,
         cure_marker: cured_marker,
         infection: infection,
-        quantity: 2
+        quantity: 2,
+        medic: false
       )
+    end
+
+    before(:each) do
+      game.update!(actions_taken: 3)
     end
     it "doesn't return error if trying to treat more cubes than actions left" do
       command.call
@@ -92,7 +99,8 @@ RSpec.describe TreatDiseases do
         game: game,
         cure_marker: not_cured_marker,
         infection: infection(3),
-        quantity: 2
+        quantity: 2,
+        medic: false
       )
     end
 
