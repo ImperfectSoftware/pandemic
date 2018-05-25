@@ -36,6 +36,7 @@ RSpec.describe MovementProposalsController, type: :request do
     end
 
     it "returns an error if the player is not a dispatcher" do
+      current_player.update!(role: Player.roles.keys[0])
       trigger_post(player_id: player.id, city_staticid: neighbor.staticid)
       expect(error).to eq(I18n.t("dispatcher.must_be_a_dispatcher"))
     end

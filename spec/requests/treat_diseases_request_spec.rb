@@ -12,6 +12,7 @@ RSpec.describe TreatDiseasesController, type: :request do
   let(:staticid) { current_player.location.staticid }
 
   before(:each) do
+    current_player.update!(role: Player.roles.keys[1])
     game.update(player_turn_ids: [current_player.id, player.id])
   end
 
