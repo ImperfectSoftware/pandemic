@@ -20,7 +20,6 @@ RSpec.describe TreatDiseases do
   end
 
   it "returns error if quantity is greater than the number of infections" do
-    infection = game.infections.build(quantity: 2, city_staticid: city_staticid)
     command = TreatDiseases.new(
       game: game,
       cure_marker: not_cured_marker,
@@ -34,7 +33,6 @@ RSpec.describe TreatDiseases do
 
   it "returns error if trying to treat more cubes than actions left" do
     game.update!(actions_taken: 3)
-    infection = game.infections.build(quantity: 2, city_staticid: city_staticid)
     command = TreatDiseases.new(
       game: game,
       cure_marker: not_cured_marker,
@@ -49,7 +47,6 @@ RSpec.describe TreatDiseases do
   context "when disease is cured" do
     before(:each) do
       game.update!(actions_taken: 3)
-      @infection = game.infections.build(quantity: 2, city_staticid: city_staticid)
       @command = TreatDiseases.new(
         game: game,
         cure_marker: cured_marker,
@@ -90,12 +87,11 @@ RSpec.describe TreatDiseases do
   end
 
   context "when disease is NOT cured" do
-    before(:each) do
-      @infection = game.infections.create!(quantity: 3, city_staticid: city_staticid)
-      @command = TreatDiseases.new(
+    let(:command) do
+      TreatDiseases.new(
         game: game,
         cure_marker: not_cured_marker,
-        infection: infection,
+        infection: infection(3),
         quantity: 2
       )
     end
@@ -122,5 +118,28 @@ RSpec.describe TreatDiseases do
     end
   end
 
+  # context "when the player is a medic" do
+  #   context "when the disease is not cured" do
+  #     it "uses only one action to cure mutliple quantities" do
+  #       # @command = TreatDiseases.new(
+  #       #   game: game,
+  #       #   cure_marker: not_cured_marker,
+  #       #   infection: infection(3),
+  #       #   quantity: 2
+  #       # )
+  #     end
+  #   end
+
+  #   context "when the disease is cured" do
+  #     xit "uses no actions to cure mutliple quantities" do
+  #     end
+  #   end
+  # end
+
   attr_reader :command, :infection
+
+  def infection(quantity = 2)
+    @infection ||= game.infections
+      .build(quantity: quantity, city_staticid: city_staticid)
+  end
 end
