@@ -118,28 +118,63 @@ RSpec.describe TreatDiseases do
     end
   end
 
-  # context "when the player is a medic" do
-  #   context "when the disease is not cured" do
-  #     it "uses only one action to cure mutliple quantities" do
-  #       # @command = TreatDiseases.new(
-  #       #   game: game,
-  #       #   cure_marker: not_cured_marker,
-  #       #   infection: infection(3),
-  #       #   quantity: 2
-  #       # )
-  #     end
-  #   end
+  context "when the player is a medic" do
+    context "when the disease is not cured" do
+      let(:command) do
+        TreatDiseases.new(
+          game: game,
+          cure_marker: not_cured_marker,
+          infection: infection(3),
+          quantity: 2,
+          medic: true
+        )
+      end
 
-  #   context "when the disease is cured" do
-  #     xit "uses no actions to cure mutliple quantities" do
-  #     end
-  #   end
-  # end
+      it "uses only one action to cure mutliple quantities" do
+        command.call
+        expect(game.reload.actions_taken).to eq(1)
+      end
+
+      it "sets remaining quantity to 0" do
+        command.call
+        expect(infection.reload.quantity).to eq(0)
+      end
+
+      it "treats disease when quantity is higher than actions left" do
+        game.update!(actions_taken: 3)
+        command.call
+        expect(infection.reload.quantity).to eq(0)
+      end
+    end
+
+    context "when the disease is cured" do
+      let(:command) do
+        TreatDiseases.new(
+          game: game,
+          cure_marker: cured_marker,
+          infection: infection(3),
+          quantity: 2,
+          medic: true
+        )
+      end
+
+      it "uses no actions to cure mutliple quantities" do
+        command.call
+        expect(game.reload.actions_taken).to eq(0)
+      end
+
+      it "treats disease when no actions left" do
+        game.update!(actions_taken: 4)
+        command.call
+        expect(infection.reload.quantity).to eq(0)
+      end
+    end
+  end
 
   attr_reader :command, :infection
 
   def infection(quantity = 2)
     @infection ||= game.infections
-      .build(quantity: quantity, city_staticid: city_staticid)
+      .create!(quantity: quantity, city_staticid: city_staticid)
   end
 end
