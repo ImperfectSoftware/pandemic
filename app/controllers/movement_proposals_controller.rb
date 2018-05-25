@@ -19,11 +19,11 @@ class MovementProposalsController < PlayerActionsController
         game: game,
         player: puppet_player,
         from: puppet_player.location_staticid,
-        to: city_staticid
+        to: city_staticid,
+        airlift: movement_proposal.airlift?
       ).call
       if movement_proposal.airlift?
         game.discarded_special_player_card_ids << airlift_card.staticid
-        game.decrement(:actions_taken)
         game.save!
         puppet_player.update!(cards_composite_ids: remaining_cards)
       end
