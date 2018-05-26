@@ -19,8 +19,7 @@ RSpec.describe PlaceInfectionCommand do
     PlaceInfectionCommand.new(
       game: game,
       staticid: san_francisco.staticid,
-      quantity: 3,
-      color: san_francisco.color
+      quantity: 3
     )
   end
 

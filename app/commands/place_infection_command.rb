@@ -1,14 +1,12 @@
 class PlaceInfectionCommand
   prepend SimpleCommand
 
-  attr_reader :outbreak_staticids
-
-  def initialize(game:, staticid:, quantity:, color:, outbreak_staticids: [])
+  def initialize(game:, staticid:, quantity:, color: nil, outbreakids: [])
     @game = game
     @staticid = staticid
     @quantity = quantity
-    @color = color
-    @outbreak_staticids = outbreak_staticids
+    @color = color || city.color
+    @outbreakids = outbreakids
   end
 
   def call
@@ -20,16 +18,16 @@ class PlaceInfectionCommand
   private
 
   def trigger_outbreak
-    @outbreak_staticids << @staticid
+    @outbreakids << @staticid
     @game.increment!(:outbreaks_nr)
     city.neighbors.each do |neighbor|
-      next if outbreak_staticids.include?(neighbor.staticid)
+      next if @outbreakids.include?(neighbor.staticid)
       PlaceInfectionCommand.new(
         game: @game,
         staticid: neighbor.staticid,
         quantity: 1,
         color: city.color,
-        outbreak_staticids: @outbreak_staticids
+        outbreakids: @outbreakids
       ).call
     end
   end
