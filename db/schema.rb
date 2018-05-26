@@ -48,7 +48,7 @@ ActiveRecord::Schema.define(version: 20180526224226) do
     t.string "discarded_special_player_card_ids", default: [], array: true
     t.boolean "skip_infections", default: false
     t.integer "outbreaks_nr", default: 0
-    t.integer "nr_of_intensified_cards"
+    t.integer "nr_of_intensified_cards", default: 0
   end
 
   create_table "infections", force: :cascade do |t|
