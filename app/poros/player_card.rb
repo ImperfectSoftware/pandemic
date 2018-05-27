@@ -1,6 +1,8 @@
 class PlayerCard
 
   def self.find_by_composite_id(composite_id)
+    return unless composite_id
+
     parts = composite_id.split('-')
     case parts.first
     when 'city'

@@ -55,4 +55,8 @@ class SpecialCard
   def one_quiet_night?
     "special-card-4" == composite_id
   end
+
+  def storable?
+    composite_id.split("-").last != '0'
+  end
 end

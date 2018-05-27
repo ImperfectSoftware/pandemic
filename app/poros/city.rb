@@ -48,4 +48,8 @@ class City
   def composite_id
     "city-#{staticid}"
   end
+
+  def storable?
+    true
+  end
 end
