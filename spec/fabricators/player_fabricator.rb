@@ -10,3 +10,13 @@ Fabricator(:medic, class_name: Player) do
   role { Player.roles.keys[2] }
   location_staticid { WorldGraph.cities.first.staticid }
 end
+
+Fabricator(:not_a_researcher, class_name: Player) do
+  user { Fabricate(:user) }
+  role do
+    roles = Player.roles.keys
+    roles.delete('researcher')
+    roles.sample
+  end
+  location_staticid { WorldGraph.cities.first.staticid }
+end

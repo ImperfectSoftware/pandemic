@@ -7,7 +7,7 @@ RSpec.describe GiveCardsController, type: :request do
   let(:current_user) { Fabricate(:user, password: '12341234') }
   let(:game) { Fabricate(:game, owner: current_user) }
   let(:current_player) { current_user.players.find_by(game: game) }
-  let(:player) { Fabricate(:player, game: game) }
+  let(:player) { Fabricate(:not_a_researcher, game: game) }
   let(:user) { user.players.find_by(game: game) }
 
   before(:each) do
