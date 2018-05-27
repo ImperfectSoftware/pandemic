@@ -32,4 +32,8 @@ class Game < ApplicationRecord
       SpecialCard.find(staticid)
     end
   end
+
+  def between_epidemic_stages?
+    nr_of_intensified_cards != 0
+  end
 end

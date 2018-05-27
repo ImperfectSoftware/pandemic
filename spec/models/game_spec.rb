@@ -29,4 +29,13 @@ RSpec.describe Game, type: :model do
       expect(game.infection_count(color: 'blue')).to eq(5)
     end
   end
+
+  it "knows it's not between infect and intensify stage" do
+    expect(game.between_epidemic_stages?).to be(false)
+  end
+
+  it "knows it's between infect and intensify stage" do
+    game.update!(nr_of_intensified_cards: 5)
+    expect(game.between_epidemic_stages?).to be(true)
+  end
 end
