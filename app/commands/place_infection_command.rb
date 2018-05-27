@@ -20,6 +20,7 @@ class PlaceInfectionCommand
   def trigger_outbreak
     @outbreakids << @staticid
     @game.increment!(:outbreaks_nr)
+    @game.finished! if @game.outbreaks_nr == 8
     city.neighbors.each do |neighbor|
       next if @outbreakids.include?(neighbor.staticid)
       PlaceInfectionCommand.new(

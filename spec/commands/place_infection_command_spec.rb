@@ -107,6 +107,12 @@ RSpec.describe PlaceInfectionCommand do
       expect(game.reload.outbreaks_nr).to eq(1)
     end
 
+    it "marks game as over if there are 8 or more outbreaks" do
+      game.update!(outbreaks_nr: 7)
+      command.call
+      expect(game.reload.finished?).to be(true)
+    end
+
     context "when there is a chain outbreak in the same color" do
       before(:each) do
         Fabricate(
