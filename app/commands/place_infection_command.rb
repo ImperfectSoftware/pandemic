@@ -41,10 +41,6 @@ class PlaceInfectionCommand
     @total_quantity ||= infection.quantity + @quantity
   end
 
-  def ceiled_quantity
-    quantities.min
-  end
-
   def city
     @city ||= City.find(@staticid)
   end

@@ -36,8 +36,4 @@ class CreateMovement
   def infections
     @infections ||= @game.infections.where(city_staticid: @to)
   end
-
-  def city
-    City.find(@to)
-  end
 end
