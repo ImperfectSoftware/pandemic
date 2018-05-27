@@ -55,6 +55,7 @@ RSpec.describe FlipCard do
     let(:player) { game.players.first }
     let(:command) { FlipCard.new(game: game, player: player) }
     before(:each) do
+      game.players.first.update!(role: Player.roles.keys.first)
       game.update!(unused_infection_card_city_staticids: %w{0 1})
       command.call
     end
