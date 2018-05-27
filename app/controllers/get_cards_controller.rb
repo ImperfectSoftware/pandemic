@@ -17,6 +17,8 @@ class GetCardsController < PlayerActionsController
       begin
         if other_player.location != current_player.location
           I18n.t("share_cards.not_the_same_location")
+        elsif !allowed_to_share_knowledge?
+          I18n.t("player_actions.not_a_researcher")
         elsif !player_card
           I18n.t("share_cards.not_an_owner")
         end

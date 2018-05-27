@@ -26,6 +26,20 @@ RSpec.describe GetCardsController, type: :request do
     expect(error).to eq(I18n.t("share_cards.not_an_owner"))
   end
 
+  context "when other player is not a researcher" do
+    before(:each) { player.update!(role: Player.roles.keys.first) }
+
+    it "returns an error when passing in a city staticid" do
+      trigger_post(city_staticid: WorldGraph.cities[25].staticid)
+      expect(error).to eq(I18n.t("player_actions.not_a_researcher"))
+    end
+
+    it "doesn't return an error when passing in the current location" do
+      trigger_post(city_staticid: player.location.staticid)
+      expect(ShareCard.last.from_player_id).to eq(player.id)
+    end
+  end
+
   context "with valid request" do
     it "stores the current player's id in the to_player_id field" do
       trigger_post
