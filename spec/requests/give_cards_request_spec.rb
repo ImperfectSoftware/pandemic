@@ -27,14 +27,14 @@ RSpec.describe GiveCardsController, type: :request do
   end
 
   context "when current player is not a researcher" do
+    before(:each) { current_player.update!(role: Player.roles.keys.first) }
+
     it "returns an error when passing in a city staticid" do
-      current_player.update!(role: Player.roles.keys.first)
       trigger_post(city_staticid: WorldGraph.cities[25].staticid)
       expect(error).to eq(I18n.t("player_actions.not_a_researcher"))
     end
 
     it "doesn't return an error when passing in the current location" do
-      current_player.update!(role: Player.roles.keys.first)
       trigger_post(city_staticid: player.location.staticid)
       expect(ShareCard.last.from_player_id).to eq(current_player.id)
     end

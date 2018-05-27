@@ -11,6 +11,7 @@ RSpec.describe GetCardsController, type: :request do
   let(:user) { user.players.find_by(game: game) }
 
   before(:each) do
+    current_player.update!(role: Player.roles.keys.first)
     game.update(player_turn_ids: [current_player.id, player.id])
   end
 
