@@ -20,3 +20,9 @@ Fabricator(:not_a_researcher, class_name: Player) do
   end
   location_staticid { WorldGraph.cities.first.staticid }
 end
+
+Fabricator(:quarantine_specialist, class_name: Player) do
+  user { Fabricate(:user) }
+  role { Player.roles.keys[4] }
+  location_staticid { WorldGraph.cities.first.staticid }
+end

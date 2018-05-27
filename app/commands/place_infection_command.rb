@@ -67,19 +67,39 @@ class PlaceInfectionCommand
   end
 
   def can_infect?
-    return false if players.include?(medic) && cure_marker&.cured?
+    return false if neighboring_location_includes_quarantine_specialist?
+    return false if players_at_current_location.include?(quarantine_specialist)
+    return false if medic_prevents_infection?
     true
-  end
-
-  def players
-    @game.players.where(location_staticid: @staticid)
   end
 
   def medic
     @game.players.find_by(role: Player.roles.keys[2])
   end
 
+  def quarantine_specialist
+    @game.players.find_by(role: Player.roles.keys[4])
+  end
+
   def cure_marker
     @game.cure_markers.find_by(color: @color)
+  end
+
+  def neighboring_location_includes_quarantine_specialist?
+    players_at_neighboring_locations.include?(quarantine_specialist)
+  end
+
+  def players_at_neighboring_locations
+    @players_at_neighboring_locations ||= @game.players
+      .where(location_staticid: city.neighbors_staticids)
+  end
+
+  def medic_prevents_infection?
+    players_at_current_location.include?(medic) && cure_marker&.cured?
+  end
+
+  def players_at_current_location
+    @players_at_current_location ||= @game.players
+      .where(location_staticid: @staticid)
   end
 end

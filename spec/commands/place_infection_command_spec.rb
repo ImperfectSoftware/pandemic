@@ -3,6 +3,7 @@ require 'rails_helper'
 RSpec.describe PlaceInfectionCommand do
 
   let(:game) { Fabricate(:game) }
+  let(:current_player) { game.players.first }
   let(:san_francisco) { WorldGraph.cities[0] }
   let(:manila) { WorldGraph.cities[42] }
   let(:los_angeles) { WorldGraph.cities[1] }
@@ -24,6 +25,7 @@ RSpec.describe PlaceInfectionCommand do
   end
 
   it "creates infection for city" do
+    current_player.update!(role: Player.roles.keys[0])
     command.call
     expect(game.infections.last.quantity).to eq(3)
   end
@@ -42,9 +44,28 @@ RSpec.describe PlaceInfectionCommand do
     end
   end
 
+  describe "when the current player is a quarantine specialist" do
+    it "does not place an infection in the current city" do
+      Fabricate(:quarantine_specialist, game: game)
+      command.call
+      expect(game.infections.count).to eq(0)
+    end
+
+    it "does not place an infection in the neighboring city" do
+      Fabricate(
+        :quarantine_specialist,
+        game: game,
+        location_staticid: chicago.staticid
+      )
+      command.call
+      expect(game.infections.count).to eq(0)
+    end
+  end
+
   context "when there is an outbreak from the same color" do
     before(:each) do
       Fabricate(:infection, game: game, quantity: 2)
+      current_player.update!(role: Player.roles.keys[0])
     end
 
     it "update the infections in the city with a maximum quantity of 3" do
@@ -99,7 +120,8 @@ RSpec.describe PlaceInfectionCommand do
 
       it "doesn't place another infection in San Francisco (parent)" do
         command.call
-        infections = game.infections.where(city_staticid: san_francisco.staticid)
+        infections = game.infections
+          .where(city_staticid: san_francisco.staticid)
         expect(infections.sum(&:quantity)).to eq(3)
       end
 
