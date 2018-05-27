@@ -30,4 +30,9 @@ RSpec.describe PlayerActionsController, type: :request do
     post "/games/#{@game.id}/shuttle_flights", params: {}, headers: headers
     expect(error).to eq(I18n.t('player_actions.discard_player_city_card'))
   end
+
+  it "raises not implemented error" do
+    expect { PlayerActionsController.new.send(:create_error_message) }
+      .to raise_error(NotImplementedError)
+  end
 end
