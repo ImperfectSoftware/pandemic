@@ -7,7 +7,8 @@ RSpec.describe StageTwoEpidemic do
     Fabricate(
       :game,
       nr_of_intensified_cards: 4,
-      unused_infection_card_city_staticids: %w{0 1}
+      unused_infection_card_city_staticids: %w{0 1},
+      discarded_special_player_card_ids: %w{0 0}
     )
   end
 
@@ -39,5 +40,4 @@ RSpec.describe StageTwoEpidemic do
     command.call
     expect(game.reload.unused_infection_card_city_staticids.count).to eq(0)
   end
-
 end
