@@ -48,6 +48,8 @@ en:
     not_authorized: This player is not authorized to accept this card transfer.
     from_player_bad_location: Player offering the card is not at the correct location.
     to_player_bad_location: Player receiving the card is not at the correct location.
+  special_cards:
+    bad_role: This player is not a Contingency Planner.
   treat_diseases:
     not_enough_actions_left: You don't have enough actions to cure that many cubes.
     quantity: You cannot cure that many infections.

@@ -4,7 +4,7 @@ Fabricator(:game) do
   status { 'not_started' }
   owner { Fabricate(:user) }
   after_create do |game, _|
-    Fabricate(:player, user: game.owner, game: game)
+    player = Fabricate(:player, user: game.owner, game: game)
   end
 end
 

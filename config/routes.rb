@@ -21,6 +21,7 @@ Rails.application.routes.draw do
       resource :forecasts, only: [:create, :update], format: :json
       resource :resilient_populations, only: [:show, :create], format: :json
       resource :skip_infections, only: :create, format: :json
+      resource :special_cards, only: [:show, :create], format: :json
       resource :stage_two_epidemics, only: :create, format: :json
     end
   end
