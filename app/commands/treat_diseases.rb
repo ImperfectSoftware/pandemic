@@ -19,7 +19,7 @@ class TreatDiseases
       errors.add(:quantity, I18n.t('treat_diseases.not_enough_actions_left'))
       return
     end
-    @game.update!(actions_taken: actions_taken)
+    @game.update!(actions_taken: total_actions_taken)
     @infection.update!(quantity: remaining_quantity)
     @cure_marker.update!(eradicated: true) if eradicated?
   end
@@ -34,13 +34,16 @@ class TreatDiseases
     false
   end
 
-  def actions_taken
-    @game.actions_taken +
-      if cured?
-        @medic ? 0 : 1
-      else
-        @medic ? 1 : @quantity
-      end
+  def total_actions_taken
+    @game.actions_taken + additional_actions_taken
+  end
+
+  def additional_actions_taken
+    if cured?
+      @medic ? 0 : 1
+    else
+      @medic ? 1 : @quantity
+    end
   end
 
   def remaining_quantity
