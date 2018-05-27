@@ -1,5 +1,5 @@
 class GamesController < ApplicationController
-  attr_reader :game
+  skip_before_action :authorize_request, only: [:create, :update]
 
   def create
     game = current_user.games.create!(turn_nr: 1, actions_taken: 0)

@@ -41,7 +41,7 @@ RSpec.describe GamesController, type: :request do
   end
 
   describe "update game" do
-    let(:game) { Fabricate(:game, owner: @current_user) }
+    let(:game) { Fabricate(:game, owner: @current_user, status: 'not_started') }
 
     it "does not start a game with only one player" do
       put "/games/#{game.id}", params: {
@@ -64,7 +64,7 @@ RSpec.describe GamesController, type: :request do
 
     context "with valid params" do
       before(:all) do
-        @game = Fabricate(:game, owner: @current_user)
+        @game = Fabricate(:game, owner: @current_user, status: 'not_started')
         @player_one = @game.players.find_by(user: @current_user)
         @player_two = Fabricate(:player, game: @game)
         put "/games/#{@game.id}", params: {

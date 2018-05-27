@@ -7,7 +7,7 @@ RSpec.describe InvitationsController, type: :request do
   before(:context) do
     @user = Fabricate(:user)
     @current_user = Fabricate(:user, password: '12341234')
-    @game = Fabricate(:game, owner: current_user)
+    @game = Fabricate(:game, owner: current_user, status: 'not_started')
   end
 
   describe "create game invitation" do

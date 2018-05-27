@@ -5,14 +5,18 @@ class ApplicationController < ActionController::API
   respond_to :json
   helper_method :game
 
-  before_action :authenticate_request
+  before_action :authenticate_request, :authorize_request
   attr_reader :current_user
 
   private
 
   def authenticate_request
     @current_user = AuthorizeApiRequest.call(request.headers).result
-    render json: { error: 'Not Authorized' }, status: 401 unless @current_user
+    render_not_authorized if @current_user.blank?
+  end
+
+  def authorize_request
+    render_not_authorized unless game.started?
   end
 
   def game
@@ -40,5 +44,9 @@ class ApplicationController < ActionController::API
 
   def check_for_potential_update_errors
     render json: { error: update_error_message } if update_error_message
+  end
+
+  def render_not_authorized
+    render json: { error: I18n.t("errors.not_authorized") }, status: 401
   end
 end

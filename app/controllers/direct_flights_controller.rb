@@ -1,5 +1,4 @@
 class DirectFlightsController < PlayerActionsController
-
   def create
     CreateMovement.new(
       game: game,

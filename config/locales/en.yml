@@ -11,7 +11,7 @@ en:
     must_be_a_dispatcher: This action requires the dispatcher role.
   errors:
     missing_param: Required parameter missing.
-    not_authorized: Not authorized.
+    not_authorized: Not Authorized.
   forecasts:
     bad_staticids: Bad static ids provided.
   games:
