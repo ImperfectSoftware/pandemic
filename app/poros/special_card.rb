@@ -29,6 +29,18 @@ class SpecialCard
     )
   end
 
+  def self.forecast
+    events.find do |event|
+      event.staticid == '5'
+    end
+  end
+
+  def self.resilient_population
+    events.find do |event|
+      event.staticid == '1'
+    end
+  end
+
   attr_reader :name, :staticid, :description
   def initialize(name:, staticid:, description:)
     @name = name
@@ -41,22 +53,30 @@ class SpecialCard
   end
 
   def forecast?
-    "special-card-5" == composite_id
+    staticid == "5"
+  end
+
+  def resilient_population?
+    staticid == '1'
   end
 
   def airlift?
-    "special-card-3" == composite_id
+    staticid == "3"
   end
 
   def government_grant?
-    "special-card-2" == composite_id
+    staticid == "2"
   end
 
   def one_quiet_night?
-    "special-card-4" == composite_id
+    staticid == "4"
+  end
+
+  def epidemic_card?
+    staticid == "0"
   end
 
   def storable?
-    composite_id.split("-").last != '0'
+    !epidemic_card?
   end
 end
