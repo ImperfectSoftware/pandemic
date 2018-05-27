@@ -39,11 +39,10 @@ class TreatDiseases
   end
 
   def additional_actions_taken
-    if cured?
-      @medic ? 0 : 1
-    else
-      @medic ? 1 : @quantity
-    end
+    return 0 if cured? && @medic
+    return 1 if cured? && !@medic
+    return 1 if !cured? && @medic
+    @quantity
   end
 
   def remaining_quantity
