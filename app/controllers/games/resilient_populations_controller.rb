@@ -20,10 +20,6 @@ class Games::ResilientPopulationsController < ApplicationController
     end
   end
 
-  def check_for_potential_create_errors
-    render json: { error: create_error_message } if create_error_message
-  end
-
   def create_error_message
     @create_error_message ||=
       begin

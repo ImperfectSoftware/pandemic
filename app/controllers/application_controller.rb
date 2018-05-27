@@ -33,4 +33,12 @@ class ApplicationController < ActionController::API
   def active_player
     @active_player ||= game.players.find_by(id: active_player_id)
   end
+
+  def check_for_potential_create_errors
+    render json: { error: create_error_message } if create_error_message
+  end
+
+  def check_for_potential_update_errors
+    render json: { error: update_error_message } if update_error_message
+  end
 end

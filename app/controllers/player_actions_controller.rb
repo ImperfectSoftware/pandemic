@@ -8,10 +8,6 @@ class PlayerActionsController < ApplicationController
     render json: { error: error_message } if error_message
   end
 
-  def check_for_potential_create_errors
-    render json: { error: create_error_message } if create_error_message
-  end
-
   def error_message
     @error_message ||=
       begin
