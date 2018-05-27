@@ -24,14 +24,6 @@ class Games::SkipInfectionsController < ApplicationController
     @event ||= SpecialCard.events.find(&:one_quiet_night?)
   end
 
-  def current_player
-    @current_player ||= current_user.players.find_by(game: game)
-  end
-
-  def game
-    @game ||= current_user.games.find_by(id: params[:game_id])
-  end
-
   def remaining_cards
     current_player.cards_composite_ids - [event.composite_id]
   end

@@ -54,14 +54,6 @@ class Games::ForecastsController < ApplicationController
     current_player.events.find(&:forecast?)
   end
 
-  def game
-    @game ||= current_user.games.find_by(id: params[:game_id])
-  end
-
-  def current_player
-    @current_player ||= current_user.players.find_by(game: game)
-  end
-
   def forecast_performed_this_turn?
     forecast&.turn_nr == game.turn_nr
   end

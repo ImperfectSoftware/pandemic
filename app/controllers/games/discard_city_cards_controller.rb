@@ -6,14 +6,6 @@ class Games::DiscardCityCardsController < ApplicationController
 
   private
 
-  def current_player
-    @current_player ||= current_user.players.find_by(game: game)
-  end
-
-  def game
-    @game ||= current_user.games.find_by(id: params[:game_id])
-  end
-
   def city_card
     City.find(params[:city_staticid])
   end

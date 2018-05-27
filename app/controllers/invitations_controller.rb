@@ -44,10 +44,6 @@ class InvitationsController < ApplicationController
 
   private
 
-  def game
-    @game ||= Game.find_by(id: params[:game_id])
-  end
-
   def update_error_message
     if game.started? && params[:accepted]
       return I18n.t("invitations.game_started")
@@ -56,4 +52,8 @@ class InvitationsController < ApplicationController
       return I18n.t("errors.missing_param")
     end
   end
+
+   def game
+     @game ||= Game.find_by(id: params[:game_id])
+   end
 end
