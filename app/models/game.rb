@@ -1,4 +1,6 @@
 class Game < ApplicationRecord
+  enum status: { not_started: 0, started: 1, over: 2 }
+
   has_many :invitations
   has_many :cure_markers
   has_many :special_cards

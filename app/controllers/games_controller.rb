@@ -2,11 +2,7 @@ class GamesController < ApplicationController
   attr_reader :game
 
   def create
-    game = current_user.games.create!(
-      started: false,
-      turn_nr: 1,
-      actions_taken: 0
-    )
+    game = current_user.games.create!(turn_nr: 1, actions_taken: 0)
     player = game.players.create!(
       user: current_user,
       role: Player.roles.keys.sample,
@@ -45,11 +41,13 @@ class GamesController < ApplicationController
         .create!(quantity: nr_of_cubes, city_staticid: city_staticid)
     end
 
+    used = setup_infection_cards.result.used_infection_card_city_staticids
+    unused = setup_infection_cards.result.unused_infection_card_city_staticids
     game.update!(
       player_turn_ids: get_player_order.result,
-      started: true,
-      used_infection_card_city_staticids: setup_infection_cards.result.used_infection_card_city_staticids,
-      unused_infection_card_city_staticids: setup_infection_cards.result.unused_infection_card_city_staticids
+      status: :started,
+      used_infection_card_city_staticids: used,
+      unused_infection_card_city_staticids: unused
     )
     render json: game
   end

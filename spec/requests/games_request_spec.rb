@@ -12,7 +12,7 @@ RSpec.describe GamesController, type: :request do
     it "creates a game with started set to false" do
       post "/games", params: {}, headers: headers
       expect(body["id"]).to eq(Game.last.id)
-      expect(body["started"]).to eq(false)
+      expect(Game.last.started?).to be(false)
     end
 
     it "creates a game with turn_nr set to 1" do
@@ -57,7 +57,7 @@ RSpec.describe GamesController, type: :request do
     end
 
     it "errors out if game has already started" do
-      game.update!(started: true)
+      game.started!
       put "/games/#{game.id}", params: {}, headers: headers
       expect(error).to eq(I18n.t("games.already_started"))
     end

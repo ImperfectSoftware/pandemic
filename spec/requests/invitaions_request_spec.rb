@@ -111,7 +111,7 @@ RSpec.describe InvitationsController, type: :request do
 
     context "after game started" do
       before(:context) do
-        @game.update!(started: true)
+        @game.started!
       end
       it 'errors out on invitation acceptance' do
         put "/games/#{@game.id}/invitations/#{invitation.id}", params: {
@@ -164,7 +164,7 @@ RSpec.describe InvitationsController, type: :request do
 
     context "before game started" do
       it "should delete associated player when deleting an invitation" do
-        @game.update!(started: false)
+        @game.not_started!
         change_logged_in_user(@user)
         invitation = Fabricate(:accepted_invitation, game: @game, user: @user)
         delete "/games/#{@game.id}/invitations/#{invitation.id}",
