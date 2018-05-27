@@ -47,5 +47,15 @@ class FlipCard
     if @game.flipped_cards_nr == 2
       errors.add(:allowed, I18n.t("errors.not_authorized"))
     end
+    if not_active_player
+      errors.add(:allowed, I18n.t("player_actions.bad_turn"))
+    end
+  end
+
+  def not_active_player
+    GetActivePlayer.new(
+      player_ids: @game.players.map(&:id),
+      turn_nr: @game.turn_nr
+     ).call.result != @player.id
   end
 end
