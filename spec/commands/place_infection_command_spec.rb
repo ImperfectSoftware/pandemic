@@ -10,6 +10,10 @@ RSpec.describe PlaceInfectionCommand do
   let(:mexico_city) { WorldGraph.cities[3] }
   let(:atlanta) { WorldGraph.cities[6] }
   let(:montreal) { WorldGraph.cities[7] }
+  let(:washington) { WorldGraph.cities[9] }
+  let(:london) { WorldGraph.cities[9] }
+  let(:madrid) { WorldGraph.cities[9] }
+  let(:paris) { WorldGraph.cities[9] }
   let(:chicago) { WorldGraph.cities[2] }
   let(:tokyo) { WorldGraph.cities[45] }
   let(:hong_kong) { WorldGraph.cities[38] }
@@ -111,6 +115,19 @@ RSpec.describe PlaceInfectionCommand do
       game.update!(outbreaks_nr: 7)
       command.call
       expect(game.reload.finished?).to be(true)
+    end
+
+    describe "when there are more than 24 infections of the same color used" do
+      it "marks game as over" do
+        Fabricate(:iblue, city_staticid: atlanta.staticid, game: game)
+        Fabricate(:iblue, city_staticid: madrid.staticid, game: game)
+        Fabricate(:iblue, city_staticid: paris.staticid, game: game)
+        Fabricate(:iblue, city_staticid: london.staticid, game: game)
+        Fabricate(:iblue, city_staticid: chicago.staticid, game: game)
+        Fabricate(:iblue, city_staticid: san_francisco.staticid, game: game)
+        command.call
+        expect(game.reload.finished?).to be(true)
+      end
     end
 
     context "when there is a chain outbreak in the same color" do

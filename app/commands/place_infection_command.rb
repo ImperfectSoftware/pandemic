@@ -13,6 +13,7 @@ class PlaceInfectionCommand
     set_before_quantity
     infection.update!(quantity: quantities.min) if can_infect?
     trigger_outbreak if outbreak?
+    check_infections_used
   end
 
   private
@@ -102,5 +103,22 @@ class PlaceInfectionCommand
   def players_at_current_location
     @players_at_current_location ||= @game.players
       .where(location_staticid: @staticid)
+  end
+
+  def check_infections_used
+    CureMarker.colors.keys.each do |color|
+      check_infections(color: color)
+    end
+  end
+
+  def check_infections(color:)
+    infection_quantity = all_infections.select do |infection|
+      infection.color == color
+    end.sum(&:quantity)
+    @game.finished! if infection_quantity >= 24
+  end
+
+  def all_infections
+    @all_infections ||= @game.infections
   end
 end
