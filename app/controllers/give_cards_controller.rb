@@ -1,4 +1,5 @@
 class GiveCardsController < PlayerActionsController
+  include ShareKnowledge
   delegate :location, to: :current_player
 
   def create
@@ -31,14 +32,6 @@ class GiveCardsController < PlayerActionsController
   def player_card
     return other_location if current_player.owns_card?(other_location)
     return location if current_player.owns_card?(location)
-  end
-
-  def allowed_to_share_knowledge?
-    return true if params[:city_staticid].nil?
-    return true if location.staticid == params[:city_staticid]
-    return true if current_player.researcher?
-    return true if other_player.researcher?
-    false
   end
 
   def other_location
