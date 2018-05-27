@@ -46,11 +46,8 @@ class TreatDiseases
   end
 
   def remaining_quantity
-    if cured? || @medic
-      0
-    else
-      @infection.quantity - @quantity
-    end
+    return 0 if cured? || @medic
+    @infection.quantity - @quantity
   end
 
   def eradicated?
