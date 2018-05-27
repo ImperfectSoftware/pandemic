@@ -36,4 +36,14 @@ class Game < ApplicationRecord
   def between_epidemic_stages?
     nr_of_intensified_cards != 0
   end
+
+  def used_cards
+    if between_epidemic_stages?
+      unused_infection_card_city_staticids.reverse[0, nr_of_intensified_cards]
+    else
+      used_infection_card_city_staticids
+    end.map do |staticid|
+      City.find(staticid)
+    end
+  end
 end

@@ -3,6 +3,7 @@ require "application_responder"
 class ApplicationController < ActionController::API
   self.responder = ApplicationResponder
   respond_to :json
+  helper_method :game
 
   before_action :authenticate_request
   attr_reader :current_user

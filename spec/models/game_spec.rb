@@ -1,7 +1,9 @@
 require 'rails_helper'
 
 RSpec.describe Game, type: :model do
-  let(:game) { Fabricate(:game) }
+  let(:game) do
+    Fabricate(:game, used_infection_card_city_staticids: %w{5 6 7 8})
+  end
 
   it 'knows if it has a research station at a specific location' do
     staticid = WorldGraph.cities.first.staticid
@@ -35,7 +37,20 @@ RSpec.describe Game, type: :model do
   end
 
   it "knows it's between infect and intensify stage" do
-    game.update!(nr_of_intensified_cards: 5)
+    game = Fabricate(:game_between_epidemic_stages)
     expect(game.between_epidemic_stages?).to be(true)
+  end
+
+  describe "used cards" do
+    it "returns intensified cards if in between epidemic stages" do
+      used_cards = WorldGraph.cities[0,5].map(&:staticid)
+      game = Fabricate(:game_between_epidemic_stages)
+      expect(game.used_cards.map(&:staticid).sort).to eq(used_cards)
+    end
+
+    it "reuturns used cards from used_infection_card_city_staticids" do
+      used_cards = WorldGraph.cities[5,4].map(&:staticid)
+      expect(game.used_cards.map(&:staticid).sort).to eq(used_cards)
+    end
   end
 end
