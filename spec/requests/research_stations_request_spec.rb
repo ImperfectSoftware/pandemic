@@ -72,40 +72,48 @@ RSpec.describe ResearchStationsController, type: :request do
       let(:grant) { SpecialCard.events.find(&:government_grant?) }
       let(:city) { WorldGraph.cities[25] }
 
-      before(:each) do
-        current_player.update!(cards_composite_ids: [grant.composite_id])
+      it "errors out if the player doesn't own the other card" do
+        current_player.update!(cards_composite_ids: [])
+        trigger_post(city_staticid: city.staticid)
+        expect(error).to eq(I18n.t('player_actions.must_own_card'))
       end
 
-      it "removes the player card even if the player is an operations expert" do
-        current_player.update!(role: Player.roles.keys.first)
-        trigger_post(city_staticid: city.staticid)
-        composite_ids = current_player.reload.cards_composite_ids
-        expect(composite_ids.include?(grant.composite_id)).to be(false)
-      end
+      context "when player owns the other card" do
+        before(:each) do
+          current_player.update!(cards_composite_ids: [grant.composite_id])
+        end
 
-      it "doesn't remove the current location card" do
-        current_player.cards_composite_ids << current_player.location.composite_id
-        current_player.save!
-        trigger_post(city_staticid: city.staticid)
-        composite_ids = current_player.reload.cards_composite_ids
-        expect(composite_ids.include?(current_player.location.composite_id))
-          .to be(true)
-      end
+        it "removes the player card even if the player is an operations expert" do
+          current_player.update!(role: Player.roles.keys.first)
+          trigger_post(city_staticid: city.staticid)
+          composite_ids = current_player.reload.cards_composite_ids
+          expect(composite_ids.include?(grant.composite_id)).to be(false)
+        end
 
-      it "doesn't increment actions taken" do
-        trigger_post(city_staticid: city.staticid)
-        expect(game.reload.actions_taken).to eq(0)
-      end
+        it "doesn't remove the current location card" do
+          current_player.cards_composite_ids << current_player.location.composite_id
+          current_player.save!
+          trigger_post(city_staticid: city.staticid)
+          composite_ids = current_player.reload.cards_composite_ids
+          expect(composite_ids.include?(current_player.location.composite_id))
+            .to be(true)
+        end
 
-      it "creates a research station" do
-        trigger_post(city_staticid: city.staticid)
-        expect(game.research_stations.count).to eq(1)
-      end
+        it "doesn't increment actions taken" do
+          trigger_post(city_staticid: city.staticid)
+          expect(game.reload.actions_taken).to eq(0)
+        end
 
-      it "adds the event card to the discarded cards pile" do
-        trigger_post(city_staticid: city.staticid)
-        discarded_ids = game.reload.discarded_special_player_card_ids
-        expect(game.reload.discarded_events.include?(grant)).to be(true)
+        it "creates a research station" do
+          trigger_post(city_staticid: city.staticid)
+          expect(game.research_stations.count).to eq(1)
+        end
+
+        it "adds the event card to the discarded cards pile" do
+          trigger_post(city_staticid: city.staticid)
+          discarded_ids = game.reload.discarded_special_player_card_ids
+          expect(game.reload.discarded_events.include?(grant)).to be(true)
+        end
       end
     end
   end
