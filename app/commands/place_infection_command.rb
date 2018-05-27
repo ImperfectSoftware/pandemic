@@ -11,7 +11,7 @@ class PlaceInfectionCommand
 
   def call
     set_before_quantity
-    infection.update!(quantity: quantities.min)
+    infection.update!(quantity: quantities.min) if can_infect?
     trigger_outbreak if outbreak?
   end
 
@@ -68,5 +68,22 @@ class PlaceInfectionCommand
 
   def outbreak?
     @before_quantity + @quantity > 3
+  end
+
+  def can_infect?
+    return false if players.include?(medic) && cure_marker&.cured?
+    true
+  end
+
+  def players
+    @game.players.where(location_staticid: @staticid)
+  end
+
+  def medic
+    @game.players.find_by(role: Player.roles.keys[2])
+  end
+
+  def cure_marker
+    @game.cure_markers.find_by(color: @color)
   end
 end

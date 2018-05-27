@@ -28,6 +28,20 @@ RSpec.describe PlaceInfectionCommand do
     expect(game.infections.last.quantity).to eq(3)
   end
 
+  describe "when the current player is a doctor and the diseas is cured" do
+    it "does not place an infection" do
+      Fabricate(
+        :cure_marker,
+        color: san_francisco.color,
+        game: game,
+        cured: true
+      )
+      Fabricate(:medic, game: game)
+      command.call
+      expect(game.infections.count).to eq(0)
+    end
+  end
+
   context "when there is an outbreak from the same color" do
     before(:each) do
       Fabricate(:infection, game: game, quantity: 2)
