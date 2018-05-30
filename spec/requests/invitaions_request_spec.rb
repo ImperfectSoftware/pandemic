@@ -18,11 +18,28 @@ RSpec.describe InvitationsController, type: :request do
       expect(error).to eq(I18n.t("invitations.user_not_found"))
     end
 
-    it "creates an invite for a game" do
-      post "/games/#{@game.id}/invitations", params: {
-        username: @user.username
-      }.to_json, headers: headers
-      expect(body["id"]).to eq(Invitation.last.id)
+    describe "returned data" do
+      before(:each) do
+        post "/games/#{@game.id}/invitations", params: {
+          username: @user.username
+        }.to_json, headers: headers
+      end
+
+      it "displays invite id" do
+        expect(body["id"]).to eq(Invitation.last.id)
+      end
+
+      it "displays invite accepted status" do
+        expect(body["accepted"]).to eq(Invitation.last.accepted)
+      end
+
+      it "displays invite user's username" do
+        expect(body["user"]["username"]).to eq(@user.username)
+      end
+
+      it "displays invite user's id" do
+        expect(body["user"]["id"]).to eq(@user.id)
+      end
     end
 
     it "errors out if attempting to create a second invite for the same user" do

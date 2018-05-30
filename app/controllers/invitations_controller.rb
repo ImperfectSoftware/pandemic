@@ -1,15 +1,9 @@
 class InvitationsController < ApplicationController
   skip_before_action :authorize_request
+  helper_method :command
 
   def create
-    command = CreateInvitation.new(game: game, username: params[:username])
     command.call
-
-    if command.errors.present?
-      render json: { error: command.errors[:allowed].first }
-    else
-      render json: command.result
-    end
   end
 
   def update
@@ -44,6 +38,10 @@ class InvitationsController < ApplicationController
   end
 
   private
+
+  def command
+    @command ||= CreateInvitation.new(game: game, username: params[:username])
+  end
 
   def update_error_message
     if game.started? && params[:accepted]
