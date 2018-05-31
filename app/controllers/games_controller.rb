@@ -1,5 +1,12 @@
 class GamesController < ApplicationController
-  skip_before_action :authorize_request, only: [:create, :update]
+  skip_before_action :authorize_request
+
+  helper_method :game
+  attr_reader :game
+
+  def index
+    @games ||= current_user.players.includes(:game).map(&:game)
+  end
 
   def create
     game = current_user.games.create!(turn_nr: 1, actions_taken: 0)

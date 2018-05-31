@@ -8,6 +8,21 @@ RSpec.describe GamesController, type: :request do
     @current_user = Fabricate(:user, password: '12341234')
   end
 
+  describe "display created games" do
+    let!(:current_user) { Fabricate(:user) }
+    let!(:game) { Fabricate(:game, owner: current_user) }
+    let!(:game_two) { Fabricate(:game) }
+    let!(:player) { Fabricate(:player, game: game_two, user: current_user) }
+
+    before(:each) do
+      get "/games", headers: headers
+    end
+
+    it "displays created and joined games" do
+      expect(body['games'].count).to eq(2)
+    end
+  end
+
   describe "create game" do
     it "creates a game with started set to false" do
       post "/games", params: {}, headers: headers

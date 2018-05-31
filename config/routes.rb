@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  resources :games, only: [:create, :update], format: :json do
+  resources :games, only: [:create, :update, :index], format: :json do
     resources :cure_diseases, only: :create, format: :json
     resources :charter_flights, only: :create, format: :json
     resources :direct_flights, only: :create, format: :json
