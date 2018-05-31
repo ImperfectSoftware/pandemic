@@ -26,19 +26,19 @@ RSpec.describe GamesController, type: :request do
   describe "create game" do
     it "creates a game with started set to false" do
       post "/games", params: {}, headers: headers
-      expect(body["id"]).to eq(Game.last.id)
+      expect(body['game']['id']).to eq(Game.last.id)
       expect(Game.last.started?).to be(false)
     end
 
     it "creates a game with turn_nr set to 1" do
       post "/games", params: {}, headers: headers
-      expect(body["id"]).to eq(Game.last.id)
+      expect(body['game']['id']).to eq(Game.last.id)
       expect(Game.last.turn_nr).to eq(1)
     end
 
     it "creates a game with actions_taken set to 0" do
       post "/games", params: {}, headers: headers
-      expect(body["id"]).to eq(Game.last.id)
+      expect(body['game']['id']).to eq(Game.last.id)
       expect(Game.last.actions_taken).to eq(0)
     end
 
