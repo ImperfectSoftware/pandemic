@@ -5,9 +5,7 @@ class GamesController < ApplicationController
   attr_reader :game
 
   def index
-    @games ||= current_user.players.includes(game: :owner).map do |player|
-      GameDecorator.new(player.game)
-    end
+    @games ||= current_user.all_games.map { |game| GameDecorator.new(game) }
   end
 
   def create

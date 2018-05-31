@@ -23,6 +23,10 @@ class Player < ApplicationRecord
   has_many :created_movement_proposals, foreign_key: "creator_id",
     class_name: "MovementProposal"
 
+  scope :ordered_desc_by_game_creation, -> do
+    includes(game: :owner).order(created_at: :desc)
+  end
+
   def location
     City.find(location_staticid)
   end
