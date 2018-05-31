@@ -23,10 +23,6 @@ class Player < ApplicationRecord
   has_many :created_movement_proposals, foreign_key: "creator_id",
     class_name: "MovementProposal"
 
-  def invitation
-    game.invitations.find_by(user: user)
-  end
-
   def location
     City.find(location_staticid)
   end
