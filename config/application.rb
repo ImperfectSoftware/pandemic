@@ -39,7 +39,7 @@ module Pandemic
       allow do
         origins '*'
         resource '*', headers: :any,
-          methods: [:get, :post, :put, :delete, :options]
+          methods: [:get, :post, :put, :patch, :delete, :options]
       end
     end
   end
