@@ -5,17 +5,18 @@ class GamesController < ApplicationController
   attr_reader :game
 
   def index
-    @games ||= current_user.players.includes(:game).map(&:game)
+    @games ||= current_user.players.includes(game: :owner).map do |player|
+      GameDecorator.new(player.game)
+    end
   end
 
   def create
-    game = current_user.games.create!(turn_nr: 1, actions_taken: 0)
+    @game = current_user.games.create!(turn_nr: 1, actions_taken: 0)
     player = game.players.create!(
       user: current_user,
       role: Player.roles.keys.sample,
       location_staticid: City.find_by_name('Atlanta').staticid
     )
-    render json: game
   end
 
   def update

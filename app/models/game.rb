@@ -1,15 +1,14 @@
 class Game < ApplicationRecord
   enum status: { not_started: 0, started: 1, finished: 2 }
 
-  has_many :invitations
-  has_many :cure_markers
-  has_many :special_cards
-  has_many :players
-  has_many :research_stations
-  has_many :infections
-  has_many :movement_proposals
-  has_many :forecasts
   belongs_to :owner, class_name: "User"
+  has_many :invitations, dependent: :destroy
+  has_many :cure_markers, dependent: :destroy
+  has_many :players, dependent: :destroy
+  has_many :research_stations, dependent: :destroy
+  has_many :infections, dependent: :destroy
+  has_many :movement_proposals, dependent: :destroy
+  has_many :forecasts, dependent: :destroy
 
   def no_actions_left?
     actions_taken == 4

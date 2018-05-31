@@ -1,3 +1,4 @@
-json.(game, :id, :owner_id)
-json.set! :started, game.started?
-json.players game.players, partial: 'players/player', as: :player
+json.(game, :id, :owner_id, :started)
+json.participants game.participants do |participant|
+  json.(participant, :user_id, :username, :invitation_id, :accepted)
+end
