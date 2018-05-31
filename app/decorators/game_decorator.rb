@@ -7,6 +7,10 @@ class GameDecorator < SimpleDelegator
     @participants ||= participants_from_invitations + owner_participant
   end
 
+  def created_date
+    created_at.to_date.to_formatted_s(:rfc822)
+  end
+
   private
 
   def participants_from_invitations
