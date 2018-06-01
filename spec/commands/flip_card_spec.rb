@@ -6,11 +6,7 @@ RSpec.describe FlipCard do
   let(:san_francisco) { WorldGraph.cities[0] }
 
   it "errors out if the player is not allowed to flip a card" do
-    game = Fabricate(
-      :game,
-      unused_player_card_ids: %w{city-10 city-11},
-      turn_nr: 2
-    )
+    game = Fabricate(:game, unused_player_card_ids: %w{city-10 city-11})
     other_player = Fabricate(:player, game: game)
     game.update!(player_turn_ids: [game.players.first.id, other_player.id])
     command = FlipCard.new(game: game, player: other_player)
