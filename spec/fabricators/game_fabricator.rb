@@ -5,6 +5,7 @@ Fabricator(:game) do
   owner { Fabricate(:user) }
   after_create do |game, _|
     player = Fabricate(:player, user: game.owner, game: game)
+    game.update!(player_turn_ids: [player.id])
   end
 end
 
@@ -16,6 +17,7 @@ Fabricator(:game_between_epidemic_stages, class_name: Game) do
   nr_of_intensified_cards { 5 }
   unused_infection_card_city_staticids { %w{0 1 2 3 4} }
   after_create do |game, _|
-    Fabricate(:player, user: game.owner, game: game)
+    player = Fabricate(:player, user: game.owner, game: game)
+    game.update!(player_turn_ids: [player.id])
   end
 end

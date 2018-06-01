@@ -8,7 +8,8 @@ RSpec.describe FlipCard do
   it "errors out if the player is not allowed to flip a card" do
     game = Fabricate(:game, unused_player_card_ids: %w{city-10 city-11})
     other_player = Fabricate(:player, game: game)
-    game.update!(player_turn_ids: [game.players.first.id, other_player.id])
+    ids = [game.players.first.id, other_player.id]
+    game.update!(player_turn_ids: ids)
     command = FlipCard.new(game: game, player: other_player)
     command.call
     expect(command.errors[:allowed].first)

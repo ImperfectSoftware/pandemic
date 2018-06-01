@@ -54,7 +54,7 @@ class FlipCard
 
   def not_active_player
     GetActivePlayer.new(
-      player_ids: @game.players.map(&:id),
+      player_ids: @game.player_turn_ids,
       turn_nr: @game.turn_nr
      ).call.result != @player.id
   end
