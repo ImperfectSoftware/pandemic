@@ -8,7 +8,7 @@ module ApplicationCable
 
     private
     def find_verified_user
-      if verified_user = User.find_by(id: decoded_token[:user_id])
+      if verified_user = User.find_by(id: decoded_token['user_id'])
         verified_user
       else
         reject_unauthorized_connection
@@ -16,8 +16,9 @@ module ApplicationCable
     end
 
     def decoded_token
-      token = request.headers[:HTTP_SEC_WEBSOCKET_PROTOCOL].split(',').last
-      JsonWebToken.decode(token)
+      token = request.headers[:HTTP_SEC_WEBSOCKET_PROTOCOL].split(',')
+        .last.strip
+      JsonWebToken.decode(token) || {}
     end
   end
 end
