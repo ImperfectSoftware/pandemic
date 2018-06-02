@@ -13,13 +13,18 @@ class InvitationsController < ApplicationController
     end
 
     invitation = current_user.invitations.find_by(id: params[:id])
-    invitation.update(accepted: params[:accepted])
+    invitation.update!(accepted: params[:accepted])
     if invitation.accepted?
       command = GetUniqueRole.new(players: invitation.game.players).call
       invitation.game.players.create(
         user: current_user,
         role: command.result,
         location_staticid: City.find_by_name('Atlanta').staticid
+      )
+      ActionCable.server.broadcast(
+        "game_channel:#{game.id}",
+        username: current_user.username,
+        accepted: true
       )
     end
     render json: invitation
