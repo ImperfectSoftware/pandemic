@@ -53,6 +53,12 @@ RSpec.describe GamesController, type: :request do
       player_role = Game.last.players.first.role
       expect(Player.roles.keys.include?(player_role)).to be(true)
     end
+
+    it "assigns game a name when created" do
+      post "/games", params: {}, headers: headers
+      player_role = Game.last.name
+      expect(Game.last.name).to_not be_nil
+    end
   end
 
   describe "update game" do

@@ -9,7 +9,11 @@ class GamesController < ApplicationController
   end
 
   def create
-    @game = current_user.games.create!(turn_nr: 1, actions_taken: 0)
+    @game = current_user.games.create!(
+      turn_nr: 1,
+      actions_taken: 0,
+      name: Faker::LeagueOfLegends.location
+    )
     player = game.players.create!(
       user: current_user,
       role: Player.roles.keys.sample,
