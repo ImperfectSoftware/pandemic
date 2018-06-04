@@ -1,4 +1,4 @@
-class InvitationsController < ApplicationController
+class Games::InvitationsController < ApplicationController
   skip_before_action :authorize_request
   helper_method :command
 
@@ -12,7 +12,6 @@ class InvitationsController < ApplicationController
       return
     end
 
-    invitation = current_user.invitations.find_by(id: params[:id])
     invitation.update!(accepted: params[:accepted])
     if invitation.accepted?
       command = GetUniqueRole.new(players: invitation.game.players).call
@@ -36,7 +35,6 @@ class InvitationsController < ApplicationController
       return
     end
 
-    invitation = current_user.invitations.find_by(id: params[:id])
     player = current_user.players.find_by(game: invitation.game)
     invitation.destroy
     player.destroy
@@ -46,6 +44,10 @@ class InvitationsController < ApplicationController
 
   def command
     @command ||= CreateInvitation.new(game: game, username: params[:username])
+  end
+
+  def invitation
+    @invitation ||= game.invitations.find_by(user_id: current_user.id)
   end
 
   def update_error_message
