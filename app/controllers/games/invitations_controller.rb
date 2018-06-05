@@ -12,7 +12,7 @@ class Games::InvitationsController < ApplicationController
       return
     end
 
-    invitation.update!(accepted: params[:accepted])
+    invitation.update!(status: params[:status])
     if invitation.accepted?
       command = GetUniqueRole.new(players: invitation.game.players).call
       invitation.game.players.create(
@@ -51,10 +51,10 @@ class Games::InvitationsController < ApplicationController
   end
 
   def update_error_message
-    if game.started? && params[:accepted]
+    if game.started? && params[:status] == 'accepted'
       return I18n.t("invitations.game_started")
     end
-    if params[:accepted].blank?
+    if params[:status].blank?
       return I18n.t("errors.missing_param")
     end
   end

@@ -19,7 +19,7 @@ class CreateInvitation
       errors.add(:allowed, I18n.t("invitations.maximum_number_sent"))
       return
     end
-    invitation = @game.invitations.create!(user: user, accepted: false)
+    invitation = @game.invitations.create!(user: user, status: 'inactive')
     send_broadcast_to_user(invitation)
     invitation
   end
@@ -44,8 +44,9 @@ class CreateInvitation
       id: invitation.id,
       user_id: user.id,
       game_id: @game.id,
-      accepted: false,
-      owner_username: @game.owner.username
+      status: invitation.status,
+      owner_username: @game.owner.username,
+      game_name: @game.name
     )
   end
 end

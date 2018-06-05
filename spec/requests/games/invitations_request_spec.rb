@@ -29,8 +29,8 @@ RSpec.describe Games::InvitationsController, type: :request do
         expect(body["id"]).to eq(Invitation.last.id)
       end
 
-      it "displays invite accepted status" do
-        expect(body["accepted"]).to eq(Invitation.last.accepted)
+      it "displays invite status" do
+        expect(body["status"]).to eq(Invitation.statuses.keys.last)
       end
 
       it "displays invite user's username" do
@@ -83,21 +83,21 @@ RSpec.describe Games::InvitationsController, type: :request do
     context "before game started" do
       it 'accepts invitation' do
         put "/games/#{@game.id}/invitations", params: {
-          accepted: true
+          status: 'accepted'
         }.to_json, headers: headers
         expect(Invitation.last.accepted?).to be(true)
       end
 
       it 'creates player on invitation acceptance' do
         put "/games/#{@game.id}/invitations", params: {
-          accepted: true
+          status: 'accepted'
         }.to_json, headers: headers
         expect(@user.players.find_by(game: @game)).to be
       end
 
       it "sets player's current location on invitation acceptance to Atlanta" do
         put "/games/#{@game.id}/invitations", params: {
-          accepted: true
+          status: 'accepted'
         }.to_json, headers: headers
         location = @current_user.players.find_by(game: @game).location
         expect(location.name).to eq('Atlanta')
@@ -105,7 +105,7 @@ RSpec.describe Games::InvitationsController, type: :request do
 
       it "sets player's role to a role not yet taken" do
         put "/games/#{@game.id}/invitations", params: {
-          accepted: true
+          status: 'accepted'
         }.to_json, headers: headers
         player_one = @game.players.find_by(user: @game.owner)
         player_two = @game.players.find_by(user: @user)
@@ -115,14 +115,14 @@ RSpec.describe Games::InvitationsController, type: :request do
 
       it 'declines invitation' do
         put "/games/#{@game.id}/invitations", params: {
-          accepted: false
+          status: 'declined'
         }.to_json, headers: headers
-        expect(Invitation.last.accepted?).to be(false)
+        expect(Invitation.last.declined?).to be(true)
       end
 
       it 'does not create player when invitation is declined' do
         put "/games/#{@game.id}/invitations", params: {
-          accepted: false
+          status: 'declined'
         }.to_json, headers: headers
         expect(@user.players.find_by(game: @game)).to be_nil
       end
@@ -134,28 +134,28 @@ RSpec.describe Games::InvitationsController, type: :request do
       end
       it 'errors out on invitation acceptance' do
         put "/games/#{@game.id}/invitations", params: {
-          accepted: true
+          status: 'accepted'
         }.to_json, headers: headers
         expect(error).to eq(I18n.t("invitations.game_started"))
       end
 
       it 'does not create a player on invitation acceptance' do
         put "/games/#{@game.id}/invitations", params: {
-          accepted: true
+          status: 'accepted'
         }.to_json, headers: headers
         expect(@user.players.find_by(game: @game)).to be_nil
       end
 
       it 'declines invitation' do
         put "/games/#{@game.id}/invitations", params: {
-          accepted: false
+          status: 'declined'
         }.to_json, headers: headers
-        expect(Invitation.last.accepted?).to be(false)
+        expect(Invitation.last.declined?).to be(true)
       end
 
       it 'does not create player when invitation is declined' do
         put "/games/#{@game.id}/invitations", params: {
-          accepted: false
+          status: 'declined'
         }.to_json, headers: headers
         expect(@user.players.find_by(game: @game)).to be_nil
       end
