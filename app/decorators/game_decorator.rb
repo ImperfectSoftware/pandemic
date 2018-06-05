@@ -19,7 +19,7 @@ class GameDecorator < SimpleDelegator
         user_id: invitation.user.id,
         username: invitation.user.username,
         invitation_id: invitation.id,
-        accepted: invitation.accepted
+        status: invitation.status
       )
     end
   end
@@ -29,7 +29,7 @@ class GameDecorator < SimpleDelegator
       user_id: owner_id,
       username: owner.username,
       invitation_id: 0,
-      accepted: true
+      status: Invitation.statuses.keys.second
     ))
   end
 end

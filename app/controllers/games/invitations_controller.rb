@@ -23,7 +23,7 @@ class Games::InvitationsController < ApplicationController
       ActionCable.server.broadcast(
         "game_channel:#{game.id}",
         username: current_user.username,
-        accepted: true
+        status: 'accepted'
       )
     end
     render json: invitation
