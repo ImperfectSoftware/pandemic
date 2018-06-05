@@ -2,6 +2,10 @@ class Games::InvitationsController < ApplicationController
   skip_before_action :authorize_request
   helper_method :command
 
+  def index
+    @invitations = current_user.invitations.order(created_at: :desc)
+  end
+
   def create
     command.call
   end

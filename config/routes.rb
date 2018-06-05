@@ -17,6 +17,7 @@ Rails.application.routes.draw do
 
       scope module: :games, path: '' do
         resource :invitations, only: [:create, :update, :destroy]
+        get :invitations, to: 'invitations#index'
         resource :discard_city_cards, only: :destroy
         resource :finish_turns, only: :create
         resource :forecasts, only: [:create, :update]
