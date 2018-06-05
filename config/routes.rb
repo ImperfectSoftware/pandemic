@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
   scope '/', defaults: { format: :json } do
+    post 'authenticate', to: 'authentication#authenticate'
     resources :games, only: [:create, :update, :index] do
       resources :cure_diseases, only: :create
       resources :charter_flights, only: :create
@@ -17,7 +18,6 @@ Rails.application.routes.draw do
 
       scope module: :games, path: '' do
         resource :invitations, only: [:create, :update, :destroy]
-        get :invitations, to: 'invitations#index'
         resource :discard_city_cards, only: :destroy
         resource :finish_turns, only: :create
         resource :forecasts, only: [:create, :update]
@@ -27,6 +27,6 @@ Rails.application.routes.draw do
         resource :stage_two_epidemics, only: :create
       end
     end
-    post 'authenticate', to: 'authentication#authenticate'
+    resources :invitations, only: :index
   end
 end
