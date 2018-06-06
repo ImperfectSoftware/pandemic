@@ -20,12 +20,12 @@ class Games::InvitationsController < ApplicationController
         role: command.result,
         location_staticid: City.find_by_name('Atlanta').staticid
       )
-      ActionCable.server.broadcast(
-        "game_channel:#{game.id}",
-        username: current_user.username,
-        status: 'accepted'
-      )
     end
+    ActionCable.server.broadcast(
+      "game_channel:#{game.id}",
+      username: current_user.username,
+      status: invitation.status
+    )
     render json: invitation
   end
 
