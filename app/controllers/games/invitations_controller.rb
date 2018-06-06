@@ -1,6 +1,6 @@
 class Games::InvitationsController < ApplicationController
   skip_before_action :authorize_request
-  helper_method :command
+  helper_method :command, :invitation, :game
 
   def create
     command.call
@@ -26,7 +26,6 @@ class Games::InvitationsController < ApplicationController
       username: current_user.username,
       status: invitation.status
     )
-    render json: invitation
   end
 
   def destroy
