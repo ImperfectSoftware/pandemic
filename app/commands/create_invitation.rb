@@ -39,14 +39,10 @@ class CreateInvitation
   end
 
   def send_broadcast_to_user(invitation)
-    ActionCable.server.broadcast(
-      "invitation_channel:#{user.id}",
-      id: invitation.id,
-      user_id: user.id,
-      game_id: @game.id,
-      status: invitation.status,
-      owner_username: @game.owner.username,
-      game_name: @game.name
-    )
+    payload = JSON.parse(ApplicationController.new.render_to_string(
+      'invitations/_invitation',
+      locals: { invitation: invitation }
+    ))
+    ActionCable.server.broadcast("invitation_channel:#{user.id}", payload)
   end
 end
