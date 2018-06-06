@@ -35,7 +35,7 @@ class CreateInvitation
   end
 
   def maximum_nr_sent?
-    @game.invitations.count == 3
+    @game.invitations.where.not(status: :declined).count == 3
   end
 
   def send_broadcast_to_user(invitation)

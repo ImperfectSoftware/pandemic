@@ -54,22 +54,34 @@ RSpec.describe Games::InvitationsController, type: :request do
     end
 
     it "errors out if 3 game invitations already exist" do
-      user_three = Fabricate(:user)
-      user_four = Fabricate(:user)
-      user_five = Fabricate(:user)
       post "/games/#{@game.id}/invitations", params: {
         username: @user.username
       }.to_json, headers: headers
       post "/games/#{@game.id}/invitations", params: {
-        username: user_three.username
+        username: Fabricate(:user).username
       }.to_json, headers: headers
       post "/games/#{@game.id}/invitations", params: {
-        username: user_four.username
+        username: Fabricate(:user).username
       }.to_json, headers: headers
       post "/games/#{@game.id}/invitations", params: {
-        username: user_five.username
+        username: Fabricate(:user).username
       }.to_json, headers: headers
       expect(error).to eq(I18n.t("invitations.maximum_number_sent"))
+    end
+
+    it "allows creation of another invite if one invite was declined" do
+      Fabricate(
+        :invitation,
+        game: game,
+        status: 'declined',
+        user: Fabricate(:user)
+      )
+      Fabricate(:invitation, game: game, user: Fabricate(:user))
+      Fabricate(:invitation, game: game, user: Fabricate(:user))
+      post "/games/#{game.id}/invitations", params: {
+        username: Fabricate(:user).username
+      }.to_json, headers: headers
+      expect(error).to be_nil
     end
   end
 

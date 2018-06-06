@@ -1,4 +1,5 @@
 Fabricator(:invitation) do
+  status { 'inactive' }
 end
 
 Fabricator(:accepted_invitation, class_name: Invitation) do
