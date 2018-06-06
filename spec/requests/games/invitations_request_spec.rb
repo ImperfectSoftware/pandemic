@@ -19,6 +19,13 @@ RSpec.describe Games::InvitationsController, type: :request do
       expect(error).to eq(I18n.t("invitations.user_not_found"))
     end
 
+    it "errors out if attempting to create invitation for the game owner" do
+        post "/games/#{@game.id}/invitations", params: {
+          username: @current_user.username
+        }.to_json, headers: headers
+        expect(error).to eq(I18n.t("invitations.game_owner"))
+    end
+
     describe "returned data" do
       before(:each) do
         post "/games/#{@game.id}/invitations", params: {

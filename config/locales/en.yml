@@ -19,6 +19,7 @@ en:
     incorrect_nr_of_epidemic_cards: Incorrect number of epidemic cards provided.
     minimum_number_of_players: Cannot start a game with only one player.
   invitations:
+    game_owner: This player is already part of the game.
     game_started: Cannot accept invitation. Game already started.
     maximum_number_sent: A maximum number of invitations have been sent.
     user_not_found: Could not find user with that username.
