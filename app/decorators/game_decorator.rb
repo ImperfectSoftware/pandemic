@@ -14,7 +14,7 @@ class GameDecorator < SimpleDelegator
   private
 
   def participants_from_invitations
-    invitations.map do |invitation|
+    invitations.not_declined.map do |invitation|
       OpenStruct.new(
         user_id: invitation.user.id,
         username: invitation.user.username,
