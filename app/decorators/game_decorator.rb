@@ -4,7 +4,8 @@ class GameDecorator < SimpleDelegator
   end
 
   def participants
-    @participants ||= participants_from_invitations + owner_participant
+    @participants ||= participants_from_invitations +
+      Array(Participant.fromOwner(owner))
   end
 
   def created_date
@@ -15,21 +16,7 @@ class GameDecorator < SimpleDelegator
 
   def participants_from_invitations
     invitations.not_declined.map do |invitation|
-      OpenStruct.new(
-        user_id: invitation.user.id,
-        username: invitation.user.username,
-        invitation_id: invitation.id,
-        status: invitation.status
-      )
+      Participant.fromInvitation(invitation)
     end
-  end
-
-  def owner_participant
-    Array(OpenStruct.new(
-      user_id: owner_id,
-      username: owner.username,
-      invitation_id: 0,
-      status: Invitation.statuses.keys.second
-    ))
   end
 end
