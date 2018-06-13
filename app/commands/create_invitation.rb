@@ -26,7 +26,7 @@ class CreateInvitation
     end
     invitation = game.invitations.create!(user: user, status: 'inactive')
     send_broadcast_to_user(invitation)
-    # send_broadcast_to_remaining_participants(invitation)
+    send_broadcast_to_remaining_participants(invitation)
     invitation
   end
 
