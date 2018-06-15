@@ -59,6 +59,7 @@ class GamesController < ApplicationController
       unused_infection_card_city_staticids: unused,
       unused_player_card_ids: setup_player_cards.result.player_cards
     )
+    ActionCable.server.broadcast("game_channel:#{game.id}", game_started: true)
     render json: game
   end
 end
