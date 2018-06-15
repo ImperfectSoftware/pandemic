@@ -50,14 +50,14 @@ class GamesController < ApplicationController
       game.infections
         .create!(quantity: nr_of_cubes, city_staticid: city_staticid)
     end
-
     used = setup_infection_cards.result.used_infection_card_city_staticids
     unused = setup_infection_cards.result.unused_infection_card_city_staticids
     game.update!(
       player_turn_ids: get_player_order.result,
       status: :started,
       used_infection_card_city_staticids: used,
-      unused_infection_card_city_staticids: unused
+      unused_infection_card_city_staticids: unused,
+      unused_player_card_ids: setup_player_cards.result.player_cards
     )
     render json: game
   end

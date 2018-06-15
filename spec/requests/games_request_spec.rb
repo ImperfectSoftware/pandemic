@@ -98,6 +98,10 @@ RSpec.describe GamesController, type: :request do
         expect(@player_two.reload.cards_composite_ids.present?).to be(true)
       end
 
+      it "sets game player cards" do
+        expect(@game.reload.unused_player_card_ids.count).to eq(49)
+      end
+
       it "sets game player turns" do
         expect(@game.reload.player_turn_ids.present?).to be(true)
       end
