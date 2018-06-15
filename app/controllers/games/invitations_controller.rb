@@ -24,7 +24,8 @@ class Games::InvitationsController < ApplicationController
     ActionCable.server.broadcast(
       "game_channel:#{game.id}",
       username: current_user.username,
-      status: invitation.status
+      status: invitation.status,
+      user_id: current_user.id
     )
   end
 
