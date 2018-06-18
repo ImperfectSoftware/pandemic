@@ -1,0 +1,1 @@
+json.(command.result, :id)
