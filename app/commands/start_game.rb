@@ -1,4 +1,4 @@
-class UpdateGame
+class StartGame
   prepend SimpleCommand
 
   attr_reader :game, :nr_of_epidemic_cards
@@ -13,7 +13,7 @@ class UpdateGame
     return if errors.any?
     check_if_cards_were_setup
     return if errors.any?
-    update_player_hands
+    update_players
     update_game_infections
     update_game_attributes
     ActionCable.server.broadcast("game_channel:#{game.id}", game_started: true)
@@ -39,10 +39,13 @@ class UpdateGame
     )
   end
 
-  def update_player_hands
+  def update_players
     game.players.each do |player|
       hand = setup_player_cards.result.player_hands[player.id]
-      player.update!(cards_composite_ids: hand)
+      player.update!(
+        cards_composite_ids: hand,
+        location_staticid: City.find_by_name('Atlanta').staticid
+      )
     end
   end
 
@@ -72,5 +75,8 @@ class UpdateGame
       unused_infection_card_city_staticids: unused,
       unused_player_card_ids: setup_player_cards.result.player_cards
     )
+  end
+
+  def place_players_in_atlanta
   end
 end

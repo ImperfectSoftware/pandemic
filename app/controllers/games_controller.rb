@@ -23,7 +23,7 @@ class GamesController < ApplicationController
 
   def update
     game = current_user.games.find_by(id: params[:id])
-    @command = UpdateGame.new(
+    @command = StartGame.new(
       game: game,
       nr_of_epidemic_cards: params[:nr_of_epidemic_cards]
     )
