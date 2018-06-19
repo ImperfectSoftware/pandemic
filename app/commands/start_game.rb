@@ -60,8 +60,11 @@ class StartGame
 
   def update_game_infections
     setup_infection_cards.result.infections.each do |city_staticid, nr_of_cubes|
-      game.infections
-        .create!(quantity: nr_of_cubes, city_staticid: city_staticid)
+      game.infections.create!(
+        quantity: nr_of_cubes,
+        city_staticid: city_staticid,
+        color: City.find(city_staticid).color
+      )
     end
   end
 

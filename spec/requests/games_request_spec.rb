@@ -118,6 +118,10 @@ RSpec.describe GamesController, type: :request do
         }.to_json, headers: headers
       end
 
+      it "assigns a color to infections" do
+        expect(@game.infections.last.color).to_not be_nil
+      end
+
       it "assigns cards to players" do
         expect(@player_one.reload.cards_composite_ids.present?).to be(true)
         expect(@player_two.reload.cards_composite_ids.present?).to be(true)
