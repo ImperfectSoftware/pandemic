@@ -127,6 +127,17 @@ RSpec.describe GamesController, type: :request do
       it "returns a game object on update" do
         expect(body["id"]).to eq(@game.id)
       end
+
+      it "returns the player roles" do
+        expect(body["enhanced_players"].first['role']).to eq(@player_one.role)
+      end
+
+      it "returns the player position" do
+        expect(body["players"].first['position'])
+          .to eq('one')
+        expect(body["players"].second['position'])
+          .to eq('two')
+      end
     end
   end
 end
