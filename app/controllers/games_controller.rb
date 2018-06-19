@@ -9,7 +9,7 @@ class GamesController < ApplicationController
   end
 
   def show
-    @game = Game.find(params[:id])
+    @game = StartedGameDecorator.new(Game.find(params[:id]))
   end
 
   def create
@@ -26,7 +26,7 @@ class GamesController < ApplicationController
   end
 
   def update
-    @game = current_user.games.find_by(id: params[:id])
+    game = current_user.games.find_by(id: params[:id])
     command = StartGame.new(
       game: game,
       nr_of_epidemic_cards: params[:nr_of_epidemic_cards]
@@ -36,6 +36,7 @@ class GamesController < ApplicationController
       render json: { error: command.errors[:game].first }
       return
     end
+    @game = StartedGameDecorator.new(game)
     render 'games/show'
   end
 end
