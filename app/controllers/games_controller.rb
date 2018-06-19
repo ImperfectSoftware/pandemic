@@ -1,11 +1,15 @@
 class GamesController < ApplicationController
   skip_before_action :authorize_request
 
-  helper_method :game, :command
-  attr_reader :game, :command
+  helper_method :game
+  attr_reader :game
 
   def index
     @games ||= current_user.all_games.map { |game| GameDecorator.new(game) }
+  end
+
+  def show
+    @game = Game.find(params[:id])
   end
 
   def create
@@ -22,15 +26,16 @@ class GamesController < ApplicationController
   end
 
   def update
-    game = current_user.games.find_by(id: params[:id])
-    @command = StartGame.new(
+    @game = current_user.games.find_by(id: params[:id])
+    command = StartGame.new(
       game: game,
       nr_of_epidemic_cards: params[:nr_of_epidemic_cards]
     )
-    @command.call
-    if @command.errors.present?
-      render json: { error: @command.errors[:game].first }
+    command.call
+    if command.errors.present?
+      render json: { error: command.errors[:game].first }
       return
     end
+    render 'games/show'
   end
 end

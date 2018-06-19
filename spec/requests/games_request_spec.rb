@@ -8,6 +8,31 @@ RSpec.describe GamesController, type: :request do
     @current_user = Fabricate(:user, password: '12341234')
   end
 
+  describe "show game displays started game" do
+    let(:game) { Fabricate(:game) }
+
+    before(:each) do
+      get "/games/#{game.id}", headers: headers
+    end
+
+    it "returns a game object on update" do
+      expect(body["id"]).to eq(game.id)
+    end
+
+    it "returns the player roles" do
+      role = body["players"].first['role']
+      expect(Player.roles.keys.include?(role)).to eq(true)
+    end
+
+    it "returns the player position" do
+      expect(body["players"].first['position']) .to eq('one')
+    end
+
+    it "returns first player's location" do
+      expect(body["players"].first['location']).to eq('san-francisco')
+    end
+  end
+
   describe "display created games" do
     let!(:current_user) { Fabricate(:user) }
     let!(:game) { Fabricate(:game, owner: current_user) }

@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
   scope '/', defaults: { format: :json } do
     post 'authenticate', to: 'authentication#authenticate'
-    resources :games, only: [:create, :update, :index] do
+    resources :games, only: [:create, :update, :index, :show] do
       resources :cure_diseases, only: :create
       resources :charter_flights, only: :create
       resources :direct_flights, only: :create
