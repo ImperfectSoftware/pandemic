@@ -20,4 +20,14 @@ class StartedGameDecorator < SimpleDelegator
     end
     result
   end
+
+  def active_player_id
+    GetActivePlayer.call(player_ids: player_turn_ids, turn_nr: turn_nr).result
+  end
+
+  def enhanced_players
+    players.order(:created_at).each_with_index.to_a.map do |player, index|
+      PlayerDecorator.new(player, index)
+    end
+  end
 end
