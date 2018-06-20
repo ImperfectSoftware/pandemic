@@ -26,8 +26,9 @@ class StartedGameDecorator < SimpleDelegator
   end
 
   def enhanced_players
-    players.order(:created_at).each_with_index.to_a.map do |player, index|
-      PlayerDecorator.new(player, index)
-    end
+    players.includes(:user).order(:created_at).each_with_index.to_a
+      .map do |player, index|
+        PlayerDecorator.new(player, index)
+      end
   end
 end

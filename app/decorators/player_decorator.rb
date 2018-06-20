@@ -9,4 +9,8 @@ class PlayerDecorator < SimpleDelegator
   def city_name
     location.dashed_name
   end
+
+  def username
+    user.username
+  end
 end
