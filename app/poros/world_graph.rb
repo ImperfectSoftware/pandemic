@@ -8,7 +8,7 @@ class WorldGraph
           color: row[4].strip,
           staticid: row[0],
           population: row[2].to_i,
-          density: row[3],
+          density: row[3].strip,
         )
       end
       # Create Graph
