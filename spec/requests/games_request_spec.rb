@@ -29,7 +29,7 @@ RSpec.describe GamesController, type: :request do
     end
 
     it "returns first player's location" do
-      expect(body["players"].first['location']).to eq('san-francisco')
+      expect(body["players"].first['city_name']).to eq('san-francisco')
     end
   end
 
@@ -167,11 +167,11 @@ RSpec.describe GamesController, type: :request do
       end
 
       it "returns first player's location" do
-        expect(body["players"].first['location']).to eq('atlanta')
+        expect(body["players"].first['city_name']).to eq('atlanta')
       end
 
       it "returns second player's location" do
-        expect(body["players"].second['location']).to eq('atlanta')
+        expect(body["players"].second['city_name']).to eq('atlanta')
       end
     end
   end
