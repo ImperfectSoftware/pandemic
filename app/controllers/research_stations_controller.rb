@@ -68,7 +68,6 @@ class ResearchStationsController < PlayerActionsController
   end
 
   def using_government_grant?
-    return false unless other_location
-    player_card == other_location
+    !!other_location
   end
 end
