@@ -27,6 +27,10 @@ class Player < ApplicationRecord
     includes(game: :owner).order(created_at: :desc)
   end
 
+  def at_research_station?
+    game.has_research_station_at?(city_staticid: location_staticid)
+  end
+
   def location
     City.find(location_staticid)
   end
@@ -51,5 +55,13 @@ class Player < ApplicationRecord
 
   def cities
     player_cards.select { |card| card.is_a?(City) }
+  end
+
+  def has_actions_left?
+    active_player_id = GetActivePlayer.call(
+      player_ids: game.player_turn_ids,
+      turn_nr: game.turn_nr
+    ).result
+    self.id == active_player_id && game.actions_taken < 4
   end
 end
