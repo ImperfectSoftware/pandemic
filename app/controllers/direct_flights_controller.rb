@@ -12,7 +12,7 @@ class DirectFlightsController < PlayerActionsController
   private
 
   def create_error_message
-    I18n.t("player_actions.city_card_composite_id") unless player_card
+    I18n.t("player_actions.city_staticid") unless player_card
   end
 
   def player_card
@@ -24,6 +24,6 @@ class DirectFlightsController < PlayerActionsController
   end
 
   def location
-    City.find_from_composite_id(params[:player_card_composite_id].to_s)
+    City.find(params[:city_staticid])
   end
 end

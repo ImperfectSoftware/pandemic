@@ -10,25 +10,19 @@ RSpec.describe DirectFlightsController, type: :request do
   let(:player) { Fabricate(:player, game: game) }
   let(:user) { user.players.find_by(game: game) }
   let(:city) { WorldGraph.cities[10] }
-  let(:composite_id) { city.composite_id }
 
   before(:each) do
     game.update(player_turn_ids: [current_player.id, player.id])
   end
 
-  it "returns an error if no player card passed in" do
+  it "returns an error if no city card passed in" do
     trigger_post
-    expect(error).to eq(I18n.t("player_actions.city_card_composite_id"))
-  end
-
-  it "returns an error if a special player card is passed in" do
-    trigger_post(id: SpecialCard.events.first.composite_id)
-    expect(error).to eq(I18n.t("player_actions.city_card_composite_id"))
+    expect(error).to eq(I18n.t("player_actions.city_staticid"))
   end
 
   context "with valid request" do
     before(:each) do
-      current_player.update!(cards_composite_ids: [composite_id])
+      current_player.update!(cards_composite_ids: [city.composite_id])
     end
 
     it "creates a movement with the to location set to the card passed in" do
@@ -54,16 +48,15 @@ RSpec.describe DirectFlightsController, type: :request do
 
     it "removes used player card from player's inventory" do
       trigger_post
-      expect(current_player.reload.cards_composite_ids.include?(composite_id))
-        .to be(false)
+      expect(current_player.reload.owns_card?(city)).to be(false)
     end
   end
 
   private
 
-  def trigger_post(id: composite_id)
+  def trigger_post(id: city.staticid)
     post "/games/#{game.id}/direct_flights", params: {
-      player_card_composite_id: id
+      city_staticid: id
     }.to_json, headers: headers
   end
 end
