@@ -52,8 +52,4 @@ class City
   def storable?
     true
   end
-
-  def dashed_name
-    name.downcase.gsub('.', '').gsub(' ', '-')
-  end
 end

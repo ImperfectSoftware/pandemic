@@ -7,13 +7,12 @@ class StartedGameDecorator < SimpleDelegator
     labels = %w{one two three}
     result = Hash.new
     self.infections.group_by(&:city_staticid).each do |staticid, group|
-      city = City.find(staticid)
       counter = 0
-      result[city.dashed_name] = Hash.new
+      result[staticid] = Hash.new
       group.each do |infection|
         1.upto(infection.quantity).each do |quantity|
           label = labels[counter]
-          result[city.dashed_name][label] = infection.color
+          result[staticid][label] = infection.color
           counter += 1
         end
       end

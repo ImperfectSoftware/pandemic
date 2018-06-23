@@ -6,10 +6,6 @@ class PlayerDecorator < SimpleDelegator
     super(player)
   end
 
-  def city_name
-    location.dashed_name
-  end
-
   def username
     user.username
   end
