@@ -14,6 +14,7 @@ class ResearchStationsController < PlayerActionsController
       game.discarded_special_player_card_ids << event_card.staticid
       game.save!
     end
+    send_game_broadcast
   end
 
   def destroy
