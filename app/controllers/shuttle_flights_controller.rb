@@ -7,6 +7,7 @@ class ShuttleFlightsController < PlayerActionsController
       from: current_player.location_staticid,
       to: params[:city_staticid]
     ).call
+    send_game_broadcast
   end
 
   private
