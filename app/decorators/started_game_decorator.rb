@@ -30,4 +30,8 @@ class StartedGameDecorator < SimpleDelegator
         PlayerDecorator.new(player, index)
       end
   end
+
+  def research_stations_city_static_ids
+    research_stations.map(&:city_staticid)
+  end
 end

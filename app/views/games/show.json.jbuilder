@@ -7,3 +7,4 @@ json.players game.enhanced_players do |player|
   json.events player.events
 end
 json.infections game.individual_infections
+json.research_stations game.research_stations_city_static_ids
