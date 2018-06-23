@@ -1,4 +1,4 @@
-class ShuttleFlightChecker
+class DirectFlightChecker
   prepend SimpleCommand
 
   attr_reader :player, :city_staticid

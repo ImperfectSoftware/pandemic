@@ -1,11 +1,11 @@
 require 'rails_helper'
 
-RSpec.describe ShuttleFlightChecker do
+RSpec.describe DirectFlightChecker do
   let(:game) { Fabricate(:two_player_game) }
   let(:player) { game.players.first }
 
   it "returns false if player has no moves left" do
-    command = ShuttleFlightChecker.call(
+    command = DirectFlightChecker.call(
       player: game.players.last,
       city_staticid: '1'
     )
@@ -14,7 +14,7 @@ RSpec.describe ShuttleFlightChecker do
 
   it "returns false if player trying to fligh to his current location" do
     player.update!(cards_composite_ids: [player.location.composite_id])
-    command = ShuttleFlightChecker.call(
+    command = DirectFlightChecker.call(
       player: game.players.first,
       city_staticid: player.location.staticid
     )
@@ -23,7 +23,7 @@ RSpec.describe ShuttleFlightChecker do
 
   it "returns false if the player doesn't own the card" do
     player.update!(cards_composite_ids: [])
-    command = ShuttleFlightChecker.call(
+    command = DirectFlightChecker.call(
       player: game.players.first,
       city_staticid: player.location.staticid
     )
@@ -36,7 +36,7 @@ RSpec.describe ShuttleFlightChecker do
     staticid = ((player.location.staticid.to_i + 10) % 47).to_s
     city = City.find(staticid)
     player.update!(cards_composite_ids: [city.composite_id])
-    command = ShuttleFlightChecker.call(
+    command = DirectFlightChecker.call(
       player: game.players.first,
       city_staticid: staticid
     )
