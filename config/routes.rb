@@ -21,6 +21,7 @@ Rails.application.routes.draw do
         resource :discard_city_cards, only: :destroy
         resource :finish_turns, only: :create
         resource :forecasts, only: [:create, :update]
+        resource :possible_actions, only: :show
         resource :resilient_populations, only: [:show, :create]
         resource :skip_infections, only: :create
         resource :special_cards, only: [:show, :create]
