@@ -14,6 +14,7 @@ RSpec.describe CureChecker do
   end
 
   it "can't cure disease if the player doesn't have enough city cards" do
+    player_one.update!(role: 'medic')
     game.research_stations.create!(city_staticid: player_one.location.staticid)
     expect(player_one.at_research_station?).to eq(true)
     command = CureChecker.call(game: game, player: player_one)
