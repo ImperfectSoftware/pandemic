@@ -17,14 +17,13 @@ class CharterFlightsController < PlayerActionsController
         if !current_player.owns_card?(current_player.location)
           I18n.t("player_actions.must_own_card")
         elsif !player_card
-          I18n.t("player_actions.city_card_composite_id")
+          I18n.t("player_actions.city_staticid")
         end
       end
   end
 
   def player_card
-    @player_card ||= City
-      .find_from_composite_id(params[:player_card_composite_id])
+    @player_card ||= City.find(params[:city_staticid])
   end
 
   def remaining_player_cards

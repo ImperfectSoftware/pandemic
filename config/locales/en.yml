@@ -34,7 +34,6 @@ en:
   player_actions:
     bad_turn: This action is not allowed on this turn.
     city_staticid: A city staticid must be provided for this action.
-    city_card_composite_id: A city card composite id must be provided for this action.
     city_with_no_station: There is no research station in %{name}.
     discard_player_city_card: You can hold a maximum of 7 city cards. Please discard card.
     must_own_card: The player does not own the card.

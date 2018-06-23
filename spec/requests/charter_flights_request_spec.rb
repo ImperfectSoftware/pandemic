@@ -16,18 +16,17 @@ RSpec.describe CharterFlightsController, type: :request do
 
   it "returns an error if the player doesn't own the current location card" do
     current_player.update!(location_staticid: WorldGraph.cities.last.staticid)
-    trigger_post(id: WorldGraph.cities[10].composite_id)
+    trigger_post(id: WorldGraph.cities[10].staticid)
     expect(error).to eq(I18n.t("player_actions.must_own_card"))
   end
 
   it "returns an error if no valid player card passed in" do
     post "/games/#{game.id}/charter_flights", params: {}, headers: headers
-    expect(error).to eq(I18n.t("player_actions.city_card_composite_id"))
+    expect(error).to eq(I18n.t("player_actions.city_staticid"))
   end
 
   context "with valid request" do
     let(:city) { WorldGraph.cities[20] }
-    let(:composite_id) { city.composite_id }
 
     before(:each) do
       current_player.update!(
@@ -36,7 +35,7 @@ RSpec.describe CharterFlightsController, type: :request do
     end
 
     it "creates a movement with the to location set to the card passed in" do
-      trigger_post
+     trigger_post
       expect(Movement.last.to_city_staticid).to eq(city.staticid)
     end
 
@@ -59,16 +58,15 @@ RSpec.describe CharterFlightsController, type: :request do
     it "removes used player card from player's inventory" do
       location = current_player.location
       trigger_post
-      composite_ids = current_player.reload.cards_composite_ids
-      expect(composite_ids.include?(location.composite_id)).to be(false)
+      expect(current_player.reload.owns_card?(location)).to be(false)
     end
   end
 
   private
 
-  def trigger_post(id: composite_id)
+  def trigger_post(id: city.staticid)
     post "/games/#{game.id}/charter_flights", params: {
-      player_card_composite_id: id
+      city_staticid: id
     }.to_json, headers: headers
   end
 
