@@ -1,6 +1,6 @@
 class Games::PossibleActionsController < ApplicationController
   helper_method :can_drive, :can_direct_flight, :can_charter_flight,
-    :can_shuttle_flight, :can_place_research_station,
+    :can_shuttle_flight, :can_build_research_station,
     :can_remove_research_station, :cure_checker
 
   def show
@@ -36,7 +36,7 @@ class Games::PossibleActionsController < ApplicationController
     ).result
   end
 
-  def can_place_research_station
+  def can_build_research_station
     ResearchStationChecker.call(
       player: current_player,
       city_staticid: params[:city_staticid]
