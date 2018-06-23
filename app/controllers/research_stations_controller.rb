@@ -20,6 +20,7 @@ class ResearchStationsController < PlayerActionsController
   def destroy
     game.research_stations
       .find_by(city_staticid: params[:city_staticid])&.destroy
+    send_game_broadcast
   end
 
   private
