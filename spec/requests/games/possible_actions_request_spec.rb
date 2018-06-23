@@ -28,7 +28,7 @@ RSpec.describe Games::PossibleActionsController, type: :request do
   end
 
   it "displays can place research station" do
-    expect(body["can_place_research_station"]).to eq(false)
+    expect(body["can_build_research_station"]).to eq(false)
   end
 
   it "displays can remove research station" do
