@@ -7,6 +7,7 @@ class DirectFlightsController < PlayerActionsController
       to: player_card.staticid
     ).call
     current_player.update!(cards_composite_ids: remaining_player_cards)
+    send_game_broadcast
   end
 
   private
