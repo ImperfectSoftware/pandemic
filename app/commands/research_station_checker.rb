@@ -10,6 +10,7 @@ class ResearchStationChecker
   def call
     return true if player.owns_card?(government_grant)
     return false unless player.has_actions_left?
+    return false unless player.location == location
     return true if player.operations_expert?
     return false unless player.owns_card?(location)
     true

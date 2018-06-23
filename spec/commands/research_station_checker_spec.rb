@@ -19,6 +19,12 @@ RSpec.describe ResearchStationChecker do
     expect(command.result).to eq(false)
   end
 
+  it "returns false if player is not at the specified location" do
+    player.update!(location_staticid: '2')
+    command = ResearchStationChecker.call(player: player, city_staticid: '1')
+    expect(command.result).to eq(false)
+  end
+
   it "returns true if player is an operations expert" do
     player.update!(role: 'operations_expert')
     command = ResearchStationChecker.call(player: player, city_staticid: '1')
