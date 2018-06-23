@@ -27,7 +27,8 @@ RSpec.describe ResearchStationChecker do
 
   it "returns true if player is an operations expert" do
     player.update!(role: 'operations_expert')
-    command = ResearchStationChecker.call(player: player, city_staticid: '1')
+    command = ResearchStationChecker
+      .call(player: player, city_staticid: player.location.staticid)
     expect(command.result).to eq(true)
   end
 
