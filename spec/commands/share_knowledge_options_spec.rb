@@ -25,6 +25,25 @@ RSpec.describe ShareKnowledgeOptions do
     end
   end
 
+  describe "nothing to with self" do
+    before(:each) do
+      player_one.update!(role: 'researcher')
+      @result = ShareKnowledgeOptions.call(
+        game: game,
+        current_player: player_one,
+        other_player: player_one
+      ).result
+    end
+
+    it "returns an empty array for cities to receive" do
+      expect(@result.to_receive).to eq([])
+    end
+
+    it "returns an empty array for cities to give" do
+      expect(@result.to_give).to eq([])
+    end
+  end
+
   describe "current player can share current location" do
     before(:each) do
       player_one.update!(role: 'medic')

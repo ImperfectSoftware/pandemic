@@ -16,16 +16,16 @@ class ShareKnowledgeOptions
 
   Struct.new('CityStruct', :name, :owner_username, :staticid)
   def receive_cities
-    return [] if current_player.location != other_player.location
     sharable_cities(other_player)
   end
 
   def give_cities
-    return [] if current_player.location != other_player.location
     sharable_cities(current_player)
   end
 
   def sharable_cities(player)
+    return [] if current_player == other_player
+    return [] if current_player.location != other_player.location
     if player.researcher?
       player.cities.map do |city|
         Struct::CityStruct.new(city.name, player.user.username, city.staticid)
