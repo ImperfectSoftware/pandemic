@@ -1,8 +1,7 @@
 class Games::PossibleActionsController < ApplicationController
   helper_method :can_drive, :can_direct_flight, :can_charter_flight, :can_treat,
     :can_shuttle_flight, :can_build_research_station, :cure_checker,
-    :can_remove_research_station
-
+    :can_remove_research_station, :can_share_knowledge
   def show
   end
 
@@ -50,6 +49,11 @@ class Games::PossibleActionsController < ApplicationController
   def cure_checker
     @cure_checker ||= CureChecker.call(game: game, player: current_player)
       .result
+  end
+
+  def can_share_knowledge
+    ShareKnowledgeChecker
+      .call(game: game, city_staticid: params[:city_staticid]).result
   end
 
   def can_treat

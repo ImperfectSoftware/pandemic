@@ -43,6 +43,26 @@ RSpec.describe Games::PossibleActionsController, type: :request do
     expect(body["cure_color"]).to eq('none')
   end
 
+  it "can treat blue should be false" do
+    expect(body["can_treat_blue"]).to eq(false)
+  end
+
+  it "can treat black should be false" do
+    expect(body["can_treat_black"]).to eq(false)
+  end
+
+  it "can treat red should be false" do
+    expect(body["can_treat_red"]).to eq(false)
+  end
+
+  it "can treat yellow should be false" do
+    expect(body["can_treat_yellow"]).to eq(false)
+  end
+
+  it "can share knowledge should be false" do
+    expect(body["can_share_knowledge"]).to eq(false)
+  end
+
   private
 
   def trigger_get
