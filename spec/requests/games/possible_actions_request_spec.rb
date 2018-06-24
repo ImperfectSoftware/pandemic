@@ -59,10 +59,6 @@ RSpec.describe Games::PossibleActionsController, type: :request do
     expect(body["can_treat_yellow"]).to eq(false)
   end
 
-  it "can share knowledge should be false" do
-    expect(body["can_share_knowledge"]).to eq(false)
-  end
-
   private
 
   def trigger_get
