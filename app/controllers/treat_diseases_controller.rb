@@ -11,6 +11,7 @@ class TreatDiseasesController < PlayerActionsController
     if command.errors.present?
       render json: { error: command.errors[:quantity].first }
     end
+    send_game_broadcast
   end
 
   private
