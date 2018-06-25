@@ -47,18 +47,11 @@ RSpec.describe ShareCardsController, type: :request do
     expect(error).to eq(I18n.t('player_actions.bad_turn'))
   end
 
-  it "returns error if the from player is no longer at the card's location" do
+  it "returns error if players are not at the same location" do
     player.update(location_staticid: city.staticid)
     current_player.update(location_staticid: bad_city.staticid)
     trigger_put
-    expect(error).to eq(I18n.t('share_cards.from_player_bad_location'))
-  end
-
-  it "returns error if the to player is no longer at the card's location" do
-    player.update(location_staticid: bad_city.staticid)
-    current_player.update(location_staticid: city.staticid)
-    trigger_put
-    expect(error).to eq(I18n.t('share_cards.to_player_bad_location'))
+    expect(error).to eq(I18n.t('share_cards.not_same_location'))
   end
 
   it "returns error if the current player is the share card creator" do

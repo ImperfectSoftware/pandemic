@@ -3,7 +3,7 @@ class ShareCardsController < PlayerActionsController
   before_action :check_for_potential_update_errors, only: :update
 
   def update
-    render "share_cards/create.json" and return unless params[:accepted]
+    render "share_cards/create" and return unless params[:accepted]
 
     share_card.update!(accepted: true)
     from_player.update!(cards_composite_ids: remaining_player_cards)
@@ -11,6 +11,7 @@ class ShareCardsController < PlayerActionsController
     to_player.save!
     game.update!(actions_taken: game.actions_taken + 1)
     render "share_cards/create.json"
+    send_game_broadcast
   end
 
   private
@@ -26,10 +27,8 @@ class ShareCardsController < PlayerActionsController
           I18n.t('player_actions.no_actions_left')
         elsif not_to_or_from_player_turn?
           I18n.t('player_actions.bad_turn')
-        elsif to_player.location != share_card.location
-          I18n.t('share_cards.to_player_bad_location')
-        elsif from_player.location != share_card.location
-          I18n.t('share_cards.from_player_bad_location')
+        elsif to_player.location != from_player.location
+          I18n.t('share_cards.not_same_location')
         elsif !player_card
           I18n.t('share_cards.not_an_owner')
         elsif current_player == creator
@@ -49,7 +48,7 @@ class ShareCardsController < PlayerActionsController
   def player_card
     @player_card ||=
       begin
-        if current_player.owns_card?(share_card.location)
+        if from_player.owns_card?(share_card.location)
           share_card.location
         end
       end

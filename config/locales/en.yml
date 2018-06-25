@@ -46,8 +46,7 @@ en:
     not_the_same_location: You are requesting a card from a player at a different location.
     not_an_owner: The card to be shared is not owned by the player.
     not_authorized: This player is not authorized to accept this card transfer.
-    from_player_bad_location: Player offering the card is not at the correct location.
-    to_player_bad_location: Player receiving the card is not at the correct location.
+    not_same_location: Players are not at the same location.
   special_cards:
     bad_role: This player is not a Contingency Planner.
   treat_diseases:

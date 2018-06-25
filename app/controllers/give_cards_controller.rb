@@ -3,12 +3,13 @@ class GiveCardsController < PlayerActionsController
   delegate :location, to: :current_player
 
   def create
-    current_player.share_cards.create!(
+    card = current_player.share_cards.create!(
       to_player: other_player,
       from_player: current_player,
       accepted: false,
       city_staticid: player_card.staticid
     )
+    send_share_card_broadcast(card)
   end
 
   private
@@ -36,5 +37,18 @@ class GiveCardsController < PlayerActionsController
 
   def other_location
     City.find(params[:city_staticid])
+  end
+
+  def send_share_card_broadcast(card)
+    ActionCable.server.broadcast(
+      "game_channel:#{game.id}",
+      share_card_notification: true,
+      payload: {
+        id: card.id,
+        city_name: player_card.name,
+        receiver_username: other_player.user.username,
+        sender_username: current_user.username
+      }
+    )
   end
 end
