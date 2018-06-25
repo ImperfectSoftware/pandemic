@@ -19,12 +19,12 @@ class ApplicationController < ActionController::API
     render_not_authorized unless game.started?
   end
 
-  def game
-    @game ||= current_user.games.find_by(id: params[:game_id])
+  def current_player
+    @current_player ||= current_user.players.find_by(game_id: params[:game_id])
   end
 
-  def current_player
-    @current_player ||= current_user.players.find_by(game: game)
+  def game
+    @game ||= current_player.game
   end
 
   def active_player_id
