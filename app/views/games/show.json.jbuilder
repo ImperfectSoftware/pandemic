@@ -9,3 +9,7 @@ json.players game.enhanced_players do |player|
 end
 json.infections game.individual_infections
 json.research_stations game.research_stations_city_static_ids
+json.blue_status game.diseases_status.blue
+json.black_status game.diseases_status.black
+json.yellow_status game.diseases_status.yellow
+json.red_status game.diseases_status.red

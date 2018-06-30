@@ -34,4 +34,19 @@ class StartedGameDecorator < SimpleDelegator
   def research_stations_city_static_ids
     research_stations.map(&:city_staticid)
   end
+
+  def diseases_status
+    @diseases_status ||=
+      begin
+        OpenStruct.new( blue: 'not', red: 'not', yellow: 'not', black: 'not')
+          .tap do |diseases|
+            cure_markers.each do |marker|
+              diseases.send("#{marker.color}=", 'cured') if marker.cured?
+              if marker.eradicated?
+                diseases.send("#{marker.color}=", 'eradicated')
+              end
+            end
+        end
+      end
+  end
 end
