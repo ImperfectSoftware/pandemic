@@ -44,6 +44,7 @@ class GiveCardsController < PlayerActionsController
       "game_channel:#{game.id}",
       share_card_notification: true,
       payload: {
+        type: 'give',
         id: card.id,
         city_name: player_card.name,
         receiver_username: other_player.user.username,
