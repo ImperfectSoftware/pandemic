@@ -1,6 +1,7 @@
 json.(game, :id, :active, :active_player_id, :actions_taken)
 json.players game.enhanced_players do |player|
-  json.(player, :id, :role, :position, :location_staticid, :username)
+  json.(player, :id, :position, :role, :location_staticid, :username)
+  json.pretty_role player.pretty_role
   json.cities player.cities do |city|
     json.(city, :color, :density, :name, :population, :staticid)
   end

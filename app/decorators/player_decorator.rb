@@ -9,4 +9,8 @@ class PlayerDecorator < SimpleDelegator
   def username
     user.username
   end
+
+  def pretty_role
+    role.split('_').map(&:capitalize).join(' ')
+  end
 end
