@@ -9,6 +9,7 @@ class CureDiseasesController < PlayerActionsController
     )
     game.increment!(:actions_taken)
     current_player.update!(cards_composite_ids: remaining_composite_ids)
+    send_game_broadcast
   end
 
   private
