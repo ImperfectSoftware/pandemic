@@ -43,6 +43,11 @@ class Player < ApplicationRecord
     cards_composite_ids.include?(card&.composite_id)
   end
 
+  def owns_cards?(cards)
+    cards.each { |card| return false unless owns_card?(card) }
+    true
+  end
+
   def player_cards
     cards_composite_ids.map do |id|
       PlayerCard.find_by_composite_id(id)

@@ -8,6 +8,7 @@ class CureDiseasesController < PlayerActionsController
       eradicated: game.eradicated?(color: color)
     )
     game.increment!(:actions_taken)
+    current_player.update!(cards_composite_ids: remaining_composite_ids)
   end
 
   private
@@ -23,6 +24,8 @@ class CureDiseasesController < PlayerActionsController
           I18n.t("cure_diseases.not_the_same_color")
         elsif game.cure_markers.find_by(color: color)&.cured
           I18n.t("cure_diseases.already_cured")
+        elsif !current_player.owns_cards?(cities)
+          I18n.t("cure_diseases.player_must_own_cards")
         end
       end
   end
@@ -46,5 +49,9 @@ class CureDiseasesController < PlayerActionsController
 
   def color
     @color ||= cities.first.color
+  end
+
+  def remaining_composite_ids
+    current_player.cards_composite_ids - cities.map(&:composite_id)
   end
 end

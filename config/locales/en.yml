@@ -5,7 +5,8 @@ en:
     already_cured: The disease is already cured.
     not_the_same_color: The cards are not the same color.
     wrong_number_of_cards: The player doesn't have correct number of cards.
-  charter_flights:
+    player_must_own_cards: The player must own the submitted city cards.
+    charter_flights:
     player_must_own_card: The player does not own the city card at the current location.
   dispatcher:
     must_be_a_dispatcher: This action requires the dispatcher role.
