@@ -43,7 +43,8 @@ class Games::PossibleActionsController < ApplicationController
   end
 
   def can_remove_research_station
-    game.has_research_station_at?(city_staticid: params[:city_staticid])
+    game.has_research_station_at?(city_staticid: params[:city_staticid]) &&
+      game.research_stations.count == 6
   end
 
   def cure_checker
