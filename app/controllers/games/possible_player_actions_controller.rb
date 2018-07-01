@@ -31,7 +31,7 @@ class Games::PossiblePlayerActionsController < ApplicationController
       .owns_card?(SpecialCard.events.find(&:airlift?))
     (WorldGraph.cities - [other_player.location]).map do |location|
         OpenStruct.new(name: location.name, staticid: location.staticid)
-    end
+    end.sort_by(&:name)
   end
 
   def operations_expert_locations
