@@ -10,31 +10,6 @@ RSpec.describe Games::SpecialCardsController, type: :request do
   let(:player) { Fabricate(:player, game: game) }
   let(:special_card) { SpecialCard.events.first }
 
-  context "GET action" do
-    it "returns an error if current_player is not the active player" do
-      game.update!(player_turn_ids: [player.id, current_player.id])
-      trigger_get
-      expect(error).to eq(I18n.t("player_actions.bad_turn"))
-    end
-
-    it "returns an error if the player is not the contingency player" do
-      game.update!(player_turn_ids: [current_player.id, player.id])
-      current_player.update!(role: Player.roles.keys.first)
-      trigger_get
-      expect(error).to eq(I18n.t("special_cards.bad_role"))
-    end
-
-    it "returns a list of non duplicated discarded special cards" do
-      game.update!(
-        player_turn_ids: [current_player.id, player.id],
-        discarded_special_player_card_ids: %w{4 1 2 4 5 3 5}
-      )
-      current_player.update!(role: Player.roles.keys.second)
-      trigger_get
-      expect(body['staticids']).to eq(%w{1 2 3})
-    end
-  end
-
   context "POST action"do
     it "returns error if current player is not the contingency planner" do
       game.update!(player_turn_ids: [current_player.id, player.id])
@@ -80,7 +55,7 @@ RSpec.describe Games::SpecialCardsController, type: :request do
 
   def trigger_post
     post "/games/#{game.id}/special_cards", params: {
-      special_card_staticid: special_card.staticid
+      event_card_staticid: special_card.staticid
     }.to_json, headers: headers
   end
 end

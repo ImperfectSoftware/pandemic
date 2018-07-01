@@ -49,4 +49,8 @@ class StartedGameDecorator < SimpleDelegator
         end
       end
   end
+
+  def event_discard_pile
+    GetSpecialCards.call(game: self).result
+  end
 end
