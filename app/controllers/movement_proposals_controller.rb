@@ -26,7 +26,7 @@ class MovementProposalsController < PlayerActionsController
       if movement_proposal.airlift?
         game.discarded_special_player_card_ids << airlift_card.staticid
         game.save!
-        puppet_player.update!(cards_composite_ids: remaining_cards)
+        movement_proposal.creator.update!(cards_composite_ids: remaining_cards)
       end
       send_game_broadcast
     end
@@ -44,9 +44,11 @@ class MovementProposalsController < PlayerActionsController
         case
         when params[:city_staticid].blank? || params[:player_id].blank?
           I18n.t("errors.missing_param")
+        when using_airlift?
+          # we need to allow this action if city is specified
         when !destination_is_a_neighbor? && !other_player_at_destination?
           I18n.t("movement_proposals.not_allowed")
-        when !current_player.dispatcher? && !using_airlift?
+        when !current_player.dispatcher?
           I18n.t("dispatcher.must_be_a_dispatcher")
         end
       end
@@ -56,7 +58,9 @@ class MovementProposalsController < PlayerActionsController
     @update_error_message ||=
       begin
         case
-        when !params[:accepted]
+        when !params[:accepted] || movement_proposal.airlift?
+          # we don't need to check for errors if not accpeted
+          # any city is allowed with airlift
         when puppet_player != current_player
           I18n.t("errors.not_authorized")
         when game.actions_taken == 4
