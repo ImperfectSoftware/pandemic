@@ -9,6 +9,7 @@ class OperationsExpertFlightsController < PlayerActionsController
     ).call
     current_player.update!(cards_composite_ids: remaining_player_cards)
     current_player.operations_expert_actions.create!(turn_nr: game.turn_nr)
+    send_game_broadcast
   end
 
   private
