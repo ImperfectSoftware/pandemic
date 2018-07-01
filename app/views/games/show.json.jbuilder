@@ -13,3 +13,9 @@ json.blue_status game.diseases_status.blue
 json.black_status game.diseases_status.black
 json.yellow_status game.diseases_status.yellow
 json.red_status game.diseases_status.red
+json.infection_discard_pile game.used_cards do |city|
+  json.(city, :color, :density, :name, :population, :staticid)
+end
+json.event_discard_pile game.discarded_events do |event|
+  json.(event, :name, :staticid)
+end
