@@ -2,7 +2,7 @@ class MovementProposalsController < PlayerActionsController
   before_action :check_for_potential_update_errors, only: :update
 
   def create
-    current_player.created_movement_proposals.create!(
+    proposal = current_player.created_movement_proposals.create!(
       player_id: params[:player_id],
       city_staticid: params[:city_staticid],
       turn_nr: game.turn_nr,
@@ -10,6 +10,7 @@ class MovementProposalsController < PlayerActionsController
       accepted: false,
       airlift: using_airlift?
     )
+    send_movement_proposal_broadcast(proposal)
   end
 
   def update
@@ -27,6 +28,7 @@ class MovementProposalsController < PlayerActionsController
         game.save!
         puppet_player.update!(cards_composite_ids: remaining_cards)
       end
+      send_game_broadcast
     end
   end
 
@@ -89,6 +91,10 @@ class MovementProposalsController < PlayerActionsController
     params[:city_staticid] || movement_proposal.city_staticid
   end
 
+  def location
+    City.find(city_staticid)
+  end
+
   def player_id
     params[:player_id] || movement_proposal.player_id
   end
@@ -103,5 +109,18 @@ class MovementProposalsController < PlayerActionsController
 
   def remaining_cards
     puppet_player.cards_composite_ids - [airlift_card.composite_id]
+  end
+
+  def send_movement_proposal_broadcast(proposal)
+    ActionCable.server.broadcast(
+      "game_channel:#{game.id}",
+      movement_proposal_notification: true,
+      payload: {
+        id: proposal.id,
+        city_name: location.name,
+        puppet_username: puppet_player.user.username,
+        proponent_username: current_user.username
+      }
+    )
   end
 end
