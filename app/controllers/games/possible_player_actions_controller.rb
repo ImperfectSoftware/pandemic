@@ -1,5 +1,5 @@
 class Games::PossiblePlayerActionsController < ApplicationController
-  helper_method :cities
+  helper_method :cities, :locations
   attr_reader :cities
 
   def show
@@ -14,5 +14,12 @@ class Games::PossiblePlayerActionsController < ApplicationController
 
   def other_player
     game.players.find(params[:player_id])
+  end
+
+  def locations
+    (game.players.map(&:location) + other_player.location.neighbors).uniq
+      .map do |location|
+        OpenStruct.new(name: location.name, staticid: location.staticid)
+      end
   end
 end
