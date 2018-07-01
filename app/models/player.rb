@@ -69,4 +69,8 @@ class Player < ApplicationRecord
     ).result
     self.id == active_player_id && game.actions_taken < 4
   end
+
+  def can_move_other_player?
+    dispatcher? || owns_card?(SpecialCard.events.find(&:airlift?))
+  end
 end
