@@ -6,3 +6,6 @@ end
 json.airlift_locations airlift_locations do |location|
   json.(location, :name, :staticid)
 end
+json.operations_expert_locations operations_expert_locations do |location|
+  json.(location, :name, :staticid)
+end
