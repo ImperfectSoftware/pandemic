@@ -1,4 +1,5 @@
 json.(game, :id, :active, :active_player_id, :actions_taken)
+json.between_epidemic_stage game.between_epidemic_stages?
 json.players game.enhanced_players do |player|
   json.(player, :id, :position, :role, :location_staticid, :username)
   json.pretty_role player.pretty_role
