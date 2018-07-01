@@ -18,6 +18,7 @@ class CureChecker
   private
 
   def most_city_cards
+    return OpenStruct.new(count: 0) if player.cities.count == 0
     @most_city_cards ||=
       begin
         pair = player.cities.group_by(&:color).map do |color, cities|

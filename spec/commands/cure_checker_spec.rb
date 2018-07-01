@@ -21,6 +21,15 @@ RSpec.describe CureChecker do
     expect(command.result.can_discover_cure).to eq(false)
   end
 
+  it "can't cure disease when player has 0 city cards" do
+    player_one.update!(role: 'medic', cards_composite_ids: [])
+    game.research_stations.create!(city_staticid: player_one.location.staticid)
+    expect(player_one.at_research_station?).to eq(true)
+    command = CureChecker.call(game: game, player: player_one)
+    expect(command.result.can_discover_cure).to eq(false)
+  end
+
+
   it "can't cure disease if it's not the player's turn" do
     five_blue_cities = blue_cities.map(&:composite_id)
     game.update(player_turn_ids: [player_two.id, player_one.id])
