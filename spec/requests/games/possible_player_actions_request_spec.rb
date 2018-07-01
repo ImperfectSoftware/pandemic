@@ -19,6 +19,15 @@ RSpec.describe Games::PossiblePlayerActionsController, type: :request do
       expect(body['operations_expert_locations'].count).to eq(47)
     end
 
+    describe "when the action was already taken" do
+      it "should display cities if at research station" do
+        game.research_stations.create!(city_staticid: player.location.staticid)
+        player.operations_expert_actions.create!(turn_nr: game.turn_nr)
+        trigger_get
+        expect(body['operations_expert_locations'].count).to eq(0)
+      end
+    end
+
     it "should display no cities if NOT at research station" do
       trigger_get
       expect(body['operations_expert_locations'].count).to eq(0)
