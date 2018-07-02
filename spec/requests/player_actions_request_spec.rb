@@ -27,8 +27,10 @@ RSpec.describe PlayerActionsController, type: :request do
 
   it 'returns error message if any player has more than 7 city cards' do
     @current_player.update(cards_composite_ids: WorldGraph.composite_ids[0,8])
+    username = @current_player.user.username
     post "/games/#{@game.id}/shuttle_flights", params: {}, headers: headers
-    expect(error).to eq(I18n.t('player_actions.discard_player_city_card'))
+    expect(error)
+      .to eq(I18n.t('player_actions.discard_player_card', username: username))
   end
 
   it "raises not implemented error" do

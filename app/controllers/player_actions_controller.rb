@@ -15,8 +15,11 @@ class PlayerActionsController < ApplicationController
           I18n.t('player_actions.bad_turn')
         elsif game.no_actions_left?
           I18n.t('player_actions.no_actions_left')
-        elsif current_player.has_too_many_cards?
-          I18n.t('player_actions.discard_player_city_card')
+        elsif game.player_with_too_many_cards
+          I18n.t(
+            'player_actions.discard_player_card',
+            username: game.player_with_too_many_cards.user.username
+          )
         end
       end
   end

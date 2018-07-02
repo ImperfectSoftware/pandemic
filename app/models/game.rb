@@ -45,4 +45,8 @@ class Game < ApplicationRecord
       City.find(staticid)
     end
   end
+
+  def player_with_too_many_cards
+    players.to_a.find { |player| player.has_too_many_cards? }
+  end
 end
