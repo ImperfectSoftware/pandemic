@@ -5,14 +5,6 @@ RSpec.describe ResearchStationChecker do
   let(:player) { game.players.first }
   let(:player_two) { game.players.last }
 
-  it "returns true if player owns a government card" do
-    event_card = SpecialCard.events.find(&:government_grant?)
-    player_two.update!(cards_composite_ids: [event_card.composite_id])
-    command = ResearchStationChecker
-      .call(player: player_two, city_staticid: '1')
-    expect(command.result).to eq(true)
-  end
-
   it "returns false if player has no moves left" do
     command = ResearchStationChecker
       .call(player: player_two, city_staticid: '1')

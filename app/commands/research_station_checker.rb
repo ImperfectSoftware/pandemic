@@ -8,7 +8,6 @@ class ResearchStationChecker
   end
 
   def call
-    return true if player.owns_card?(government_grant)
     return false unless player.has_actions_left?
     return false unless player.location == location
     return true if player.operations_expert?
@@ -17,10 +16,6 @@ class ResearchStationChecker
   end
 
   private
-
-  def government_grant
-    SpecialCard.events.find(&:government_grant?)
-  end
 
   def location
     City.find(city_staticid)
