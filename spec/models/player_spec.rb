@@ -32,6 +32,12 @@ RSpec.describe Player, type: :model do
     expect(@player.owns_card?(city)).to eq(true)
   end
 
+  it "knows if it owns the government grant card" do
+    composite_id = SpecialCard.events.find(&:government_grant?).composite_id
+    @player.cards_composite_ids = [composite_id]
+    expect(@player.owns_government_grant?).to eq(true)
+  end
+
   context "card types" do
     let(:city) { WorldGraph.cities.first }
     let(:event) { SpecialCard.events.first }

@@ -73,4 +73,8 @@ class Player < ApplicationRecord
   def can_move_other_player?
     dispatcher? || owns_card?(SpecialCard.events.find(&:airlift?))
   end
+
+  def owns_government_grant?
+    owns_card?(SpecialCard.events.find(&:government_grant?))
+  end
 end
