@@ -11,6 +11,12 @@ RSpec.describe Player, type: :model do
     expect(@player.has_too_many_cards?).to be(true)
   end
 
+  it "knows it has too many cards when composite ids are mixed" do
+    composite_ids = WorldGraph.composite_ids[0,7] + ['special-card-3']
+    @player.update(cards_composite_ids: composite_ids)
+    expect(@player.has_too_many_cards?).to be(true)
+  end
+
   it 'knows if it has too many cards when player has 9 cards' do
     @player.update(cards_composite_ids: WorldGraph.composite_ids[0,9])
     expect(@player.has_too_many_cards?).to be(true)
