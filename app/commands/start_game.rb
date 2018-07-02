@@ -16,6 +16,7 @@ class StartGame
     update_players
     update_game_infections
     update_game_attributes
+    create_research_station_in_atlanta
     ActionCable.server.broadcast("game_channel:#{game.id}", game_started: true)
     game
   end
@@ -80,6 +81,8 @@ class StartGame
     )
   end
 
-  def place_players_in_atlanta
+  def create_research_station_in_atlanta
+    game.research_stations
+      .create!(city_staticid: City.find_by_name('Atlanta').staticid)
   end
 end
