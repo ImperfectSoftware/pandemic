@@ -31,7 +31,7 @@ class ResearchStationsController < PlayerActionsController
         case
         when all_research_stations_used?
           I18n.t('research_stations.none_left')
-        when using_government_grant? && !current_player.owns_card?(event_card)
+        when using_government_grant? && !current_player.owns_government_grant?
           I18n.t('player_actions.must_own_card')
         when !player_card && !current_player.operations_expert?
           I18n.t('player_actions.must_own_card')
@@ -44,7 +44,7 @@ class ResearchStationsController < PlayerActionsController
   end
 
   def player_card
-    return other_location if other_location
+    return other_location if using_government_grant?
     return location if current_player.operations_expert?
     return location if current_player.owns_card?(location)
   end
@@ -61,15 +61,16 @@ class ResearchStationsController < PlayerActionsController
     end
   end
 
-  def other_location
-    @other_location ||= City.find(params[:city_staticid])
-  end
-
   def event_card
     SpecialCard.events.find(&:government_grant?)
   end
 
+  # Used with government grant card
+  def other_location
+    @other_location ||= City.find(params[:city_staticid])
+  end
+
   def using_government_grant?
-    !!other_location
+    params[:government_grant]
   end
 end
