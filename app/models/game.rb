@@ -10,6 +10,10 @@ class Game < ApplicationRecord
   has_many :movement_proposals, dependent: :destroy
   has_many :forecasts, dependent: :destroy
 
+  def all_research_stations_used?
+    research_stations.count == 6
+  end
+
   def no_actions_left?
     actions_taken == 4
   end

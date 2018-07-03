@@ -1,7 +1,9 @@
 class Games::PossibleActionsController < ApplicationController
   helper_method :can_drive, :can_direct_flight, :can_charter_flight, :can_treat,
     :can_shuttle_flight, :can_build_research_station, :cure_checker,
-    :can_remove_research_station, :current_player
+    :can_remove_research_station, :current_player,
+    :display_government_grant_option
+
   def show
   end
 
@@ -66,5 +68,13 @@ class Games::PossibleActionsController < ApplicationController
         end
         result
       end
+  end
+
+  def display_government_grant_option
+    if params[:city_staticid] != current_player.location.staticid &&
+        game.has_research_station_at?(city_staticid: params[:city_staticid])
+      return false
+    end
+    current_player.owns_government_grant?
   end
 end
