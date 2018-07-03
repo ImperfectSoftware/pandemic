@@ -39,8 +39,4 @@ class ResearchStationsController < PlayerActionsController
   def remaining_player_cards
     current_player.cards_composite_ids - [player_card.composite_id]
   end
-
-  def event_card
-    SpecialCard.events.find(&:government_grant?)
-  end
 end

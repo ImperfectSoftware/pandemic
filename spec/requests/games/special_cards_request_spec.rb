@@ -49,10 +49,6 @@ RSpec.describe Games::SpecialCardsController, type: :request do
 
   private
 
-  def trigger_get
-    get "/games/#{game.id}/special_cards", params: {}, headers: headers
-  end
-
   def trigger_post
     post "/games/#{game.id}/special_cards", params: {
       event_card_staticid: special_card.staticid

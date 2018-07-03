@@ -12,12 +12,6 @@ class City
     end
   end
 
-  def self.find_from_composite_id(composite_id)
-    WorldGraph.cities.find do |city|
-      city.composite_id == composite_id
-    end
-  end
-
   def self.find_from_staticids(staticids)
     staticids.map do |staticid|
       find(staticid)

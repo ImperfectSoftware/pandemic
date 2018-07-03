@@ -65,6 +65,13 @@ RSpec.describe CureDiseasesController, type: :request do
       expect(error).to eq(I18n.t("cure_diseases.not_the_same_color"))
     end
 
+    it "returns an error if the player doesn't own the cards" do
+      current_player.update!(cards_composite_ids: [])
+      trigger_post(city_staticids: city_staticids)
+      expect(error).to eq(I18n.t("cure_diseases.player_must_own_cards"))
+    end
+
+
     it "creates a cure marker" do
       current_player.update!(cards_composite_ids: city_composite_ids)
       trigger_post(city_staticids: city_staticids)

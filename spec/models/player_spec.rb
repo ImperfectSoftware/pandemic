@@ -38,6 +38,21 @@ RSpec.describe Player, type: :model do
     expect(@player.owns_government_grant?).to eq(true)
   end
 
+  context "when a dispatcher" do
+    it "can move another player" do
+      @player.dispatcher!
+      expect(@player.can_move_other_player?).to eq(true)
+    end
+  end
+
+  context "when it owns the airlift card" do
+    it "can move another player" do
+      composite_id = SpecialCard.events.find(&:airlift?).composite_id
+      @player.cards_composite_ids = [composite_id]
+      expect(@player.can_move_other_player?).to eq(true)
+    end
+  end
+
   context "card types" do
     let(:city) { WorldGraph.cities.first }
     let(:event) { SpecialCard.events.first }
