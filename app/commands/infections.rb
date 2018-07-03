@@ -1,4 +1,4 @@
-class StageTwoEpidemic
+class Infections
   prepend SimpleCommand
 
   def initialize(game:)
@@ -13,6 +13,8 @@ class StageTwoEpidemic
       @game.used_infection_card_city_staticids << staticid
     end
     @game.nr_of_intensified_cards = 0
+    @game.actions_taken = 0
+    @game.flipped_cards_nr = 0
     @game.save!
   end
 

@@ -71,7 +71,7 @@ RSpec.describe FlipCard do
       command.call
     end
 
-    it "places the card in the game's discarde special cards inventory" do
+    it "places the card in the game's discarded special cards inventory" do
       expect(game.reload.discarded_events.include?(SpecialCard.epidemic_card))
         .to be(true)
     end

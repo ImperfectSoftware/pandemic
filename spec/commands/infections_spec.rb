@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe StageTwoEpidemic do
+RSpec.describe Infections do
   let(:los_angeles) { WorldGraph.cities[1] }
   let(:san_francisco) { WorldGraph.cities[0] }
   let(:game) do
@@ -13,7 +13,7 @@ RSpec.describe StageTwoEpidemic do
   end
   let(:current_player) { game.players.first }
   let(:player) { Fabricate(:player, game: game) }
-  let(:command) { StageTwoEpidemic.new(game: game) }
+  let(:command) { Infections.new(game: game) }
 
   before(:each) do
     current_player.update!(role: Player.roles.keys[0])

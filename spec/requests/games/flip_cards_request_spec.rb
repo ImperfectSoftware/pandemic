@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Games::FinishTurnsController, type: :request do
+RSpec.describe Games::FlipCardsController, type: :request do
   include AuthHelper
   include ResponseHelpers
 
@@ -25,7 +25,7 @@ RSpec.describe Games::FinishTurnsController, type: :request do
     expect(error).to eq(I18n.t("errors.not_authorized"))
   end
 
-  it "triggers a flip card event and end the game" do
+  it "triggers a flip card event and ends the game" do
     trigger_post
     expect(game.reload.finished?).to be(true)
   end
@@ -33,6 +33,6 @@ RSpec.describe Games::FinishTurnsController, type: :request do
   private
 
   def trigger_post
-    post "/games/#{game.id}/finish_turns", params: {}, headers: headers
+    post "/games/#{game.id}/flip_cards", params: {}, headers: headers
   end
 end

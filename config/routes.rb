@@ -18,8 +18,9 @@ Rails.application.routes.draw do
 
       scope module: :games, path: '' do
         resource :invitations, only: [:create, :update, :destroy]
+        resource :infections, only: :create
         resource :discard_city_cards, only: :destroy
-        resource :finish_turns, only: :create
+        resource :flip_cards, only: :create
         resource :forecasts, only: [:create, :update]
         resource :government_grant, only: :create
         resource :possible_actions, only: :show

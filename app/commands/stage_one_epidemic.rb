@@ -16,18 +16,11 @@ class StageOneEpidemic
     )
     PlaceInfectionCommand
       .new(game: @game, staticid: city_staticid, quantity: 3).call
-    StageTwoEpidemic.new(game: @game).call if should_start_stage_two?
   end
 
   private
 
   def unused_infection_cards
     @game.unused_infection_card_city_staticids
-  end
-
-  def should_start_stage_two?
-    @game.players.map(&:events).flatten.select do |event|
-      event.forecast? || event.resilient_population?
-    end.blank?
   end
 end

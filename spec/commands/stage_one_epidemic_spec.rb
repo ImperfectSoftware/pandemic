@@ -40,44 +40,16 @@ RSpec.describe StageOneEpidemic do
 
   end
 
-  context "with special cards that prevent Stage Two Epidemic" do
-    let(:forecast) { SpecialCard.forecast }
-    describe "when players own a forecast card" do
-      it "doesn't trigger a stage two epidemic" do
-        game.update!(
-          used_infection_card_city_staticids: %w{5 6 7 8},
-          unused_infection_card_city_staticids: %w{0 1 2 3 4}
-        )
-        current_player.update!(cards_composite_ids: [forecast.composite_id])
-        command.call
-        expect(game.reload.infections.total_quantity).to eq(3)
-      end
-    end
-  end
-
   it "shuffles only the last used cards" do
-      game.update!(
-        used_infection_card_city_staticids: (1..20).to_a,
-        unused_infection_card_city_staticids: %w{21 22 23 24}
-      )
-      command.call
-      game.reload
-      expect(game.unused_infection_card_city_staticids[0,3]).to eq(%w{22 23 24})
-      # There a 1 in aprox 5^19 chance that this test will fail. Good enough.
-      expect(game.unused_infection_card_city_staticids[3,30])
-        .to_not eq((1..20).to_a)
-  end
-
-  context "when players don't own a forecast or resilient population card" do
-    describe "it triggers a stage two epidemic" do
-      it "infections should be greater than 5" do
-        game.update!(
-          used_infection_card_city_staticids: %w{5 6 7 8},
-          unused_infection_card_city_staticids: %w{0 1 2 3 4}
-        )
-        command.call
-        expect(game.infections.total_quantity >= 5).to be(true)
-      end
-    end
+    game.update!(
+      used_infection_card_city_staticids: (1..20).to_a,
+      unused_infection_card_city_staticids: %w{21 22 23 24}
+    )
+    command.call
+    game.reload
+    expect(game.unused_infection_card_city_staticids[0,3]).to eq(%w{22 23 24})
+    # There a 1 in aprox 5^19 chance that this test will fail. Good enough.
+    expect(game.unused_infection_card_city_staticids[3,30])
+      .to_not eq((1..20).to_a)
   end
 end
