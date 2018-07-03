@@ -1,4 +1,6 @@
 class Games::GovernmentGrantsController < ApplicationController
+  include GameBroadcast
+
   before_action :check_for_potential_create_errors, only: :create
 
   def create
@@ -37,17 +39,5 @@ class Games::GovernmentGrantsController < ApplicationController
 
   def government_grant
     SpecialCard.events.find(&:government_grant?)
-  end
-
-  def send_game_broadcast
-    payload = JSON.parse(ApplicationController.new.render_to_string(
-      'games/show',
-      locals: { game: StartedGameDecorator.new(game) }
-    ))
-    ActionCable.server.broadcast(
-      "game_channel:#{game.id}",
-      game_update: true,
-      game: payload
-    )
   end
 end

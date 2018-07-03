@@ -1,4 +1,6 @@
 class PlayerActionsController < ApplicationController
+  include GameBroadcast
+
   before_action :ensure_player_can_act, only: :create
   before_action :check_for_potential_create_errors, only: :create
 
@@ -27,17 +29,5 @@ class PlayerActionsController < ApplicationController
   def create_error_message
     # implement method in subclass
     raise NotImplementedError
-  end
-
-  def send_game_broadcast
-    payload = JSON.parse(ApplicationController.new.render_to_string(
-      'games/show',
-      locals: { game: StartedGameDecorator.new(game) }
-    ))
-    ActionCable.server.broadcast(
-      "game_channel:#{game.id}",
-      game_update: true,
-      game: payload
-    )
   end
 end

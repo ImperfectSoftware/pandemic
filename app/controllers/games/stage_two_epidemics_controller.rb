@@ -1,4 +1,5 @@
 class Games::StageTwoEpidemicsController < ApplicationController
+  include GamesBroadcast
   before_action :check_for_potential_create_errors, only: :create
 
   def create
@@ -23,17 +24,5 @@ class Games::StageTwoEpidemicsController < ApplicationController
           I18n.t("errors.not_authorized")
         end
       end
-  end
-
-  def send_game_broadcast
-    payload = JSON.parse(ApplicationController.new.render_to_string(
-      'games/show',
-      locals: { game: StartedGameDecorator.new(game) }
-    ))
-    ActionCable.server.broadcast(
-      "game_channel:#{game.id}",
-      game_update: true,
-      game: payload
-    )
   end
 end
