@@ -32,6 +32,18 @@ RSpec.describe Games::InfectionsController, type: :request do
     expect(game.reload.nr_of_intensified_cards).to eq(0)
   end
 
+  it "skips infections if using quiet night event card" do
+    game.update!(
+      player_turn_ids: [current_player.id, player.id],
+      unused_infection_card_city_staticids: %w{1 2 3},
+      nr_of_intensified_cards: 4,
+      flipped_cards_nr: 2,
+      skip_infections: true
+    )
+    expect { trigger_post }.to change { Infection.total_quantity }.by(0)
+    expect(game.reload.skip_infections).to eq(false)
+  end
+
   private
 
   def trigger_post

@@ -3,7 +3,11 @@ class Games::InfectionsController < ApplicationController
   before_action :check_for_potential_create_errors, only: :create
 
   def create
-    Infections.new(game: game).call
+    if game.skip_infections
+      game.update!(skip_infections: false)
+    else
+      Infections.new(game: game).call
+    end
     send_game_broadcast
   end
 
