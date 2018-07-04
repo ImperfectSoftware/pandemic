@@ -6,7 +6,7 @@ RSpec.describe Games::InvitationsController, type: :request do
 
   attr_reader :game
   before(:context) do
-    @user = Fabricate(:user)
+    @user = Fabricate(:user, username: 'jack')
     @current_user = Fabricate(:user, password: '12341234')
     @game = Fabricate(:game, owner: current_user, status: 'not_started')
   end

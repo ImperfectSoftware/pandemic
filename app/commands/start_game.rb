@@ -13,6 +13,7 @@ class StartGame
     return if errors.any?
     check_if_cards_were_setup
     return if errors.any?
+    create_cure_markers
     update_players
     update_game_infections
     update_game_attributes
@@ -84,5 +85,11 @@ class StartGame
   def create_research_station_in_atlanta
     game.research_stations
       .create!(city_staticid: City.find_by_name('Atlanta').staticid)
+  end
+
+  def create_cure_markers
+    CureMarker.colors.keys.each do |color|
+      game.cure_markers.create!(color: color, cured: false, eradicated: false)
+    end
   end
 end

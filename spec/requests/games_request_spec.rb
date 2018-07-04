@@ -118,6 +118,12 @@ RSpec.describe GamesController, type: :request do
         }.to_json, headers: headers
       end
 
+      it "creates cures markers" do
+        expect(@game.cure_markers.map(&:color).uniq.count).to eq(4)
+        expect(@game.cure_markers.map(&:cured).uniq).to eq([false])
+        expect(@game.cure_markers.map(&:eradicated).uniq).to eq([false])
+      end
+
       it "assigns a color to infections" do
         expect(@game.infections.last.color).to_not be_nil
       end

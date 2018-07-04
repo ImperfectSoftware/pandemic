@@ -2,11 +2,7 @@ class CureDiseasesController < PlayerActionsController
   delegate :location, to: :current_player
 
   def create
-    game.cure_markers.create!(
-      color: color,
-      cured: true,
-      eradicated: game.eradicated?(color: color)
-    )
+    cure_marker.update!(cured: true, eradicated: game.eradicated?(color: color))
     game.increment!(:actions_taken)
     current_player.update!(cards_composite_ids: remaining_composite_ids)
     send_game_broadcast
@@ -23,7 +19,7 @@ class CureDiseasesController < PlayerActionsController
           I18n.t("cure_diseases.wrong_number_of_cards")
         elsif cities.map(&:color).uniq.count != 1
           I18n.t("cure_diseases.not_the_same_color")
-        elsif game.cure_markers.find_by(color: color)&.cured
+        elsif cure_marker.cured
           I18n.t("cure_diseases.already_cured")
         elsif !current_player.owns_cards?(cities)
           I18n.t("cure_diseases.player_must_own_cards")
@@ -40,9 +36,12 @@ class CureDiseasesController < PlayerActionsController
       end
   end
 
-  def cities
-    @cities ||= City.find_from_staticids(unique_city_staticids)
+  def cure_marker
+    @cure_marker ||= game.cure_markers.find_by(color: color)
   end
+
+  def cities
+    @cities ||= City.find_from_staticids(unique_city_staticids) end
 
   def unique_city_staticids
     params[:city_staticids].uniq

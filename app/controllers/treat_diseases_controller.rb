@@ -25,7 +25,7 @@ class TreatDiseasesController < PlayerActionsController
   end
 
   def cure_marker
-    @cure_marker ||= game.cure_markers.find_or_create_by(color: params[:color])
+    @cure_marker ||= game.cure_markers.find_by(color: params[:color])
   end
 
   def infection

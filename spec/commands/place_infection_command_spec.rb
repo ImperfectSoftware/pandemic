@@ -36,12 +36,7 @@ RSpec.describe PlaceInfectionCommand do
 
   describe "when the current player is a doctor and the diseas is cured" do
     it "does not place an infection" do
-      Fabricate(
-        :cure_marker,
-        color: san_francisco.color,
-        game: game,
-        cured: true
-      )
+      game.cure_markers.find_by(color: san_francisco.color).update!(cured: true)
       Fabricate(:medic, game: game)
       command.call
       expect(game.infections.count).to eq(0)
@@ -50,13 +45,8 @@ RSpec.describe PlaceInfectionCommand do
 
   describe "when the diseas is eradicated" do
     it "does not place an infection" do
-      Fabricate(
-        :cure_marker,
-        color: san_francisco.color,
-        game: game,
-        cured: true,
-        eradicated: true
-      )
+      game.cure_markers.find_by(color: san_francisco.color)
+        .update!(cured: true, eradicated: true)
       Fabricate(:operations_expert, game: game)
       command.call
       expect(game.infections.count).to eq(0)

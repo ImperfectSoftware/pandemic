@@ -6,6 +6,9 @@ Fabricator(:game) do
   after_create do |game, _|
     player = Fabricate(:player, user: game.owner, game: game)
     game.update!(player_turn_ids: [player.id])
+    CureMarker.colors.keys.each do |color|
+      game.cure_markers.create!(color: color, cured: false, eradicated: false)
+    end
   end
 end
 
