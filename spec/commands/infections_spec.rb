@@ -24,6 +24,10 @@ RSpec.describe Infections do
     expect(game.reload.nr_of_intensified_cards).to eq(0)
   end
 
+  it "increases the turn nr" do
+    expect(game.reload.turn_nr).to eq(2)
+  end
+
   it "infects San Francisco" do
     infection = game.infections.find_by(city_staticid: san_francisco.staticid)
     expect(infection.quantity).to eq(1)

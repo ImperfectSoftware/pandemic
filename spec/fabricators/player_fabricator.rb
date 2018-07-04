@@ -26,3 +26,9 @@ Fabricator(:quarantine_specialist, class_name: Player) do
   role { Player.roles.keys[4] }
   location_staticid { WorldGraph.cities.first.staticid }
 end
+
+Fabricator(:operations_expert, class_name: Player) do
+  user { Fabricate(:user) }
+  role { Player.roles.keys[0] }
+  location_staticid { WorldGraph.cities.first.staticid }
+end

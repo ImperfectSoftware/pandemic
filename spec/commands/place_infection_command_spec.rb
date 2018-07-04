@@ -48,6 +48,21 @@ RSpec.describe PlaceInfectionCommand do
     end
   end
 
+  describe "when the diseas is eradicated" do
+    it "does not place an infection" do
+      Fabricate(
+        :cure_marker,
+        color: san_francisco.color,
+        game: game,
+        cured: true,
+        eradicated: true
+      )
+      Fabricate(:operations_expert, game: game)
+      command.call
+      expect(game.infections.count).to eq(0)
+    end
+  end
+
   describe "when the current player is a quarantine specialist" do
     it "does not place an infection in the current city" do
       Fabricate(:quarantine_specialist, game: game)

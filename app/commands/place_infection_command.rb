@@ -72,6 +72,7 @@ class PlaceInfectionCommand
     return false if neighboring_location_includes_quarantine_specialist?
     return false if players_at_current_location.include?(quarantine_specialist)
     return false if medic_prevents_infection?
+    return false if disease_eradicated?
     true
   end
 
@@ -120,5 +121,9 @@ class PlaceInfectionCommand
 
   def all_infections
     @all_infections ||= @game.infections
+  end
+
+  def disease_eradicated?
+    @game.cure_markers.find_by(color: city.color)&.eradicated?
   end
 end
