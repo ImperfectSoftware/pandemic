@@ -22,7 +22,7 @@ RSpec.describe Games::FlipCardsController, type: :request do
   it "returns an error if no flip cards left" do
     game.update!(flipped_cards_nr: 2)
     trigger_post
-    expect(error).to eq(I18n.t("errors.not_authorized"))
+    expect(error).to eq(I18n.t("player_actions.flipped_max"))
   end
 
   it "triggers a flip card event and ends the game" do
