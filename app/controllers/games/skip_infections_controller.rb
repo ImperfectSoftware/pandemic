@@ -1,4 +1,6 @@
 class Games::SkipInfectionsController < ApplicationController
+  include GameBroadcast
+
   before_action :check_for_potential_create_errors, only: :create
 
   def create
@@ -6,6 +8,7 @@ class Games::SkipInfectionsController < ApplicationController
     game.discarded_special_player_card_ids << event.staticid
     game.save!
     current_player.update!(cards_composite_ids: remaining_cards)
+    send_game_broadcast
   end
 
   private
