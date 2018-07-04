@@ -12,6 +12,8 @@ RSpec.describe FlipCard do
     game.update!(player_turn_ids: ids)
     command = FlipCard.new(game: game, player: other_player)
     command.call
+
+    expect(command.errors[:allowed][0]).to_not match("translation missing")
     expect(command.errors[:allowed].first)
       .to eq(I18n.t("player_actions.bad_turn"))
   end
@@ -34,7 +36,10 @@ RSpec.describe FlipCard do
     it "errors out if flipped_cards_nr is 2" do
       game.update!(flipped_cards_nr: 2)
       command.call
-      expect(command.errors[:allowed][0]).to eq(I18n.t("errors.not_authorized"))
+
+      expect(command.errors[:allowed][0]).to_not match("translation missing")
+      expect(command.errors[:allowed][0])
+        .to eq(I18n.t("player_actions.flipped_max"))
     end
 
     it "marks game as finished if no cards left to flip" do

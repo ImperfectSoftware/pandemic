@@ -44,6 +44,7 @@ en:
     no_actions_left: You have no player actions left.
     not_a_researcher: Only a researcher can pass in a location.
     draw_cards: You must draw two cards before starting the infections stage.
+    flipped_max: You have already flipped 2 cards. Time to infect!
   research_stations:
     none_left: There are no research stations left to be placed.
   share_cards:

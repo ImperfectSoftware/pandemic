@@ -45,7 +45,7 @@ class FlipCard
 
   def validate_command
     if @game.flipped_cards_nr == 2
-      errors.add(:allowed, I18n.t("errors.not_authorized"))
+      errors.add(:allowed, I18n.t("player_actions.flipped_max"))
     end
     if not_active_player
       errors.add(:allowed, I18n.t("player_actions.bad_turn"))
