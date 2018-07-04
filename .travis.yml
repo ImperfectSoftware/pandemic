@@ -13,7 +13,7 @@ before_script:
   - ./cc-test-reporter before-build
 script:
 - export RAILS_ENV=test
-- bundle exec rake db:create db:migrate
+- bundle exec rake db:drop db:create db:migrate
 - bundle exec rake spec
 after_script:
   - ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT
