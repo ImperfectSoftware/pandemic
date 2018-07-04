@@ -53,4 +53,10 @@ class Game < ApplicationRecord
   def player_with_too_many_cards
     players.to_a.find { |player| player.has_too_many_cards? }
   end
+
+  def epidemic_cards_count
+    discarded_special_player_card_ids.select do |staticid|
+      SpecialCard.epidemic_card.staticid == staticid
+    end.count
+  end
 end

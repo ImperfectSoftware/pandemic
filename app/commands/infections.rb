@@ -23,12 +23,7 @@ class Infections
   private
 
   def infection_rate
-    GetInfectionRate.new(nr_of_epidemic_cards: epidemic_cards.count).call.result
-  end
-
-  def epidemic_cards
-    game.discarded_special_player_card_ids.select do |staticid|
-      SpecialCard.epidemic_card.staticid == staticid
-    end
+    GetInfectionRate
+      .new(nr_of_epidemic_cards: game.epidemic_cards_count).call.result
   end
 end

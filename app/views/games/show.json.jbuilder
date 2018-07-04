@@ -1,5 +1,4 @@
 json.(game, :id, :active, :active_player_id, :actions_taken, :skip_infections)
-json.between_epidemic_stage game.between_epidemic_stages?
 json.players game.enhanced_players do |player|
   json.(player, :id, :position, :role, :location_staticid, :username)
   json.pretty_role player.pretty_role
@@ -14,6 +13,7 @@ json.blue_status game.diseases_status.blue
 json.black_status game.diseases_status.black
 json.yellow_status game.diseases_status.yellow
 json.red_status game.diseases_status.red
+json.epidemic_cards_count game.epidemic_cards_count
 json.infection_discard_pile game.used_cards do |city|
   json.(city, :color, :density, :name, :population, :staticid)
 end
