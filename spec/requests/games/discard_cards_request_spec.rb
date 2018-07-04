@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Games::DiscardCityCardsController, type: :request do
+RSpec.describe Games::DiscardCardsController, type: :request do
   include AuthHelper
   include ResponseHelpers
 
@@ -9,13 +9,22 @@ RSpec.describe Games::DiscardCityCardsController, type: :request do
   let(:current_player) { current_user.players.find_by(game: game) }
   let(:city) { WorldGraph.cities[10] }
   let(:city2) { WorldGraph.cities[11] }
+  let(:event) { SpecialCard.events.last }
 
-  it "removes card from player's inventory" do
+  it "removes cities from player's inventory" do
     composite_ids = [city.composite_id, city2.composite_id]
     current_player.update!(cards_composite_ids: composite_ids)
-    trigger_delete(city_staticid: city.staticid)
+    trigger_delete(composite_id: city.composite_id)
     expect(current_player.reload.cards_composite_ids)
       .to eq([city2.composite_id])
+  end
+
+  it "removes events from player's inventory" do
+    composite_ids = [city.composite_id, event.composite_id]
+    current_player.update!(cards_composite_ids: composite_ids)
+    trigger_delete(composite_id: event.composite_id)
+    expect(current_player.reload.cards_composite_ids)
+      .to eq([city.composite_id])
   end
 
   it "does nothing if the player is no longer in the possesion of the card" do
@@ -26,9 +35,9 @@ RSpec.describe Games::DiscardCityCardsController, type: :request do
 
   private
 
-  def trigger_delete(city_staticid: nil)
-    delete "/games/#{game.id}/discard_city_cards", params: {
-      city_staticid: city_staticid
+  def trigger_delete(composite_id: nil)
+    delete "/games/#{game.id}/discard_cards", params: {
+      composite_id: composite_id
     }.to_json, headers: headers
   end
 end
