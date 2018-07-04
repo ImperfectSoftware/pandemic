@@ -57,6 +57,10 @@ class Games::PossibleActionsController < ApplicationController
   def operations_expert_flight
     return false unless current_player.operations_expert?
     return false unless current_player == active_player
+    return false unless current_player.operations_expert_actions
+      .find_by(turn_nr: game.turn_nr).nil?
+    return false unless game
+      .has_research_station_at?(city_staticid: current_player.location.staticid)
     return false if current_player.location.staticid == params[:city_staticid]
     return false if current_player.location.neighbors_staticids
       .include?(params[:city_staticid])
