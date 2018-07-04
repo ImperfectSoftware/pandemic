@@ -2,7 +2,7 @@ class Games::PossibleActionsController < ApplicationController
   helper_method :can_drive, :can_direct_flight, :can_charter_flight, :can_treat,
     :can_shuttle_flight, :can_build_research_station, :cure_checker,
     :can_remove_research_station, :current_player,
-    :display_government_grant_option
+    :display_government_grant_option, :operations_expert_flight
 
   def show
   end
@@ -52,6 +52,15 @@ class Games::PossibleActionsController < ApplicationController
   def cure_checker
     @cure_checker ||= CureChecker.call(game: game, player: current_player)
       .result
+  end
+
+  def operations_expert_flight
+    return false unless current_player.operations_expert?
+    return false unless current_player == active_player
+    return false if current_player.location.staticid == params[:city_staticid]
+    return false if current_player.location.neighbors_staticids
+      .include?(params[:city_staticid])
+    true
   end
 
   def can_treat

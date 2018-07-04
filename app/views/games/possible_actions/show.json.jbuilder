@@ -7,6 +7,7 @@ json.set! :can_remove_research_station, can_remove_research_station
 json.set! :can_discover_cure, cure_checker.can_discover_cure
 json.set! :cure_color, cure_checker.color
 json.set! :display_government_grant_option, display_government_grant_option
+json.set! :operations_expert_flight, operations_expert_flight
 json.set! :can_treat_yellow, can_treat['yellow']
 json.set! :can_treat_blue, can_treat['blue']
 json.set! :can_treat_red, can_treat['red']

@@ -1,6 +1,5 @@
 class Games::PossiblePlayerActionsController < ApplicationController
-  helper_method :cities, :locations, :airlift_locations,
-    :operations_expert_locations
+  helper_method :cities, :locations, :airlift_locations
   attr_reader :cities
 
   def show
@@ -32,23 +31,5 @@ class Games::PossiblePlayerActionsController < ApplicationController
     (WorldGraph.cities - [other_player.location]).map do |location|
         OpenStruct.new(name: location.name, staticid: location.staticid)
     end.sort_by(&:name)
-  end
-
-  def operations_expert_locations
-    return [] unless current_player.operations_expert? &&
-      player_at_research_station? && action_not_performed_this_turn?
-    (WorldGraph.cities - [current_player.location]).map do |location|
-        OpenStruct.new(name: location.name, staticid: location.staticid)
-    end.sort_by(&:name)
-  end
-
-  def player_at_research_station?
-    game.has_research_station_at?(
-      city_staticid: current_player.location.staticid
-    )
-  end
-
-  def action_not_performed_this_turn?
-    !current_player.operations_expert_actions.find_by(turn_nr: game.turn_nr)
   end
 end
