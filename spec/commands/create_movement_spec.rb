@@ -49,8 +49,8 @@ RSpec.describe CreateMovement do
           quantity: 3,
           city_staticid: destination.staticid
         )
-        game.cure_markers.create!(color: destination.color, cured: true)
-        game.cure_markers.create!(color: algiers.color, cured: true)
+        game.cure_markers.find_by(color: destination.color).update!(cured: true)
+        game.cure_markers.find_by(color: algiers.color).update!(cured: true)
         create_movement
       end
 
@@ -67,7 +67,7 @@ RSpec.describe CreateMovement do
 
     it "doesn't treat disease if the color marker is not cured" do
       create_movement
-      game.cure_markers.create!(color: destination.color, cured: false)
+      game.cure_markers.find_by(color: destination.color).update!(cured: false)
       expect(game.infections.last.quantity).to eq(3)
     end
   end
