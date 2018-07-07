@@ -1,1 +1,3 @@
-json.set! :staticids, game.used_cards.map(&:staticid).sort
+json.cities cities do |city|
+  json.(city, :name, :staticid, :color)
+end

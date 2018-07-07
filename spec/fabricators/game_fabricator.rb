@@ -12,7 +12,7 @@ Fabricator(:game) do
   end
 end
 
-Fabricator(:game_between_epidemic_stages, class_name: Game) do
+Fabricator(:game_between_infect_and_intensify, class_name: Game) do
   turn_nr { 1 }
   actions_taken { 0 }
   status { 'not_started' }

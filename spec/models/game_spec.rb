@@ -32,25 +32,18 @@ RSpec.describe Game, type: :model do
     end
   end
 
-  it "knows it's not between infect and intensify stage" do
-    expect(game.between_epidemic_stages?).to be(false)
-  end
-
-  it "knows it's between infect and intensify stage" do
-    game = Fabricate(:game_between_epidemic_stages)
-    expect(game.between_epidemic_stages?).to be(true)
-  end
-
   describe "used cards" do
-    it "returns intensified cards if in between epidemic stages" do
+    it "returns intensified cards if in between infect and intensify stages" do
       used_cards = WorldGraph.cities[0,5].map(&:staticid)
-      game = Fabricate(:game_between_epidemic_stages)
-      expect(game.used_cards.map(&:staticid).sort).to eq(used_cards)
+      game = Fabricate(:game_between_infect_and_intensify)
+      expect(game.resilient_population_cards.map(&:staticid).sort)
+        .to eq(used_cards)
     end
 
     it "reuturns used cards from used_infection_card_city_staticids" do
       used_cards = WorldGraph.cities[5,4].map(&:staticid)
-      expect(game.used_cards.map(&:staticid).sort).to eq(used_cards)
+      expect(game.resilient_population_cards.map(&:staticid).sort)
+        .to eq(used_cards)
     end
   end
 end

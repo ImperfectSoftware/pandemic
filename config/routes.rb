@@ -26,7 +26,7 @@ Rails.application.routes.draw do
         resource :government_grant, only: :create
         resource :possible_actions, only: :show
         resource :possible_player_actions, only: :show
-        resource :resilient_populations, only: [:show, :create]
+        resource :resilient_populations, only: [:show, :destroy]
         resource :skip_infections, only: :create
         resource :special_cards, only: :create
       end
