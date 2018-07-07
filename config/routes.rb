@@ -28,7 +28,6 @@ Rails.application.routes.draw do
         resource :resilient_populations, only: [:show, :create]
         resource :skip_infections, only: :create
         resource :special_cards, only: :create
-        resource :stage_two_epidemics, only: :create
       end
     end
     resources :invitations, only: :index
