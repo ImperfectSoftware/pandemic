@@ -53,4 +53,8 @@ class StartedGameDecorator < SimpleDelegator
   def event_discard_pile
     GetSpecialCards.call(game: self).result
   end
+
+  def used_infection_cards
+    City.find_from_staticids(used_infection_card_city_staticids)
+  end
 end
