@@ -8,6 +8,7 @@ RSpec.describe Games::InfectionsController, type: :request do
   let(:current_user) { game.owner }
   let(:current_player) { game.players.first }
   let(:player) { Fabricate(:player, game: game) }
+  let(:forecast_card) { SpecialCard.events.find(&:forecast?) }
 
   it "errors out if current player is not the active player" do
     game.update!(turn_nr: 2, player_turn_ids: [current_player.id, player.id])
@@ -42,6 +43,28 @@ RSpec.describe Games::InfectionsController, type: :request do
     )
     expect { trigger_post }.to change { Infection.total_quantity }.by(0)
     expect(game.reload.skip_infections).to eq(false)
+  end
+
+  context "when forecast event card used" do
+    before(:each) do
+      game.update!(
+        player_turn_ids: [current_player.id, player.id],
+        unused_infection_card_city_staticids: %w{1 2 3},
+        flipped_cards_nr: 2
+      )
+      current_player.update!(cards_composite_ids: [forecast_card.composite_id])
+      game.forecasts.create!(turn_nr: game.turn_nr)
+      trigger_post
+    end
+
+    it "discards card from player inventory" do
+      expect(current_player.reload.cards_composite_ids).to eq([])
+    end
+
+    it "places card in discarded special player cards" do
+      expect(game.reload.discarded_special_player_card_ids.last)
+        .to eq(forecast_card.staticid)
+    end
   end
 
   private

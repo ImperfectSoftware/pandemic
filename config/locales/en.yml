@@ -15,6 +15,7 @@ en:
     not_authorized: Not Authorized.
   forecasts:
     bad_staticids: Bad static ids provided.
+    updated: Player %{username} has used a forecast event. These infection cards are coming %{cards}.
   games:
     already_started: This game has already started.
     incorrect_nr_of_epidemic_cards: Incorrect number of epidemic cards provided.
