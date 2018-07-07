@@ -8,7 +8,7 @@ class MovementProposalsController < PlayerActionsController
       turn_nr: game.turn_nr,
       game: game,
       accepted: false,
-      airlift: using_airlift?
+      airlift: false
     )
     send_movement_proposal_broadcast(proposal)
   end

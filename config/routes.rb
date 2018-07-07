@@ -17,6 +17,7 @@ Rails.application.routes.draw do
       resources :treat_diseases, only: :create
 
       scope module: :games, path: '' do
+        resource :airlifts, only: :create
         resource :invitations, only: [:create, :update, :destroy]
         resource :infections, only: :create
         resource :discard_cards, only: :destroy

@@ -41,26 +41,6 @@ RSpec.describe MovementProposalsController, type: :request do
       expect(error).to eq(I18n.t("dispatcher.must_be_a_dispatcher"))
     end
 
-    it "creates a movement proposal if using an airlift card" do
-      current_player.update!(cards_composite_ids: [airlift.composite_id])
-      trigger_post(
-        player_id: player.id,
-        city_staticid: neighbor.staticid,
-        airlift: true
-      )
-      expect(MovementProposal.last.player_id).to eq(player.id)
-    end
-
-    it "sets airlift to true" do
-      current_player.update!(cards_composite_ids: [airlift.composite_id])
-      trigger_post(
-        player_id: player.id,
-        city_staticid: neighbor.staticid,
-        airlift: true
-      )
-      expect(MovementProposal.last.airlift).to be(true)
-    end
-
     context "when destination is a neighbor" do
       before(:each) do
         # dispatcher role
@@ -213,8 +193,7 @@ RSpec.describe MovementProposalsController, type: :request do
   def trigger_post(city_staticid: nil, player_id: nil, airlift: false)
     post "/games/#{game.id}/movement_proposals", params: {
       city_staticid: city_staticid,
-      player_id: player_id,
-      airlift: airlift
+      player_id: player_id
     }.to_json, headers: headers
   end
 
