@@ -7,6 +7,8 @@ json.players game.enhanced_players do |player|
   end
   json.events player.events
 end
+json.won game.won?
+json.lost game.lost?
 json.infections game.individual_infections
 json.research_stations game.research_stations_city_static_ids
 json.blue_status game.diseases_status.blue

@@ -55,4 +55,14 @@ class Game < ApplicationRecord
       SpecialCard.epidemic_card.staticid == staticid
     end.count
   end
+
+  def won?
+    return false unless finished?
+    cure_markers.cured.count == 4
+  end
+
+  def lost?
+    return false unless finished?
+    cure_markers.cured.count != 4
+  end
 end
