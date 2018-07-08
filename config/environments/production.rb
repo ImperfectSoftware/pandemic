@@ -35,7 +35,7 @@ Rails.application.configure do
   # config.action_cable.mount_path = nil
   # config.action_cable.url = 'wss://example.com/cable'
   # config.action_cable.allowed_request_origins = [ 'http://example.com', /http:\/\/example.*/ ]
-  config.action_cable.allowed_request_origins = ['http://localhost:8080']
+  config.action_cable.allowed_request_origins = ['https://pandemic-vue.herokuapp.com']
   config.web_socket_server_url = "wss://mlpinit-pandemic.herokuapp.com/cable"
 
 
