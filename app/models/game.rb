@@ -58,11 +58,11 @@ class Game < ApplicationRecord
 
   def won?
     return false unless finished?
-    cure_markers.cured.count == 4
+    cure_markers.where(cured: true).count == 4
   end
 
   def lost?
     return false unless finished?
-    cure_markers.cured.count != 4
+    cure_markers.where(cured: true).count != 4
   end
 end

@@ -26,7 +26,7 @@ class ShareKnowledgeOptions
   def sharable_cities(player)
     return [] if current_player == other_player
     return [] if current_player.location != other_player.location
-    if player.researcher?
+    if current_player.researcher? || other_player.researcher?
       player.cities.map do |city|
         Struct::CityStruct.new(city.name, player.user.username, city.staticid)
       end
