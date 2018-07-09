@@ -7,7 +7,7 @@ class Games::InfectionsController < ApplicationController
     if game.skip_infections
       game.update!(skip_infections: false)
     else
-      Infections.new(game: game).call
+      Infections.call(game: game)
     end
     send_game_broadcast
   end

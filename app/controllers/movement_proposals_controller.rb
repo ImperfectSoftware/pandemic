@@ -48,7 +48,7 @@ class MovementProposalsController < PlayerActionsController
   end
 
   def puppet_player
-    @puppet_player ||= game.players.find_by(id: player_id)
+    @puppet_player ||= game.players.find_by(id: params[:player_id])
   end
 
   def movement_proposal
@@ -61,25 +61,6 @@ class MovementProposalsController < PlayerActionsController
 
   def location
     City.find(city_staticid)
-  end
-
-  def player_id
-    params[:player_id] || movement_proposal.player_id
-  end
-
-  def airlift_card
-    SpecialCard.events.find(&:airlift?)
-  end
-
-  def place_airlift_card_in_game_discarded_special_player_cards
-    game.discarded_special_player_card_ids << airlift_card.staticid
-    game.save!
-  end
-
-  def discard_airlift_card_from_movement_proposal_creator
-    movement_proposal.creator.cards_composite_ids
-      .delete(airlift_card.composite_id)
-    movement_proposal.creator.save!
   end
 
   def send_movement_proposal_broadcast(proposal)
