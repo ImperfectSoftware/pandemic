@@ -24,8 +24,7 @@ class FlipCard
       @player.cards_composite_ids << player_card.composite_id
       @player.save!
     else
-      @game.discarded_special_player_card_ids << player_card.staticid
-      @game.save!
+      @game.discard_event!(player_card)
       start_stage_one_epidemic
     end
   end

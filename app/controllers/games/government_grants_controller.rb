@@ -5,9 +5,9 @@ class Games::GovernmentGrantsController < ApplicationController
 
   def create
     game.research_stations.create!(city_staticid: params[:city_staticid])
-    current_player.update(cards_composite_ids: remaining_composite_ids)
-    game.discarded_special_player_card_ids << government_grant.staticid
-    game.save!
+    current_player.cards_composite_ids.delete(event.composite_id)
+    current_player.save!
+    game.discard_event!(event)
     send_game_broadcast
   end
 
@@ -33,11 +33,7 @@ class Games::GovernmentGrantsController < ApplicationController
     game.research_stations.find_by(city_staticid: params[:city_staticid])
   end
 
-  def remaining_composite_ids
-    current_player.cards_composite_ids - [government_grant.composite_id]
-  end
-
-  def government_grant
+  def event
     SpecialCard.events.find(&:government_grant?)
   end
 end

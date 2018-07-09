@@ -28,17 +28,13 @@ class Games::InfectionsController < ApplicationController
 
   def handle_forecast_card
     if game.forecasts.find_by(turn_nr: game.turn_nr)
-      game.discarded_special_player_card_ids << forecast_card.staticid
-      game.save!
-      current_player.update!(cards_composite_ids: remaining_cards)
+      game.discard_event!(event)
+      current_player.cards_composite_ids.delete(event.composite_id)
+      current_player.save!
     end
   end
 
-  def remaining_cards
-    current_player.cards_composite_ids - [forecast_card.composite_id]
-  end
-
-  def forecast_card
+  def event
     current_player.events.find(&:forecast?)
   end
 end

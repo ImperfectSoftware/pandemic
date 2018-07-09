@@ -65,4 +65,9 @@ class Game < ApplicationRecord
     return false unless finished?
     cure_markers.where(cured: true).count != 4
   end
+
+  def discard_event!(event)
+    discarded_special_player_card_ids << event.staticid
+    save!
+  end
 end

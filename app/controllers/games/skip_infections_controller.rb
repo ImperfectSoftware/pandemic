@@ -4,10 +4,9 @@ class Games::SkipInfectionsController < ApplicationController
   before_action :check_for_potential_create_errors, only: :create
 
   def create
-    game.skip_infections = true
-    game.discarded_special_player_card_ids << event.staticid
-    game.save!
-    current_player.update!(cards_composite_ids: remaining_cards)
+    game.update!(skip_infections: true)
+    game.discard_event!(event)
+    remove_event_from_player_inventory
     send_game_broadcast
   end
 
@@ -23,7 +22,8 @@ class Games::SkipInfectionsController < ApplicationController
     @event ||= SpecialCard.events.find(&:one_quiet_night?)
   end
 
-  def remaining_cards
-    current_player.cards_composite_ids - [event.composite_id]
+  def remove_event_from_player_inventory
+    current_player.cards_composite_ids.delete(event.composite_id)
+    current_player.save!
   end
 end

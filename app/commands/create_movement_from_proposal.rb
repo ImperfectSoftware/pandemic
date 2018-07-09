@@ -20,8 +20,9 @@ class CreateMovementFromProposal
     CreateMovement
       .call(game: game, player: player, from: from, to: to, airlift: airlift?)
     if airlift?
-      place_airlift_card_in_game_discarded_special_player_cards!
-      discard_airlift_card_from_movement_proposal_creator!
+      game.discard_event!(event)
+      creator.cards_composite_ids.delete(event.composite_id)
+      creator.save!
     end
     send_game_broadcast
   end
@@ -34,17 +35,7 @@ class CreateMovementFromProposal
     proposal.city_staticid
   end
 
-  def place_airlift_card_in_game_discarded_special_player_cards!
-    game.discarded_special_player_card_ids << airlift_card.staticid
-    game.save!
-  end
-
-  def discard_airlift_card_from_movement_proposal_creator!
-    creator.cards_composite_ids.delete(airlift_card.composite_id)
-    creator.save!
-  end
-
-  def airlift_card
+  def event
     SpecialCard.events.find(&:airlift?)
   end
 

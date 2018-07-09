@@ -10,8 +10,8 @@ class Games::ResilientPopulationsController < ApplicationController
   def destroy
     game.used_infection_card_city_staticids.delete(params[:city_staticid])
     game.unused_infection_card_city_staticids.delete(params[:city_staticid])
-    game.discarded_special_player_card_ids << card.staticid
     game.save!
+    game.discard_event!(event)
     current_player.update!(cards_composite_ids: remaining_cards)
     send_game_broadcast
   end
@@ -29,7 +29,7 @@ class Games::ResilientPopulationsController < ApplicationController
         case
         when params[:city_staticid].blank?
           I18n.t("player_actions.city_staticid")
-        when !current_player.owns_card?(card)
+        when !current_player.owns_card?(event)
           I18n.t("errors.not_authorized")
         when city_is_not_removable?
           I18n.t("errors.not_authorized")
@@ -43,10 +43,10 @@ class Games::ResilientPopulationsController < ApplicationController
   end
 
   def remaining_cards
-    current_player.cards_composite_ids - [card.composite_id]
+    current_player.cards_composite_ids - [event.composite_id]
   end
 
-  def card
+  def event
     SpecialCard.resilient_population
   end
 
