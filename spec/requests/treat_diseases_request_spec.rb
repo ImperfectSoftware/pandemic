@@ -28,7 +28,7 @@ RSpec.describe TreatDiseasesController, type: :request do
 
   context "when treating all disease" do
     before(:each) do
-      game.infections.create!(quantity: 3, city_staticid: staticid)
+      Fabricate(:iblue, game: game, city_staticid: staticid)
     end
 
     it "returns error message if not enough actions left" do
@@ -45,7 +45,6 @@ RSpec.describe TreatDiseasesController, type: :request do
 
   context "with different type of diseases at the same location" do
     it "treats the disease identified by the color" do
-      staticid = current_player.location.staticid
       Fabricate(:iyellow, quantity: 2, game: game, city_staticid: staticid)
       Fabricate(:iblue, quantity: 1, game: game, city_staticid: staticid)
       trigger_post(color: 'yellow')
