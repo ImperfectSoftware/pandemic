@@ -8,3 +8,9 @@ Fabricator(:iblue, class_name: Infection) do
   quantity { 3 }
   game { Game.first }
 end
+
+Fabricator(:iyellow, class_name: Infection) do
+  color { 'yellow' }
+  quantity { 3 }
+  game { Game.first }
+end

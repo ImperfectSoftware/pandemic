@@ -43,6 +43,18 @@ RSpec.describe TreatDiseasesController, type: :request do
     end
   end
 
+  context "with different type of diseases at the same location" do
+    it "treats the disease identified by the color" do
+      staticid = current_player.location.staticid
+      Fabricate(:iyellow, quantity: 2, game: game, city_staticid: staticid)
+      Fabricate(:iblue, quantity: 1, game: game, city_staticid: staticid)
+      trigger_post(color: 'yellow')
+      infection = game.infections
+        .find_by(color: 'yellow', city_staticid: staticid)
+      expect(infection.quantity).to eq(1)
+    end
+  end
+
   private
 
   def trigger_post(color: 'blue', quantity: 1)

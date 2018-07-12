@@ -29,7 +29,8 @@ class TreatDiseasesController < PlayerActionsController
   end
 
   def infection
-    @infection ||= game.infections.find_by(city_staticid: city.staticid)
+    @infection ||= game.infections
+      .find_by(city_staticid: city.staticid, color: params[:color])
   end
 
   def city
