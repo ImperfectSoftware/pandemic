@@ -33,16 +33,43 @@ RSpec.describe Games::InfectionsController, type: :request do
     expect(game.reload.nr_of_intensified_cards).to eq(0)
   end
 
-  it "skips infections if using quiet night event card" do
-    game.update!(
-      player_turn_ids: [current_player.id, player.id],
-      unused_infection_card_city_staticids: %w{1 2 3},
-      nr_of_intensified_cards: 4,
-      flipped_cards_nr: 2,
-      skip_infections: true
-    )
-    expect { trigger_post }.to change { Infection.total_quantity }.by(0)
-    expect(game.reload.skip_infections).to eq(false)
+  context "using quiet night" do
+    before(:each) do
+      game.update!(
+        player_turn_ids: [current_player.id, player.id],
+        unused_infection_card_city_staticids: %w{1 2 3},
+        nr_of_intensified_cards: 4,
+        flipped_cards_nr: 2,
+        skip_infections: true,
+        actions_taken: 4
+      )
+    end
+
+    it "skips infections if using quiet night event card" do
+      expect { trigger_post }.to change { Infection.total_quantity }.by(0)
+      expect(game.reload.skip_infections).to eq(false)
+    end
+
+    it "resets nr of intensified cards" do
+      trigger_post
+      expect(game.reload.nr_of_intensified_cards).to eq(0)
+    end
+
+    it "resets nr of flipped cards" do
+      trigger_post
+      expect(game.reload.flipped_cards_nr).to eq(0)
+    end
+
+    it "resets actions taken" do
+      trigger_post
+      expect(game.reload.actions_taken).to eq(0)
+    end
+
+    it "increases the turn nr" do
+      turn_nr = game.turn_nr
+      trigger_post
+      expect(game.reload.turn_nr - turn_nr).to eq(1)
+    end
   end
 
   context "when forecast event card used" do

@@ -7,11 +7,10 @@ class Infections
   end
 
   def call
-    infection_rate.times do
-      staticid = game.unused_infection_card_city_staticids.pop
-      PlaceInfectionCommand.new(game: game, staticid: staticid, quantity: 1)
-        .call
-      game.used_infection_card_city_staticids << staticid
+    if game.skip_infections
+      game.update!(skip_infections: false)
+    else
+      infect
     end
     game.nr_of_intensified_cards = 0
     game.actions_taken = 0
@@ -21,6 +20,15 @@ class Infections
   end
 
   private
+
+  def infect
+    infection_rate.times do
+      staticid = game.unused_infection_card_city_staticids.pop
+      PlaceInfectionCommand.new(game: game, staticid: staticid, quantity: 1)
+        .call
+      game.used_infection_card_city_staticids << staticid
+    end
+  end
 
   def infection_rate
     GetInfectionRate

@@ -4,11 +4,7 @@ class Games::InfectionsController < ApplicationController
 
   def create
     handle_forecast_card
-    if game.skip_infections
-      game.update!(skip_infections: false)
-    else
-      Infections.call(game: game)
-    end
+    Infections.call(game: game)
     send_game_broadcast
   end
 
