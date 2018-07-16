@@ -11,7 +11,7 @@ class StartGame
   def call
     check_if_game_started
     return if errors.any?
-    check_if_cards_were_setup
+    setup_player_cards
     return if errors.any?
     create_cure_markers
     update_players
@@ -28,17 +28,18 @@ class StartGame
     errors.add(:game, I18n.t("games.already_started")) if game.started?
   end
 
-  def check_if_cards_were_setup
-    if setup_player_cards.errors[:setup].present?
-      errors.add(:game, setup_player_cards.errors[:setup].first)
-    end
-  end
-
   def setup_player_cards
-    @setup_player_cards ||= SetupPlayerCards.call(
-      player_ids: game.players.pluck(:id),
-      nr_of_epidemic_cards: nr_of_epidemic_cards
-    )
+    @setup_player_cards ||=
+      begin
+        command = SetupPlayerCards.call(
+          player_ids: game.players.pluck(:id),
+          nr_of_epidemic_cards: nr_of_epidemic_cards
+        )
+        if command.errors[:setup].present?
+          errors.add(:game, command.errors[:setup].first)
+        end
+        command
+      end
   end
 
   def update_players
